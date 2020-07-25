@@ -19,10 +19,45 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a969638-b93b-49b4-99a7-a8634df2afde" name="Default Changelist" comment="Configurando plantilla">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="3a969638-b93b-49b4-99a7-a8634df2afde" name="Default Changelist" comment="Configurando DB">
+      <change afterPath="$PROJECT_DIR$/app/Categorias.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Contacto.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Empresa.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoriasController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ContactoController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/EmpresaController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ResourcesMediaController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/UbicacionesController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ResourcesMedia.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/TipoCategoria.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Ubicaciones.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_07_25_045642_create_tipo_categorias_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_07_25_045727_create_categorias_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_07_25_050022_create_contactos_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_07_25_050857_create_resources_media_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_07_26_044401_create_empresas_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_07_27_053237_create_ubicaciones_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/demo/chart-area-demo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/demo/chart-bar-demo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/demo/chart-pie-demo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/demo/datatables-demo.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/error-404-monochrome.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/scripts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/Categorias/categorias.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/Empresas/empresas_dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cea-webservices.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cea-webservices.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +67,13 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -131,6 +173,7 @@
       <path value="$PROJECT_DIR$/vendor/scrivo/highlight.php" />
       <path value="$PROJECT_DIR$/vendor/psy/psysh" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/laravel/ui" />
     </include_path>
   </component>
   <component name="ProjectId" id="1ceww7BkNf5MeC6Zfd3eZxEvdkp" />
@@ -175,7 +218,7 @@
       <option name="presentableId" value="Default" />
       <updated>1590902603416</updated>
       <workItem from="1590902609572" duration="1425000" />
-      <workItem from="1595650811714" duration="810000" />
+      <workItem from="1595650811714" duration="9188000" />
     </task>
     <task id="LOCAL-00001" summary="Configurando plantilla">
       <created>1595651506180</created>
@@ -184,7 +227,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595651506180</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Configurando DB">
+      <created>1595651643248</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1595651643248</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,20 +253,21 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Configurando plantilla" />
-    <option name="LAST_COMMIT_MESSAGE" value="Configurando plantilla" />
+    <MESSAGE value="Configurando DB" />
+    <option name="LAST_COMMIT_MESSAGE" value="Configurando DB" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="517" y="292" key="NewPhpFileDialog" timestamp="1595651194870">
+    <state x="517" y="292" key="NewPhpFileDialog" timestamp="1595658051539">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="517" y="292" key="NewPhpFileDialog/0.0.1366.738@0.0.1366.738" timestamp="1595651194870" />
+    <state x="517" y="292" key="NewPhpFileDialog/0.0.1366.738@0.0.1366.738" timestamp="1595658051539" />
     <state x="184" y="9" key="SettingsEditor" timestamp="1590904521323">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1590904521323" />
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1595651509756">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1595651646556">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1595651509756" />
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1595651646556" />
   </component>
 </project>

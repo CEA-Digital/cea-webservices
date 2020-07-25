@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get("/empresas","EmpresaController@index")->name("empresas");
+Route::get("/categorias","CategoriasController@index")->name("categorias");
+Route::post("/tipo_categoria/nueva","CategoriasController@nuevoTipoCategoria")->name("nuevoTipoCategoria");
+
