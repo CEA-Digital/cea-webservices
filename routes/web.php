@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get("/empresas","EmpresaController@index")->name("empresas");
-Route::get("/categorias","CategoriasController@index")->name("categorias");
-Route::post("/tipo_categoria/nueva","CategoriasController@nuevoTipoCategoria")->name("nuevoTipoCategoria");
+//-----------------------------------------PRODUCTOS ROUTES---------------------------------------------------------
+Route::get("/empresas","EmpresaController@index")->name("empresas");//Permite mostrar las empresas asociadas
+//--------------------------------------------CATEGORIAS ROUTES------------------------------------------------------
+Route::get("/categorias","CategoriasController@index")->name("categorias");//Muestra las categorias de productos y/o empresas
+Route::post("/tipo_categoria/nueva","CategoriasController@nuevoTipoCategoria")->name("nuevoTipoCategoria");// Crea una nueva categoria
 
