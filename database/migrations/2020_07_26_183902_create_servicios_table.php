@@ -15,7 +15,7 @@ class CreateServiciosTable extends Migration
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("id_categoria")->references("id")->on("tipo_categorias");
+            $table->foreignId("id_categoria")->references("id")->on("categorias");
             $table->foreignId("id_empresa")->references("id")->on("empresas");
             $table->string("name",100);
             $table->string("descripcion",192)->nullable();

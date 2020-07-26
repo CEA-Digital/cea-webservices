@@ -162,6 +162,12 @@
             placeholder:"Seleccione una opción"
         });
     });
+    $(document).ready(function () {
+        $(".select2Tipo").select2({
+            theme:"classic",
+            placeholder:"Seleccione una opción"
+        });
+    });
     /**------------------PERMITE VER LA IMG SELECCIONA EN UN INPUT EN POPOVER-------------------------------------*/
     $(document).on('click', '#close-preview', function(){
         $('.image-preview').popover('hide');

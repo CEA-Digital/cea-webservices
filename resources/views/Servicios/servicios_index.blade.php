@@ -125,19 +125,15 @@
                             <input required class="form-control" name="name" id="nombreNuevoServicio" maxlength="100">
                         </div>
 
-                        <div class="form-group">
-                            <label for="descripcioNuevoServicio">Descripción</label>
-                            <input required class="form-control" name="descripcion" id="descripcioNuevoServicio" maxlength="100">
-                        </div>
 
                         <div class="form-group">
                             <label for="condicionesNuevoServicio">Condiciones</label>
-                            <input required class="form-control" name="descripcion" id="condicionesNuevoServicio" maxlength="100">
+                            <input required class="form-control" name="condiciones" id="condicionesNuevoServicio" maxlength="100">
                         </div>
 
                         <div class="form-group">
                             <label for="precioNuevoServicio">Precio</label>
-                            <input type="number" required class="form-control" name="descripcion" id="precioNuevoServicio" maxlength="5">
+                            <input type="number" required class="form-control" name="precio" id="precioNuevoServicio" maxlength="5">
                         </div>
                         <div class="form-group">
                             <label for="EmpresaNuevoServicio">Seleccione la empresa
@@ -150,24 +146,45 @@
                                     class="select2TipoCategoria form-control" id="tipoNuevaCategoria">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($empresas as $empresa)
-                                    <option value="{{$empresa->id}}" @if(session("idNuevaCategoria"))
-                                        {{session("idNuevaCategoria") == $tipoCategoria->id ? 'selected="selected"':''}}
-                                        @endif>{{$empresa->name}}</option>
+                                    <option value="{{$empresa->id}}">{{$empresa->name}}</option>
+
                                 @endforeach
                             </select>
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
-                               data-target="#modalNuevoTipoCategoria">
+                               data-target="">
+                                <i class="fas fa-plus" style="color: green"></i></a>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="CategoriaNuevoServicio">Seleccione la categoria
+                                <!---- Boton para crear un nuevo tipo de categoria- -->
+                            </label>
+                            <br>
+                            <select name="id_categoria"
+                                    required
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="id_categoria">
+                                <option disabled selected value="">Seleccione</option>
+                                @foreach($categorias as $categoria)
+                                    <option value="{{$categoria->id}}">{{$categoria->name}}</option>
+
+                                @endforeach
+                            </select>
+                            <a class="btn btn-sm btn-outline-success"
+                               data-toggle="modal"
+                               data-target="">
                                 <i class="fas fa-plus" style="color: green"></i></a>
                         </div>
                         <div class="form-group">
-                            <label for="descripcionNuevaCategoria">Descripción de nueva categoria (Opcional):</label>
+                            <label for="descripcionNuevoServicio">Descripción del servicio (Opcional):</label>
                             <textarea class="form-control"
                                       name="descripcion"
                                       id="descripcionNuevaCategoria"
                                       maxlength="192"></textarea>
                         </div>
-                        <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
+                        <label for="imagenServicio">Seleccione una imagen (opcional): </label>
+
                         <div class="input-group image-preview">
 
                             <input type="text" class="form-control image-preview-filename" disabled="disabled">
@@ -188,6 +205,8 @@
                                 </div>
                             </span>
                         </div><!-- /input-group image-preview [TO HERE]-->
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Crear</button>

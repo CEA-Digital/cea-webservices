@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Categorias;
 use App\Empresa;
+
+use App\Http\Requests\CreateServiciosRequest;
+use App\Servicio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,8 +28,11 @@ class ServiciosController extends Controller
                 "servicios.servicio_img_id","servicios.servicio_img_id","Empresas.name As name_empresa","tipo_categorias.name As name_categoria")->get();
 
 
-            $empresas = Empresa::all();
-            return view('Servicios.servicios_index')->with("empresas",$empresas)->with("servicios",$servicios)->withNoPagina(1);
+        $categorias = Categorias::Orderby('name','ASC')->get();
+
+
+            $empresas = Empresa::Orderby('name','ASC')->get();
+            return view('Servicios.servicios_index')->with("categorias",$categorias)->with("empresas",$empresas)->with("servicios",$servicios)->withNoPagina(1);
         }
 
 
@@ -47,7 +54,26 @@ class ServiciosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+         $servicio = new Servicio();
+
+        $servicio->name = $request->name;
+        $servicio->descripcion = $request->descripcion;
+        $servicio->condiciones = $request->condiciones;
+        $servicio->precio = $request->precio;
+        $servicio->servicio_img_id = $request->servivio_img_id;
+        $servicio->id_categoria = $request->id_categoria;
+        $servicio->id_empresa = $request->id_empresa;
+
+
+
+
+        $servicio->save();
+
+
+        return redirect()->route("servicios.index")
+            ->withExito("Se creó un nuevo servicio con nombre '"
+                .$request->input("name")."' con ID= ".$servicio->id."");
     }
 
     /**
