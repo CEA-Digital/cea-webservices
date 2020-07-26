@@ -23,5 +23,9 @@ Route::get("/categorias","CategoriasController@index")->name("categorias");//Mue
 Route::get("/categorias/tipos","CategoriasController@verTipoCategorias")->name("verTipoCategorias");
 Route::post("/categoria/nueva","CategoriasController@storeCategoria")->name("nuevaCategoria");
 Route::post("/tipo_categoria/nueva","CategoriasController@nuevoTipoCategoria")->name("nuevoTipoCategoria");// Crea una nueva categoria
-Route::get("/productos", "ProductosController@index")->name("productos");//Muestra el servicio de las empresas
+ //--------------------------------------------Servivios ROUTES------------------------------------------------------
+Route::resource("/servicios", "ServiciosController");
+//--------------------------------------------Productos ROUTES------------------------------------------------------
+
+ Route::get("/productos", "ProductosController@index")->name("productos");//Muestra el servicio de las empresas
 
