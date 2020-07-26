@@ -17,7 +17,8 @@ class CreateCategoriasTable extends Migration
             $table->id();
             $table->foreignId("id_categoria")->references("id")->on("tipo_categorias");
             $table->string("name",100);
-            $table->string("descripcion",192);
+            $table->string("descripcion",192)->nullable();
+            $table->string("img_url")->nullable();
             $table->timestamps();
         });
     }

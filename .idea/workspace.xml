@@ -19,7 +19,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a969638-b93b-49b4-99a7-a8634df2afde" name="Default Changelist" comment="Creando componentes para mostrar categorias productos y tipos de categorias.blade.php">
+    <list default="true" id="3a969638-b93b-49b4-99a7-a8634df2afde" name="Default Changelist" comment="Documentando">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/Categorias/tipo_categorias.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cea-webservices.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cea-webservices.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Categorias.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Categorias.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoriasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoriasController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_25_045727_create_categorias_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_26_035727_create_categorias_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Categorias/categorias.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Categorias/categorias.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -148,6 +157,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -181,7 +191,7 @@
       <option name="presentableId" value="Default" />
       <updated>1590902603416</updated>
       <workItem from="1590902609572" duration="1425000" />
-      <workItem from="1595650811714" duration="9314000" />
+      <workItem from="1595650811714" duration="25630000" />
     </task>
     <task id="LOCAL-00001" summary="Configurando plantilla">
       <created>1595651506180</created>
@@ -204,7 +214,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595660158513</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Documentando">
+      <created>1595660255328</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1595660255328</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,20 +242,29 @@
     <MESSAGE value="Configurando plantilla" />
     <MESSAGE value="Configurando DB" />
     <MESSAGE value="Creando componentes para mostrar categorias productos y tipos de categorias.blade.php" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creando componentes para mostrar categorias productos y tipos de categorias.blade.php" />
+    <MESSAGE value="Documentando" />
+    <option name="LAST_COMMIT_MESSAGE" value="Documentando" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="517" y="292" key="NewPhpFileDialog" timestamp="1595658051539">
+    <state x="517" y="292" key="NewPhpFileDialog" timestamp="1595745824388">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="517" y="292" key="NewPhpFileDialog/0.0.1366.738@0.0.1366.738" timestamp="1595658051539" />
+    <state x="517" y="292" key="NewPhpFileDialog/0.0.1366.738@0.0.1366.738" timestamp="1595745824388" />
     <state x="184" y="9" key="SettingsEditor" timestamp="1590904521323">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1590904521323" />
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1595660163769">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1595660258043">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1595660163769" />
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1595660258043" />
+    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595736313689">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.738@0.0.1366.738" timestamp="1595736313689" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1595735986223">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1595735986223" />
   </component>
 </project>
