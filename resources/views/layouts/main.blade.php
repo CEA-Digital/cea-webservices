@@ -66,6 +66,8 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="{{route("empresas")}}">Empresas Asociadas</a>
                             <a class="nav-link" href="{{route("categorias")}}">Categorias</a>
+                            <a class="nav-link" href="{{ url('servicios') }}">Servicios</a>
+
                         </nav>
                     </div>
                     <a class="nav-link collapsed"  href="#" data-toggle="collapse" data-target="#collapsePages"
