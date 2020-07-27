@@ -17,21 +17,27 @@ class ServiciosController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
+
+
+        if ($request) {
+            $query = trim($request->get('search'));
+
             $servicios = DB::table("servicios")
                 ->leftJoin("empresas", "servicios.id_empresa", "=", "empresas.id")
                 ->leftJoin("categorias", "servicios.id_categoria", "=", "categorias.id")
                 ->leftJoin("tipo_categorias", "categorias.id_categoria", "=", "tipo_categorias.id")
+                ->select("servicios.name", "servicios.descripcion", "servicios.condiciones", "servicios.precio",
+                    "servicios.servicio_img_id", "servicios.servicio_img_id", "Empresas.name As name_empresa", "tipo_categorias.name As name_categoria")
+                ->where('servicios.name','LIKE','%'.$query.'%')->get();
 
-                ->select("servicios.name", "servicios.descripcion", "servicios.condiciones","servicios.precio",
-                "servicios.servicio_img_id","servicios.servicio_img_id","Empresas.name As name_empresa","tipo_categorias.name As name_categoria")->get();
 
-
-        $categorias = Categorias::Orderby('name','ASC')->get();
-        $empresas = Empresa::Orderby('name','ASC')->get();
-            return view('Servicios.servicios_index')->with("categorias",$categorias)->with("empresas",$empresas)->with("servicios",$servicios)->withNoPagina(1);
+            $categorias = Categorias::Orderby('name', 'ASC')->get();
+            $empresas = Empresa::Orderby('name', 'ASC')->get();
+            return view('Servicios.servicios_index')->with("categorias", $categorias)->with("empresas", $empresas)->with("servicios", $servicios)->withNoPagina(1);
         }
+    }
 
 
     /**

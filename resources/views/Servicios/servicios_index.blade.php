@@ -43,6 +43,24 @@
                 }
             </script>
         @endif
+        <div class="pagination pagination-sm ">
+
+            <form  class="d-none d-md-inline-block form-inline
+                           ml-auto mr-0 mr-md-2 my-0 my-md-0 mb-md-2">
+                <div class="input-group" style="width: 300px">
+                    <input class="form-control" name="search" type="search" placeholder="Search"
+                           aria-label="Search">
+                    <div class="input-group-append">
+                        <a id="borrarBusqueda" class="btn btn-danger hideClearSearch" style="color: white"
+                           href="{{route("servicios.index")}}">&times;</a>
+                        <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+
+                </div>
+            </form>
+
+
+        </div>
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -134,8 +152,13 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nombreNuevoServicio">Nombre del servicio</label>
-                            <input  name="name" id="nombreNuevoServicio" maxlength="100"  class="form-control">
+                            <input  name="name" id="nombreNuevoServicio" maxlength="100"  class="form-control @error('name') is-invalid @enderror">
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
 
+                                    </span>
+                            @enderror
                         </div>
 
 
