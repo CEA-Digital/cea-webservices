@@ -9,13 +9,17 @@
                     <span class="fas fa-plus"></span> Nueva
                 </button>
                 <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                    <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle"
+                            data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                         Tipos de Categorias
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <button class="dropdown-item" data-toggle="modal" data-target="#modalNuevoTipoCategoria"><span class="fas fa-plus"></span> Crear nueva</button>
-                        <a class="dropdown-item" href="{{route("verTipoCategorias")}}"><span class="fas fa-external-link-alt"></span> Ver & editar</a>
+                        <button class="dropdown-item" data-toggle="modal" data-target="#modalNuevoTipoCategoria"><span
+                                class="fas fa-plus"></span> Crear nueva
+                        </button>
+                        <a class="dropdown-item" href="{{route("verTipoCategorias")}}"><span
+                                class="fas fa-external-link-alt"></span> Ver & editar</a>
                     </div>
                 </div>
             </div>
@@ -34,6 +38,38 @@
                 </button>
             </div>
         @endif
+        @if(session("error"))
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <span class="fa fa-save"></span> {{session("error")}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        <div class="pagination pagination-sm ">
+            {{$categorias->links()}}
+            <form action="{{route("buscarCategorias")}}"
+                  enctype="multipart/form-data" method="GET"
+                  class="d-none d-md-inline-block form-inline
+                           ml-auto mr-0 mr-md-2 my-0 my-md-0 mb-md-2">
+                <!--- METODO PARA BUSCAR PRODUCTOS EN EL INDEX DE PRODUCTOS -->
+                <div class="input-group" style="width: 300px">
+                    <input class="form-control" type="text"
+                           id="busquedaInput"
+                           name="busqueda"
+                           @if(session("busqueda"))
+                           value="{{$busqueda}}"
+                           @endif
+                           placeholder="Buscar..." aria-label="Search"
+                           aria-describedby="basic-addon2"/>
+                    <div class="input-group-append">
+                        <a id="borrarBusqueda" class="btn btn-danger hideClearSearch" style="color: white"
+                           href="{{route("categorias")}}">&times;</a>
+                        <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -53,7 +89,18 @@
             @foreach($categorias as $categoria)
                 <tr>
                     <td>{{$noPagina++}}</td>
-                    <td>{{$categoria->name}}</td>
+                    <td>
+                        <button id="callModalVistaPrevia{{$categoria->id}}"
+                                data-src_img="{{$categoria->img_url}}"
+                                @if($categoria->img_url)
+                                data-toggle="modal"
+                                data-target="#modalVistaPrevia"
+                                @endif
+                                style="opacity: 0"></button>
+                        <img src="/images/categorias/{{$categoria->img_url}}"
+                             onclick="$('#callModalVistaPrevia{{$categoria->id}}').click()"
+                             width="250px" height="250px" style="object-fit: contain"
+                             onerror="this.src='/images/noimage.jpg'"> {{$categoria->name}}</td>
                     <td>{{$categoria->tipo_categoria}}</td>
                     @if(!$categoria->descripcion)
                         <td>N/A</td>
@@ -62,7 +109,10 @@
                     @endif
 
                     <td>
-                        <button class="btn btn-sm btn-success" title="Editar">
+                        <button class="btn btn-sm btn-success"
+                                data-toggle="modal"
+                                data-target="#modalEditarCategoria"
+                                title="Editar">
                             <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-sm btn-danger"
@@ -108,7 +158,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
-                                <!---- Boton para crear un nuevo tipo de categoria- -->
+
                             </label>
                             <br>
                             <select name="id_categoria"
@@ -122,6 +172,7 @@
                                         @endif>{{$tipoCategoria->name}}</option>
                                 @endforeach
                             </select>
+                            <!---- Boton para crear un nuevo tipo de categoria- -->
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
                                data-target="#modalNuevoTipoCategoria">
@@ -137,7 +188,8 @@
                         <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
                         <div class="input-group image-preview">
 
-                            <input type="text" class="form-control image-preview-filename" disabled="disabled">
+                            <input type="text" name="imagen_url" class="form-control image-preview-filename"
+                                   disabled="disabled">
                             <!-- don't give a name === doesn't send on POST/GET -->
                             <span class="input-group-btn">
                                 <!-- image-preview-clear button -->
@@ -184,7 +236,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" name="fuenteRuta" value="/categoria">
+                        <input type="hidden" name="fuenteRuta"
+                               value="{{\Illuminate\Support\Facades\Route::currentRouteName()}}">
                         <button type="submit" class="btn btn-success">Crear</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
@@ -192,7 +245,49 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalEditarCategoria" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #2a2a35">
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-pencil-alt"></span> Editar
+                        categoria</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span style="color: white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Crear</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalVistaPrevia" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #2a2a35">
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-pencil-alt"></span> Vista Previa
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span style="color: white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="object-fit: fill">
+                    <img id="img"
+                         style="display:block; width: 100%; margin-left: auto; margin-right: auto;"
+                         onerror="this.src='/images/noimage.jpg'"
+                    >
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <style>
         .image-preview-input {

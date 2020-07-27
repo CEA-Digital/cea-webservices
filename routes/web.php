@@ -20,8 +20,14 @@ Route::get('/', function () {
 Route::get("/empresas","EmpresaController@index")->name("empresas");//Permite mostrar las empresas asociadas
 //--------------------------------------------CATEGORIAS ROUTES------------------------------------------------------
 Route::get("/categorias","CategoriasController@index")->name("categorias");//Muestra las categorias de productos y/o empresas
-Route::get("/categorias/tipos","CategoriasController@verTipoCategorias")->name("verTipoCategorias");
 Route::post("/categoria/nueva","CategoriasController@storeCategoria")->name("nuevaCategoria");
+Route::get("/categoria/buscar","CategoriasController@buscarCategorias")->name("buscarCategorias");
+
+
+Route::get("/categoria/tipos/buscar","CategoriasController@buscarTipoCategorias")->name("buscarTipoCategorias");
+Route::get("/categorias/tipos","CategoriasController@verTipoCategorias")->name("verTipoCategorias");
+Route::put("/categoria/tipos/editar","CategoriasController@editarTipoCategoria")->name("editarTipoCategoria");
+Route::delete("/categoria/tipos/borrar","CategoriasController@borrarTipoCategoria")->name("borrarTipoCategoria");
 Route::post("/tipo_categoria/nueva","CategoriasController@nuevoTipoCategoria")->name("nuevoTipoCategoria");// Crea una nueva categoria
  //--------------------------------------------Servivios ROUTES------------------------------------------------------
 Route::resource("/servicios", "ServiciosController");

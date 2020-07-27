@@ -12,7 +12,9 @@
           crossorigin="anonymous"/>
     <script src="{{asset("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js")}}"
             crossorigin="anonymous"></script>
-    <link href="{{asset("https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css")}}" rel="stylesheet"/>
+    <link href="{{asset("https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css")}}"
+          rel="stylesheet"/>
+    <link href="{{asset("css/main.css")}}">
 
 </head>
 <body class="sb-nav-fixed">
@@ -70,7 +72,7 @@
 
                         </nav>
                     </div>
-                    <a class="nav-link collapsed"  href="#" data-toggle="collapse" data-target="#collapsePages"
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                        aria-expanded="false" aria-controls="collapsePages">
                         <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                         Pages
@@ -155,87 +157,7 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/datatables-demo.js"></script>
-<script>
-    $(document).ready(function () {
-        $(".select2TipoCategoria").select2({
-            theme:"classic",
-            placeholder:"Seleccione una opción"
-        });
-    });
-    $(document).ready(function () {
-        $(".select2Tipo").select2({
-            theme:"classic",
-            placeholder:"Seleccione una opción"
-        });
-    });
-    /**------------------PERMITE VER LA IMG SELECCIONA EN UN INPUT EN POPOVER-------------------------------------*/
-    $(document).on('click', '#close-preview', function(){
-        $('.image-preview').popover('hide');
-        // Hover befor close the preview
-        $('.image-preview').hover(
-            function () {
-                $('.image-preview').popover('show');
-            },
-            function () {
-                $('.image-preview').popover('hide');
-            }
-        );
-    });
-
-    $(function() {
-        // Create the close button
-        var closebtn = $('<button/>', {
-            type:"button",
-            text: "x",
-            id: 'close-preview',
-            style: 'font-size: initial;',
-        });
-        closebtn.attr("class","close pull-right");
-        // Set the popover default content
-        $('.image-preview').popover({
-            trigger:'manual',
-            html:true,
-            title: "<strong>Vista Previa </strong>"+$(closebtn)[0].outerHTML,
-            content: "No hay una imagen seleccionada",
-            placement:'auto',
-            sanitize:false
-        });
-        // Clear event
-        $('.image-preview-clear').click(function(){
-            $('.image-preview').attr("data-content","").popover('hide');
-            $('.image-preview-filename').val("");
-            $('.image-preview-clear').hide();
-            $('.image-preview-input input:file').val("");
-            $(".image-preview-input-title").text("Seleccionar");
-        });
-        // Create the preview image
-        $(".image-preview-input input:file").change(function (){
-            var img = $('<img/>', {
-                id: 'dynamic',
-                width:250,
-                height:200,
-                objectFit:"contain"
-            });
-            var file = this.files[0];
-            var reader = new FileReader();
-            // Set preview image into the popover data-content
-            reader.onload = function (e) {
-                $(".image-preview-input-title").text("Cambiar");
-                $(".image-preview-clear").show();
-                $(".image-preview-filename").val(file.name);
-                img.attr('src', e.target.result);
-                img.attr("width",250)
-                $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show").attr("width",250).attr("height",250);
-            }
-            reader.readAsDataURL(file);
-        });
-    });
-    /****---------------------------------------------------------------------*/
-</script>
-<script>
-
-</script>
-
+<script src="{{asset("js/categorias.js")}}"></script>
 
 </body>
 </html>
