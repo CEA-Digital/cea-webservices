@@ -29,9 +29,7 @@ class ServiciosController extends Controller
 
 
         $categorias = Categorias::Orderby('name','ASC')->get();
-
-
-            $empresas = Empresa::Orderby('name','ASC')->get();
+        $empresas = Empresa::Orderby('name','ASC')->get();
             return view('Servicios.servicios_index')->with("categorias",$categorias)->with("empresas",$empresas)->with("servicios",$servicios)->withNoPagina(1);
         }
 
@@ -52,17 +50,23 @@ class ServiciosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateServiciosRequest $request)
     {
+           $servicio = new Servicio();
 
-         $servicio = new Servicio();
+
+        $foto ='';
+        if($foto = Servicio::setCaratula($request->servicio_img_id)){
+            $request->request->add(['imagen_servicio'=>$foto]);
+            $servicio->servicio_img_id = $request->imagen_servicio;
+
+        }
 
         $servicio->name = $request->name;
         $servicio->descripcion = $request->descripcion;
         $servicio->condiciones = $request->condiciones;
         $servicio->precio = $request->precio;
-        $servicio->servicio_img_id = $request->servivio_img_id;
-        $servicio->id_categoria = $request->id_categoria;
+         $servicio->id_categoria = $request->id_categoria;
         $servicio->id_empresa = $request->id_empresa;
 
 

@@ -3,6 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+
 
 class Servicio extends Model
 {
@@ -10,6 +14,29 @@ class Servicio extends Model
    // protected $appends=["empresas","categorias","resource_media"];
 
 
+    public static function setCaratula($foto, $actual = false)
+    {
+        if ($foto){
+            if($actual){
+                Storage::disk('public')->delete("images/servivio/$actual");
+            }
+            $imageName = Str::random(20).'.jpg';
+            $imagen = Image::make($foto)->encode('jpg',75);
+            $imagen->resize(450,450,function ($constraint){
 
+                $constraint->upsize();
+            });
+
+            Storage::disk('public')->put("images/servicio/$imageName",$imagen->stream());
+            return $imageName;
+
+
+        }else{
+            return false;
+        }
+
+
+
+    }
 
 }

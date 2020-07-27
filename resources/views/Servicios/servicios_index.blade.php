@@ -34,6 +34,15 @@
                 </button>
             </div>
         @endif
+        @if ($errors->any())
+            <script>
+                document.onreadystatechange = function () {
+                    if (document.readyState) {
+                        document.getElementById("botonAbrirModalNuevoServicio").click();
+                    }
+                }
+            </script>
+        @endif
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -118,22 +127,38 @@
                 </div>
                 <form method="POST" action="{{route('servicios.store')}}" enctype="multipart/form-data">
 
+                    @include('Alerts.errors')
+
+
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nombreNuevoServicio">Nombre del servicio</label>
-                            <input required class="form-control" name="name" id="nombreNuevoServicio" maxlength="100">
+                            <input  name="name" id="nombreNuevoServicio" maxlength="100"  class="form-control">
+
                         </div>
 
 
                         <div class="form-group">
                             <label for="condicionesNuevoServicio">Condiciones</label>
-                            <input required class="form-control" name="condiciones" id="condicionesNuevoServicio" maxlength="100">
+                            <input required class="form-control @error('condiciones') is-invalid @enderror" name="condiciones" id="condicionesNuevoServicio" maxlength="192">
+                            @error('condiciones')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+
+                                    </span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="precioNuevoServicio">Precio</label>
-                            <input type="number" required class="form-control" name="precio" id="precioNuevoServicio" maxlength="5">
+                            <input type="text" required class="form-control @error('precio') is-invalid @enderror" name="precio" id="precioNuevoServicio"  maxlength="8"  pattern="[0-9]+">
+                            @error('precio')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+
+                                    </span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="EmpresaNuevoServicio">Seleccione la empresa
@@ -143,13 +168,18 @@
                             <select name="id_empresa"
                                     required
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control" id="tipoNuevaCategoria">
+                                    class="select2TipoCategoria form-control @error('id_empresa') is-invalid @enderror" id="tipoNuevaCategoria">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($empresas as $empresa)
                                     <option value="{{$empresa->id}}">{{$empresa->name}}</option>
 
                                 @endforeach
                             </select>
+                            @error('id_empresa')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
                                data-target="">
@@ -164,13 +194,18 @@
                             <select name="id_categoria"
                                     required
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control" id="id_categoria">
+                                    class="select2TipoCategoria form-control @error('id_categoria') is-invalid @enderror" id="id_categoria">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($categorias as $categoria)
                                     <option value="{{$categoria->id}}">{{$categoria->name}}</option>
 
                                 @endforeach
                             </select>
+                            @error('id_categoria')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
                                data-target="">
@@ -200,7 +235,7 @@
                                     <span class="fas fa-folder-open"></span>
                                     <span class="image-preview-input-title">Seleccionar</span>
                                     <input type="file" accept="image/png, image/jpeg, image/gif"
-                                           name="imagen_url"/>
+                                           name="servicio_img_id"/>
                                     <!-- rename it -->
                                 </div>
                             </span>
