@@ -60,3 +60,22 @@ $(function () {
         reader.readAsDataURL(file);
     });
 });
+
+/**CARGA EL INPUT PARA VARIOS ARCHIVOS**/
+$("#imagenes_empresa").fileinput({
+    theme: 'fas',
+    language:"es",
+    uploadUrl: "/image-view",
+    uploadExtraData: function() {
+        return {
+            _token: $("input[name='_token']").val(),
+        };
+    },
+    allowedFileExtensions: ["jpeg",'jpg', 'png', 'gif'],
+    overwriteInitial: false,
+    maxFileSize:10000,
+    maxFilesNum: 10,
+    slugCallback: function (filename) {
+        return filename.replace('(', '_').replace(']', '_');
+    }
+});

@@ -61,70 +61,17 @@
 
                 </div>
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8 col-sm-12 col-10 main-section">
-                            @csrf
-                            <div class="form-group">
-                                <div class="file-loading">
-                                    <input id="file-1" type="file" name="file" multiple class="file"
-                                           data-overwrite-initial="false" data-min-file-count="2">
-                                </div>
-                            </div>
 
+                <div class="card card-body">
+                    <label>Selecciona una o varias imagenes <span class="badge badge-dark"> (opcional)</span>: </label>
+                    <div class="form-group">
+                        <div class="file-loading">
+                            <input id="imagenes_empresa" type="file" name="file" multiple class="file"
+                                   data-overwrite-initial="false" data-min-file-count="2">
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="imagenCategoria">Seleccione una imagen de perfil (opcional): </label>
-                        <div class="input-group image-preview-profile">
 
-                            <input type="text" name="imagen_url" class="form-control image-preview-filename-profile"
-                                   disabled="disabled">
-                            <!-- don't give a name === doesn't send on POST/GET -->
-                            <span class="input-group-btn">
-                                <!-- image-preview-clear button -->
-                                <button type="button" class="btn btn-outline-danger image-preview-clear-profile"
-                                        style="display:none;">
-                                    <span class="fas fa-times"></span> Clear
-                                </button>
-                                <!-- image-preview-input -->
-                                <div class="btn btn-default image-preview-input-profile">
-                                    <span class="fas fa-folder-open"></span>
-                                    <span class="image-preview-input-title-profile">Seleccionar</span>
-                                    <input type="file" accept="image/png, image/jpeg, image/gif"
-                                           name="profile_img_url"/>
-                                    <!-- rename it -->
-                                </div>
-                            </span>
-                        </div><!-- /input-group image-preview [TO HERE]-->
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="imagenCategoria">Seleccione una imagen de portada (opcional): </label>
-                        <div class="input-group image-preview">
-
-                            <input type="text" name="imagen_url"
-                                   class="form-control image-preview-filename"
-                                   disabled="disabled">
-                            <!-- don't give a name === doesn't send on POST/GET -->
-                            <span class="input-group-btn">
-                                <!-- image-preview-clear button -->
-                                <button type="button" class="btn btn-outline-danger image-preview-clear"
-                                        style="display:none;">
-                                    <span class="fas fa-times"></span> Clear
-                                </button>
-                                <!-- image-preview-input -->
-                                <div class="btn btn-default image-preview-input">
-                                    <span class="fas fa-folder-open"></span>
-                                    <span class="image-preview-input-title">Seleccionar</span>
-                                    <input type="file" accept="image/png, image/jpeg, image/gif"
-                                           name="portada_img_url"/>
-                                    <!-- rename it -->
-                                </div></span>
-                        </div><!-- /input-group image-preview [TO HERE]-->
-                    </div>
-                </div>
             </form>
         </div>
     </div>

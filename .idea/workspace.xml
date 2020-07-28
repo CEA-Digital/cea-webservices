@@ -19,22 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a969638-b93b-49b4-99a7-a8634df2afde" name="Default Changelist" comment="Cambios en la interfaz de empresas_dashboard.blade.php">
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/EmpresasRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/empresas.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/mapInput.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/Empresas/nueva_empresa.blade.php" afterDir="false" />
+    <list default="true" id="3a969638-b93b-49b4-99a7-a8634df2afde" name="Default Changelist" comment="Cambios en la migracion de 2020_07_26_044401_create_empresas_table.php e implementando el input multiples selecciones">
+      <change beforePath="$PROJECT_DIR$/.idea/cea-webservices.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cea-webservices.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Contacto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Contacto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Empresa.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Empresa.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EmpresaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EmpresaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_25_050022_create_contactos_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_25_050022_create_contactos_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_07_26_044401_create_empresas_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_07_26_044401_create_empresas_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/Empresas/empresas_dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Empresas/empresas_dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/Servicios/prueba.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Servicios/prueba.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/empresas.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/empresas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Empresas/nueva_empresa.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Empresas/nueva_empresa.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +194,7 @@
       <option name="presentableId" value="Default" />
       <updated>1590902603416</updated>
       <workItem from="1590902609572" duration="1425000" />
-      <workItem from="1595650811714" duration="63500000" />
+      <workItem from="1595650811714" duration="65258000" />
     </task>
     <task id="LOCAL-00001" summary="Configurando plantilla">
       <created>1595651506180</created>
@@ -254,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1595897542300</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Cambios en la migracion de 2020_07_26_044401_create_empresas_table.php e implementando el input multiples selecciones">
+      <created>1595970666505</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1595970666505</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,7 +277,8 @@
     <MESSAGE value="CREANDO VISTA Y METODOS EN CategoriasController.php Y MAS CAMBIOS" />
     <MESSAGE value="realizando cambios en crud de tipos de categorias.blade.php" />
     <MESSAGE value="Cambios en la interfaz de empresas_dashboard.blade.php" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cambios en la interfaz de empresas_dashboard.blade.php" />
+    <MESSAGE value="Cambios en la migracion de 2020_07_26_044401_create_empresas_table.php e implementando el input multiples selecciones" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambios en la migracion de 2020_07_26_044401_create_empresas_table.php e implementando el input multiples selecciones" />
   </component>
   <component name="WindowStateProjectService">
     <state x="275" y="31" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595818296216">
@@ -311,14 +310,14 @@
     </state>
     <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1590904521323" />
     <state x="184" y="9" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1595962505388" />
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1595897546163">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2" timestamp="1595970671091">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1595897546163" />
-    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595969175626">
+    <state x="275" y="102" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1595970671091" />
+    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595972142951">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.738@0.0.1366.738" timestamp="1595969175626" />
+    <state x="492" y="286" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.738@0.0.1366.738" timestamp="1595972142951" />
     <state x="339" y="169" key="run.anything.popup" timestamp="1595797230227">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
