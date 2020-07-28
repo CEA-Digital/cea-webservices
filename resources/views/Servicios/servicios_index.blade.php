@@ -52,19 +52,7 @@
 
 
         </div>
-        <div class="container" >
-            <div class="row"  >
-                <div class="col-md-4 main-section" >
 
-                    {!! csrf_field() !!}
-                    <div class="file-loading">
-                        <input id="file-1" type="file" name="file"    data-overwrite-initial="true" data-min-file-count="1">
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -123,7 +111,20 @@
 
 
                     <td>
-                        <button class="btn btn-sm btn-success" title="Editar">
+                        <button class="btn btn-sm btn-success"
+                                data-toggle="modal"
+                                data-target="#modalEditarServicio"
+                                data-nombre="{{$servicio->name}}"
+                                data-id="{{$servicio->id}}"
+                                data-descripcion="{{$servicio->descripcion}}"
+                                data-condiciones="{{$servicio->condiciones}}"
+                                data-precio="{{$servicio->precio}}"
+
+                                data-id_empresa="{{$servicio->id_empresa}}"
+                                data-id_categoria="{{$servicio->id_categoria}}"
+                                data-img_url="{{$servicio->servicio_img_id}}"
+                                data-id_tipo_categoria="{{$servicio->id_categoria}}"
+                                title="Editar">
                             <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-sm btn-danger"
@@ -257,20 +258,28 @@
                                       id="descripcionNuevaCategoria"
                                       maxlength="192"></textarea>
                         </div>
-                        <label for="imagenServicio">Seleccione una imagen (opcional): </label>
 
-                        <div class="container" >
-                            <div class="row"  >
-                                <div class="col-md-4 main-section" >
+                        <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
+                        <div class="input-group image-preview">
 
-                                    {!! csrf_field() !!}
-                                    <div class="file-loading">
-                                        <input id="file-1" type="file" name="file"    data-overwrite-initial="true" data-min-file-count="1">
-
-                                    </div>
-
+                            <input type="text" name="servicio_img_id" class="form-control image-preview-filename"
+                                   disabled="disabled">
+                            <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-outline-danger image-preview-clear"
+                                        style="display:none;">
+                                    <span class="fas fa-times"></span> Clear
+                                </button>
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="fas fa-folder-open"></span>
+                                    <span class="image-preview-input-title">Seleccionar</span>
+                                    <input type="file" accept="image/png, image/jpeg, image/gif"
+                                           name="servicio_img_id"/>
+                                    <!-- rename it -->
                                 </div>
-                            </div>
+                            </span>
                         </div>
 
 
@@ -284,33 +293,95 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalNuevoTipoCategoria" tabindex="-1" role="dialog">
+
+    <div class="modal fade" id="modalEditarServicio" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background: #2a2a35">
-                    <h5 class="modal-title" style="color: white">Crear nuevo tipo de categoria</h5>
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-pencil-alt"></span> Editar
+                        categoria</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span style="color: white" aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{route("nuevoTipoCategoria")}}" method="post" enctype="multipart/form-data">
+                <form method="post" action="{{route("editarServicio")}}" enctype="multipart/form-data">
+                    @method("PUT")
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="nombreNuevoTipoCategoria">Ingrese el nombre:</label>
-                            <input class="form-control"
-                                   required name="name" id="nombreNuevoTipoCategoria" maxlength="100">
+                            <input id="nombreEditarServicio" placeholder="Nombre de servicio" name="name" class="form-control" max="100" required>
                         </div>
+                        <div class="form-group">
+                            <input id="condicionesEditarServicio" placeholder="Condiciones" name="condiciones" class="form-control" max="100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input id="precioEditarServicio" placeholder="precio" name="precio" class="form-control" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
+                            </label>
+                            <br>
+                            <select name="id_categoria"
+                                    required
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="tipoCategoriaEditar">
+                                <option disabled selected value="">Seleccione</option>
+
+
+                            </select>
+                            <!---- Boton para crear un nuevo tipo de categoria- -->
+                            <a class="btn btn-sm btn-outline-success"
+                               data-toggle="modal"
+                               data-target="#modalNuevoTipoCategoria">
+                                <i class="fas fa-plus" style="color: green"></i></a>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcionNuevaCategoria">Descripción de categoria (Opcional):</label>
+                            <textarea class="form-control"
+                                      name="descripcion"
+                                      id="descripcionEditarServicio"
+                                      maxlength="192"></textarea>
+                        </div>
+                        <img id="imgVistaPreviaEditarCategoria"
+                             height="150px" width="150px"
+                             style="object-fit: contain"
+                             onerror="this.src='/images/noimage.jpg'">
+                        <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
+                        <div class="input-group image-preview">
+                            <input type="text" name="imagen_url" class="form-control image-preview-filename"
+                                   disabled="disabled">
+                            <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-outline-danger image-preview-clear"
+                                        style="display:none;">
+                                    <span class="fas fa-times"></span> Limpiar
+                                </button>
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="fas fa-folder-open"></span>
+                                    <span class="image-preview-input-title">Seleccionar</span>
+                                    <input type="file" accept="image/png, image/jpeg, image/gif"
+                                           name="imagen_url"/>
+                                    <!-- rename it -->
+                                </div>
+                            </span>
+                        </div><!-- /input-group image-preview [TO HERE]-->
+
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" name="fuenteRuta" value="/categoria">
-                        <button type="submit" class="btn btn-success">Crear</button>
+                        <input id="idCategoria" name="id" type="hidden" >
+                        <button type="submit" class="btn btn-success">Editar</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="modalVistaPreviaServicio" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
@@ -365,18 +436,7 @@
     </style>
 
 
-    <style media="screen">
-        #uploadForm,
-        #imagePreview{
-            width: 150px;
-            margin:  auto;
-        }
 
-        img{
-            max-width: 150px;
-            height: 150px;
-        }
-    </style>
 
 
  @endsection

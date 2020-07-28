@@ -77,21 +77,31 @@ $('#modalBorrarCategoria').on('show.bs.modal', function (event) {
     modal.find('.modal-footer #idCategoria').val(idCategoria);
 });
 
-$('#modalEditarCategoria').on('show.bs.modal', function (event) {
+$('#modalEditarServicio').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
-    var idCategoria = button.data("id");
-    var nombreCategoria = button.data("nombre");
-    var id_tipo_categoria= button.data("id_tipo_categoria");
+    var idServicio = button.data("id");
+    var nombreServicio = button.data("nombre");
     var descripcion = button.data("descripcion");
-    var img_url = button.data("img_url");
+    var condiciones = button.data("condiciones");
+    var precio = button.data("precio");
+
+    var idEmpresa= button.data("id_empresa");
+    var idCategoria= button.data("id_categoria");
+     var img_url = button.data("img_url");
 
 
     var modal = $(this);
-    modal.find('.modal-body #nombreEditarCategoria').val(nombreCategoria);
-    modal.find('.modal-body #imgVistaPreviaEditarCategoria').attr("src","/images/categorias/"+img_url);
-    modal.find('.modal-body #descripcionEditarCategoria').val(descripcion);
-    modal.find(".modal-body #tipoCategoriaEditar").val(id_tipo_categoria).change();
-    modal.find('.modal-footer #idCategoria').val(idCategoria);
+    modal.find('.modal-body #nombreEditarServicio').val(nombreServicio);
+    modal.find('.modal-body #imgVistaPreviaEditarservicio').attr("src","storage/images/servicio/"+img_url);
+    modal.find('.modal-body #descripcionEditarServicio').val(descripcion);
+    modal.find('.modal-body #precioEditarServicio').val(precio);
+
+    modal.find('.modal-body #condicionesEditarServicio').val(condiciones);
+
+    modal.find(".modal-body #idCategoriaEditar").val(idCategoria).change();
+    modal.find(".modal-body #idEmpresaEditar").val(idEmpresa).change();
+
+    modal.find('.modal-footer #idServicio').val(idServicio);
 });
 
 /****---------------------------------------------------------------------*/
