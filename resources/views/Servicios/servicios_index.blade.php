@@ -8,22 +8,13 @@
                         data-toggle="modal" data-target="#modalNuevoServicio">
                     <span class="fas fa-plus"></span> Nuevo
                 </button>
-                <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        Tipos de Categorias
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <button class="dropdown-item" data-toggle="modal" data-target="#modalNuevoTipoCategoria"><span class="fas fa-plus"></span> Crear nueva</button>
-                        <a class="dropdown-item" href="{{route("verTipoCategorias")}}"><span class="fas fa-external-link-alt"></span> Ver & editar</a>
-                    </div>
-                </div>
+
             </div>
         </h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background: transparent">
                 <li class="breadcrumb-item" aria-current="page"><a href="/">Inicio</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+                <li class="breadcrumb-item active" aria-current="page">Servicios</li>
             </ol>
         </nav>
         @if(session("exito"))
@@ -100,7 +91,18 @@
                     <td>{{$servicio->precio}}</td>
                     <td>{{$servicio->name_empresa}}</td>
                     <td>{{$servicio->name_categoria}}</td>
-                    <td>{{$servicio->servicio_img_id}}</td>
+                     <td>
+                        <button id="callModalVistaPrevia{{$servicio->id}}"
+                                data-src_img="{{$servicio->servicio_img_id}}"
+                                @if($servicio->servicio_img_id)
+                                data-toggle="modal"
+                                data-target="#modalVistaPrevia"
+                                @endif
+                                style="opacity: 0"></button>
+                        <img  src="storage/images/servicio/{{$servicio->servicio_img_id}}"
+                             onclick="$('#callModalVistaPrevia{{$servicio->id}}').click()"
+                             width="250px" height="250px" style="object-fit: contain"
+                             onerror="this.src='/images/noimage.jpg'"> {{$servicio->name}}</td>
 
 
 
@@ -302,6 +304,30 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalVistaPrevia" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #2a2a35">
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-pencil-alt"></span> Vista Previa
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span style="color: white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="object-fit: fill">
+                    <img id="img"
+                         style="display:block; width: 100%; margin-left: auto; margin-right: auto;"
+                         onerror="this.src='/images/noimage.jpg'"
+                    >
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <style>

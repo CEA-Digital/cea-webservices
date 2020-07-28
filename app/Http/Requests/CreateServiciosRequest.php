@@ -25,7 +25,7 @@ class CreateServiciosRequest extends FormRequest
     {
         return [
             'name'=>'required|string|max:100',
-            'descripcion'=>'string|max:192',
+            'descripcion'=>'max:192',
             'condiciones'=>'required|string|max:100',
              'precio'=>'required|numeric',
             'id_empresa'=>'required|integer',
