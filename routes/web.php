@@ -37,4 +37,5 @@ Route::resource("/servicios", "ServiciosController");
 Route::post("/productos/nuevo","ProductosController@storeProductos")->name("nuevoProducto");
 Route::get("/productos", "ProductosController@index")->name("productos");//Muestra el servicio de las empresas
 Route::put("/productos/editar","ProductosController@editarProductos")->name("editarProducto");
+Route::delete("/productos/borrar","ProductosController@borrarProducto")->name("borrarProducto");
 

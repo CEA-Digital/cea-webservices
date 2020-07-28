@@ -7,7 +7,7 @@ $('#modalVistaPreviaProductos').on('show.bs.modal', function (event) {
 });
 //Editar modal Producto
 $('#modalEditarProducto').on('show.bs.modal',function (e) {
-    var button = $(e.relatedTarget)
+    var button = $(e.relatedTarget);
     var id_producto = button.data('id');
     var name = button.data('name');
     var unit_prince = button.data('unit_price');
@@ -15,7 +15,8 @@ $('#modalEditarProducto').on('show.bs.modal',function (e) {
     var description = button.data('description');
     var disponible = button.data('disponible');
     var categoria = button.data('id_categoria');
-    var imag_url = button.data('imag_url');
+    var empresa = button.data('id_empresa');
+    var img_url = button.data('img_url');
 
     var modal = $(this);
 
@@ -26,5 +27,16 @@ $('#modalEditarProducto').on('show.bs.modal',function (e) {
     modal.find('.modal-body #descripcionEditarProducto').val(description);
     modal.find('.modal-body #disponible').val(disponible);
     modal.find('.modal-body #tipoEditarCategoria').val(categoria);
+    modal.find('.modal-body #empresa').val(empresa);
+    modal.find('.modal-body #imgVistaPreviaEditarCategoria').attr("src","/images/productos/"+img_url);
+});
+$('#modalBorrarProducto').on('show.bs.modal', function (e) {
+    var button = $(e.relatedTarget);
+    var id = button.data('id');
+    var name= button.data('name');
 
+    var modal=$(this);
+
+    modal.find('.modal-footer #id').val(id);
+    modal.find('.modal-body #nombreProducto').val(name);
 })

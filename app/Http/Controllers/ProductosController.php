@@ -40,6 +40,7 @@ class ProductosController extends Controller
             $nuevoProducto->lote_price=$request->input('lote_price');
             $nuevoProducto->id_categoria=$request->input('id_categoria');
             $nuevoProducto->id_empresa=$request->input('id_empresa');
+            $nuevoProducto->disponible=$request->input('disponible');
             $nuevoProducto->save();
             $id = $nuevoProducto->id;
 
@@ -74,5 +75,13 @@ class ProductosController extends Controller
         $editarProductos->id_empresa=$request->input('id_empresa');
         $editarProductos->save();
 
+    }
+    public function borrarProducto(Request $request){
+
+        $producto = $request->input('id');
+        $borrar = Producto::findOrFail($producto);
+        $borrar->delete();
+        return redirect()->route("productos")->withExito("Se borró un producto con nombre "
+            . $request->input("name"));
     }
 }

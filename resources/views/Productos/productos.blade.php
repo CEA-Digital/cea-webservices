@@ -103,7 +103,11 @@
                             <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-sm btn-danger"
-                                title="Borrar">
+                                title="Borrar"
+                        data-toggle="modal"
+                        data-target="#modalBorrarProducto"
+                        data-id="{{$productos->id}}"
+                        data-name="{{$productos->name}}">
                             <span class="fas fa-trash"></span>
                         </button>
                     </td>
@@ -286,7 +290,8 @@
                         <span aria-hidden="true" style="color: white">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{route("nuevoProducto")}}" enctype="multipart/form-data">
+                <form method="POST" action="{{route("editarProducto")}}" enctype="multipart/form-data">
+                    @method("PUT")
                     @include('Alerts.errors')
 
                     @csrf
@@ -365,11 +370,15 @@
                                     style="width: 85%"
                                     class="select2TipoCategoria form-control" id="disponible">
                                 <option disabled selected value="">Seleccione</option>
-                                <option value=1>Si</option>
-                                <option value=0>No</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
 
+                        <img id="imgVistaPreviaEditarCategoria"
+                             height="150px" width="150px"
+                             style="object-fit: contain"
+                             onerror="this.src='/images/noimage.jpg'">
                         <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
                         <div class="input-group image-preview">
 
@@ -395,7 +404,7 @@
                     </div>
                     <div class="modal-footer">
                         <input id="id" name="id" type="hidden" >
-                        <button type="submit" class="btn btn-success">Crear</button>
+                        <button type="submit" class="btn btn-success">Editar</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
@@ -403,6 +412,37 @@
             </div>
         </div>
     </div>
+
+    <!------------------MODAL BORRAR PRODUCTO---------------------------->
+    <div class="modal fade" id="modalBorrarProducto" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <form method="post" action="{{route("borrarProducto")}}" enctype="multipart/form-data">
+                    @method("DELETE")
+                    @csrf
+                    <div class="modal-header" style="background: #2a2a35">
+                        <h5 class="modal-title" style="color: white"><span class="fas fa-trash"></span> Borrar Categoria
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span style="color: white" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro que deseas borrar este producto con nombre ' <label
+                                id="nombreProducto"></label>'?</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input id="id" name="id" type="hidden" value="">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
 
     <style>
         .image-preview-input {
