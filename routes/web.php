@@ -35,5 +35,6 @@ Route::post("/tipo_categoria/nueva","CategoriasController@nuevoTipoCategoria")->
 Route::resource("/servicios", "ServiciosController");
 //--------------------------------------------Productos ROUTES------------------------------------------------------
 Route::post("/productos/nuevo","ProductosController@storeProductos")->name("nuevoProducto");
- Route::get("/productos", "ProductosController@index")->name("productos");//Muestra el servicio de las empresas
+Route::get("/productos", "ProductosController@index")->name("productos");//Muestra el servicio de las empresas
+Route::put("/productos/editar","ProductosController@editarProductos")->name("editarProducto");
 

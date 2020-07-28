@@ -34,6 +34,15 @@
                 </button>
             </div>
         @endif
+        @if ($errors->any())
+            <script>
+                document.onreadystatechange = function () {
+                    if (document.readyState) {
+                        document.getElementById("botonAbrirModalNuevoProducto").click();
+                    }
+                }
+            </script>
+        @endif
 
         <table class="table">
             <thead class="thead-dark">
@@ -69,8 +78,8 @@
                                 style="opacity: 0"></button>
                         <img src="/images/productos/{{$productos->imagen_url}}"
                              onclick="$('#callModalVistaPrevia{{$productos->id}}').click()"
-                             width="200px" height="200px" style="object-fit: contain"
-                             onerror="this.src='/images/noimage.jpg'">{{$productos->name}}</td>
+                             width="150px" height="150px" style="object-fit: contain"
+                             onerror="this.src='/images/noimage.jpg'"></td>
 
                     <td>{{$productos->name}}</td>
                     <td>{{$productos->unit_price}}</td>
@@ -78,7 +87,19 @@
                     <td>{{$productos->disponible}}</td>
 
                     <td>
-                        <button class="btn btn-sm btn-success" title="Editar">
+                        <button class="btn btn-sm btn-success"
+                                data-toggle="modal"
+                                data-target="#modalEditarProducto"
+                                data-id="{{$productos->id}}"
+                                data-name="{{$productos->name}}"
+                                data-description="{{$productos->description}}"
+                                data-id_categoria="{{$productos->id_categoria}}"
+                                data-id_empresa="{{$productos->id_empresa}}"
+                                data-unit_price="{{$productos->unit_price}}"
+                                data-lote_price="{{$productos->lote_price}}"
+                                data-disponible="{{$productos->disponible}}"
+                                data-img_url="{{$productos->imagen_url}}"
+                                title="Editar">
                             <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-sm btn-danger"
@@ -91,7 +112,15 @@
 
             </tbody>
         </table>
-
+        @if (session("idNuevoProducto"))
+            <script>
+                document.onreadystatechange = function () {
+                    if (document.readyState) {
+                        document.getElementById("botonAbrirModalNuevoServicio").click();
+                    }
+                }
+            </script>
+        @endif
     </div>
     <!-----vista previa imagen------->
     <div class="modal fade" id="modalVistaPreviaProductos" tabindex="-1" role="dialog">
@@ -117,7 +146,7 @@
         </div>
     </div>
 
-
+<!------------------------MODAL NUEVO PRODUCTO------------------------------------->
     <div class="modal fade" id="modalNuevoProducto" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -129,12 +158,18 @@
                     </button>
                 </div>
                 <form method="POST" action="{{route("nuevoProducto")}}" enctype="multipart/form-data">
+                    @include('Alerts.errors')
 
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nombreNuevoProducto">Nombre Producto</label>
-                            <input required class="form-control" name="name" id="nombreNuevoProducto" maxlength="100">
+                            <input required class="form-control @error('name') is-invalid @enderror" name="name" id="nombreNuevoProducto" maxlength="100">
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -146,7 +181,7 @@
                         </div>
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Unitario</label>
-                            <input required class="form-control" name="unit_price" id="precioUnitarioProducto" maxlength="7" type="number">
+                            <input required class="form-control" name="unit_price" id="precioUnitarioProducto" maxlength="8" type="number">
                         </div>
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Lote</label>
@@ -192,6 +227,20 @@
                                     @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="tipoNuevaCategoria">Seleccion si esta disponible
+                            </label>
+                            <br>
+                            <select name="disponible"
+                                    required
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="disponible">
+                                <option disabled selected value="">Seleccione</option>
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
+                            </select>
+                            <!---- Boton para crear un nuevo tipo de categoria- -->
+                        </div>
 
                         <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
                         <div class="input-group image-preview">
@@ -225,6 +274,136 @@
             </div>
         </div>
     </div>
+
+    <!-----------------------------MODAL EDITAR PRODUCTO------------------------------->
+    <div class="modal fade" id="modalEditarProducto" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #2a2a35">
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-plus"></span> Agregar Producto
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{route("nuevoProducto")}}" enctype="multipart/form-data">
+                    @include('Alerts.errors')
+
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nombreNuevoProducto">Nombre Producto</label>
+                            <input required class="form-control @error('name') is-invalid @enderror" name="name" id="nombreEditarProducto" maxlength="100">
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcionNuevoProducto">Descripción de nuevo Producto (Opcional):</label>
+                            <textarea class="form-control"
+                                      name="descripcion"
+                                      id="descripcionEditarProducto"
+                                      maxlength="192"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="precioUnitarioProducto">Precio Unitario</label>
+                            <input required class="form-control" name="unit_price" id="precioUnitarioProducto" maxlength="8" type="number">
+                        </div>
+                        <div class="form-group">
+                            <label for="precioUnitarioProducto">Precio Lote</label>
+                            <input required class="form-control" name="lote_price" id="precioLoteProducto" maxlength="8" type="number">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
+                            </label>
+                            <br>
+                            <select name="id_categoria"
+                                    required
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="tipoEditarCategoria">
+                                <option disabled selected value="">Seleccione</option>
+                                @foreach($tipoCategoria as $categoria)
+                                    <option value="{{$categoria->id}}"
+                                    @if(session("idNuevaCategoria"))
+                                        {{session("idNuevaCategoria") == $categoria->id ? 'selected="selected"':''}}
+                                        @endif>{{$categoria->name}}</option>
+                                @endforeach
+                            </select>
+                            <!---- Boton para crear un nuevo tipo de categoria- -->
+                            <a class="btn btn-sm btn-outline-success"
+                               data-toggle="modal"
+                               data-target="#modalNuevoTipoCategoria">
+                                <i class="fas fa-plus" style="color: green"></i></a>
+                        </div>
+                        <div class="form-group">
+                            <label for="empresa">Seleccione la empresa</label>
+                            <br>
+                            <select name="id_empresa"
+                                    required
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="empresa">
+                                <option disabled selected value="">Seleccione</option>
+                                @foreach($empresas as $empresa)
+                                    <option value="{{$empresa->id}}" @if(session("idEmpresa"))
+                                        {{session("idEmpresa")==$empresa->id ? 'selected="selected"':''}}
+                                        @endif>{{$empresa->name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoNuevaCategoria">Seleccion si esta disponible
+                            </label>
+                            <br>
+                            <select name="disponible"
+                                    required
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="disponible">
+                                <option disabled selected value="">Seleccione</option>
+                                <option value=1>Si</option>
+                                <option value=0>No</option>
+                            </select>
+                        </div>
+
+                        <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
+                        <div class="input-group image-preview">
+
+                            <input type="text" name="imagen_url" class="form-control image-preview-filename"
+                                   disabled="disabled">
+                            <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-outline-danger image-preview-clear"
+                                        style="display:none;">
+                                    <span class="fas fa-times"></span> Clear
+                                </button>
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="fas fa-folder-open"></span>
+                                    <span class="image-preview-input-title">Seleccionar</span>
+                                    <input type="file" accept="image/png, image/jpeg, image/gif"
+                                           name="imagen_url"/>
+                                    <!-- rename it -->
+                                </div>
+                            </span>
+                        </div><!-- /input-group image-preview [TO HERE]-->
+                    </div>
+                    <div class="modal-footer">
+                        <input id="id" name="id" type="hidden" >
+                        <button type="submit" class="btn btn-success">Crear</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
     <style>
         .image-preview-input {
             position: relative;

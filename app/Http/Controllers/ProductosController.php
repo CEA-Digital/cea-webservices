@@ -19,7 +19,8 @@ class ProductosController extends Controller
             ->leftJoin("empresas","productos.id_empresa","=","empresas.id")
         ->leftJoin("resources_media","productos.id","=","id_serv_produc")
         ->select("productos.id","productos.name","productos.description","productos.unit_price","productos.lote_price",
-            "productos.disponible","empresas.name AS nombre_empresa","resources_media.ruta As imagen_url","categorias.name as nombre_categoria")->paginate(10);
+            "productos.disponible","empresas.name AS nombre_empresa","resources_media.ruta As imagen_url","categorias.name as nombre_categoria",
+            "productos.id_categoria","productos.id_empresa")->paginate(10);
         $empresas = Empresa::all();
         $tipo_Categoria = TipoCategoria::all();
 
@@ -61,9 +62,17 @@ class ProductosController extends Controller
 
             return redirect()->route("productos")->withExito("Se creó un producto con nombre '"
                 . $request->input("name"));
-
         }
+    }
+    public function editarProductos(Request $request){
+        $editarProductos=Producto::findOrFail($request->id);
+        $editarProductos->name=$request->input('name');
+        $editarProductos->description=$request->input('descripcion');
+        $editarProductos->unit_price=$request->input('unit_price');
+        $editarProductos->lote_price=$request->input('lote_price');
+        $editarProductos->id_categoria=$request->input('id_categoria');
+        $editarProductos->id_empresa=$request->input('id_empresa');
+        $editarProductos->save();
 
     }
-
 }
