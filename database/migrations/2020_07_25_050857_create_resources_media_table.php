@@ -16,6 +16,7 @@ class CreateResourcesMediaTable extends Migration
         Schema::create('resources_media', function (Blueprint $table) {
             $table->id();
             $table->string("ruta");
+            $table->string("id_serv_produc");
             $table->timestamps();
         });
     }

@@ -16,7 +16,8 @@
                 <li class="breadcrumb-item" aria-current="page" ><a href="/">Inicio</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Productos</li>
             </ol>
-         <</nav>
+         </nav>
+
         @if(session("exito"))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{session("exito")}}
@@ -68,8 +69,9 @@
                                 style="opacity: 0"></button>
                         <img src="/images/productos/{{$productos->imagen_url}}"
                              onclick="$('#callModalVistaPrevia{{$productos->id}}').click()"
-                             width="250px" height="250px" style="object-fit: contain"
-                             onerror="this.src='/images/noimage.jpg'"> {{$productos->nombre_categoria}}</td>
+                             width="200px" height="200px" style="object-fit: contain"
+                             onerror="this.src='/images/noimage.jpg'">{{$productos->name}}</td>
+
                     <td>{{$productos->name}}</td>
                     <td>{{$productos->unit_price}}</td>
                     <td>{{$productos->lote_price}}</td>
@@ -91,6 +93,30 @@
         </table>
 
     </div>
+    <!-----vista previa imagen------->
+    <div class="modal fade" id="modalVistaPreviaProductos" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #2a2a35">
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-pencil-alt"></span> Vista Previa
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span style="color: white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="object-fit: fill">
+                    <img id="img"
+                         style="display:block; width: 100%; margin-left: auto; margin-right: auto;"
+                         onerror="this.src='/images/noimage.jpg'"
+                    >
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal fade" id="modalNuevoProducto" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -154,7 +180,7 @@
                             <label for="empresa">Seleccione la empresa</label>
                             <br>
                             <select name="id_empresa"
-
+                                    required
                             style="width: 85%"
                             class="select2TipoCategoria form-control" id="empresa">
                                 <option disabled selected value="">Seleccione</option>
