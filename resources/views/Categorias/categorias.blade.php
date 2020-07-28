@@ -32,7 +32,7 @@
         </nav>
         @if(session("exito"))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{session("exito")}}
+                <span class="fas fa-check"></span> {{session("exito")}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -81,7 +81,7 @@
             </tr>
             </thead>
             <tbody>
-            @if(!$categorias)
+            @if($categorias->count()==0)
                 <tr>
                     <td colspan="4" style="align-items: center">No hay categorias</td>
                 </tr>
@@ -99,7 +99,7 @@
                                 style="opacity: 0"></button>
                         <img src="/images/categorias/{{$categoria->img_url}}"
                              onclick="$('#callModalVistaPrevia{{$categoria->id}}').click()"
-                             width="250px" height="250px" style="object-fit: contain"
+                             width="150px" height="150px" style="object-fit: contain"
                              onerror="this.src='/images/noimage.jpg'"> {{$categoria->name}}</td>
                     <td>{{$categoria->tipo_categoria}}</td>
                     @if(!$categoria->descripcion)
@@ -112,11 +112,20 @@
                         <button class="btn btn-sm btn-success"
                                 data-toggle="modal"
                                 data-target="#modalEditarCategoria"
+                                data-nombre="{{$categoria->name}}"
+                                data-id="{{$categoria->id}}"
+                                data-descripcion="{{$categoria->descripcion}}"
+                                data-img_url="{{$categoria->img_url}}"
+                                data-id_tipo_categoria="{{$categoria->id_categoria}}"
                                 title="Editar">
                             <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-sm btn-danger"
-                                title="Borrar">
+                                title="Borrar"
+                                data-toggle="modal"
+                                data-id_categoria="{{$categoria->id}}"
+                                data-nombre="{{$categoria->name}}"
+                                data-target="#modalBorrarCategoria">
                             <span class="fas fa-trash"></span>
                         </button>
                     </td>
@@ -154,7 +163,8 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nombreNuevaCategoria">Nombre de categoria</label>
-                            <input required class="form-control" name="name" id="nombreNuevaCategoria" maxlength="100">
+                            <input required class="form-control" name="name"
+                                   id="nombreNuevaCategoria" maxlength="100">
                         </div>
                         <div class="form-group">
                             <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
@@ -245,6 +255,7 @@
             </div>
         </div>
     </div>
+    <!--                modal editar categoria -->
     <div class="modal fade" id="modalEditarCategoria" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -255,17 +266,80 @@
                         <span style="color: white" aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <form method="post" action="{{route("editarCategoria")}}" enctype="multipart/form-data">
+                    @method("PUT")
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input id="nombreEditarCategoria" placeholder="Nombre de categoria" name="name" class="form-control" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
+                            </label>
+                            <br>
+                            <select name="id_categoria"
+                                    required
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="tipoCategoriaEditar">
+                                <option disabled selected value="">Seleccione</option>
+                                @foreach($tipoCategorias as $tipoCategoria)
+                                    <option value="{{$tipoCategoria->id}}" @if(session("idNuevaCategoria"))
+                                        {{session("idNuevaCategoria") == $tipoCategoria->id ? 'selected="selected"':''}}
+                                        @endif>{{$tipoCategoria->name}}</option>
+                                @endforeach
+                            </select>
+                            <!---- Boton para crear un nuevo tipo de categoria- -->
+                            <a class="btn btn-sm btn-outline-success"
+                               data-toggle="modal"
+                               data-target="#modalNuevoTipoCategoria">
+                                <i class="fas fa-plus" style="color: green"></i></a>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Crear</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcionNuevaCategoria">Descripción de categoria (Opcional):</label>
+                            <textarea class="form-control"
+                                      name="descripcion"
+                                      id="descripcionEditarCategoria"
+                                      maxlength="192"></textarea>
+                        </div>
+                        <img id="imgVistaPreviaEditarCategoria"
+                             height="150px" width="150px"
+                             style="object-fit: contain"
+                             onerror="this.src='/images/noimage.jpg'">
+                        <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
+                        <div class="input-group image-preview">
+                            <input type="text" name="imagen_url" class="form-control image-preview-filename"
+                                   disabled="disabled">
+                            <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-outline-danger image-preview-clear"
+                                        style="display:none;">
+                                    <span class="fas fa-times"></span> Limpiar
+                                </button>
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="fas fa-folder-open"></span>
+                                    <span class="image-preview-input-title">Seleccionar</span>
+                                    <input type="file" accept="image/png, image/jpeg, image/gif"
+                                           name="imagen_url"/>
+                                    <!-- rename it -->
+                                </div>
+                            </span>
+                        </div><!-- /input-group image-preview [TO HERE]-->
+
+                    </div>
+                    <div class="modal-footer">
+                        <input id="idCategoria" name="id" type="hidden" >
+                        <button type="submit" class="btn btn-success">Editar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
+    <!-- ..............................modal vista previa................................. -->
     <div class="modal fade" id="modalVistaPrevia" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -288,6 +362,37 @@
             </div>
         </div>
     </div>
+
+    <!-- -------------------------------MODAL BORRAR CATEGORIA---------------------------------- -->
+    <div class="modal fade" id="modalBorrarCategoria" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <form method="post" action="{{route("borrarCategoria")}}" enctype="multipart/form-data">
+                    @method("DELETE")
+                    @csrf
+                    <div class="modal-header" style="background: #2a2a35">
+                        <h5 class="modal-title" style="color: white"><span class="fas fa-trash"></span> Borrar Categoria
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span style="color: white" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro que deseas borrar este la categoria con nombre ' <label
+                                id="nombreCategoriaBorrarModal"></label>'?</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input id="idCategoria" name="id" type="hidden" value="">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
 
     <style>
         .image-preview-input {

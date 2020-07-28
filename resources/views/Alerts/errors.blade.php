@@ -21,9 +21,9 @@
             color: black;
         }
     </style>
-    <div class="alert">
+    <div class="alert alert-dismissible">
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong>Advertencia!</strong>  @foreach ($errors->all() as $error)
+       <span class="fas fa-exclamation-triangle"></span> <strong> ¡Advertencia!</strong>  @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
         @endforeach
     </div>

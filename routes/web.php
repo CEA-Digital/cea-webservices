@@ -22,7 +22,8 @@ Route::get("/empresas","EmpresaController@index")->name("empresas");//Permite mo
 Route::get("/categorias","CategoriasController@index")->name("categorias");//Muestra las categorias de productos y/o empresas
 Route::post("/categoria/nueva","CategoriasController@storeCategoria")->name("nuevaCategoria");
 Route::get("/categoria/buscar","CategoriasController@buscarCategorias")->name("buscarCategorias");
-
+Route::delete("/categoria/borrar","CategoriasController@borrarCategoria")->name("borrarCategoria");
+Route::put("/categoria/editar","CategoriasController@editarCategoria")->name("editarCategoria");
 
 Route::get("/categoria/tipos/buscar","CategoriasController@buscarTipoCategorias")->name("buscarTipoCategorias");
 Route::get("/categorias/tipos","CategoriasController@verTipoCategorias")->name("verTipoCategorias");

@@ -59,6 +59,7 @@ $(function () {
             $(".image-preview-input-title").text("Cambiar");
             $(".image-preview-clear").show();
             $(".image-preview-filename").val(file.name);
+            $("#imgVistaPreviaEditarCategoria").attr("src",e.target.result);
             img.attr('src', e.target.result);
             img.attr("width", 250)
             $(".image-preview").attr("data-content", $(img)[0].outerHTML).popover("show").attr("width", 250).attr("height", 250);
@@ -66,6 +67,33 @@ $(function () {
         reader.readAsDataURL(file);
     });
 });
+$('#modalBorrarCategoria').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var idCategoria = button.data("id_categoria");
+    var nombreCategoria = button.data("nombre");
+
+    var modal = $(this);
+    modal.find('.modal-body #nombreCategoriaBorrarModal').text(nombreCategoria)
+    modal.find('.modal-footer #idCategoria').val(idCategoria);
+});
+
+$('#modalEditarCategoria').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var idCategoria = button.data("id");
+    var nombreCategoria = button.data("nombre");
+    var id_tipo_categoria= button.data("id_tipo_categoria");
+    var descripcion = button.data("descripcion");
+    var img_url = button.data("img_url");
+
+
+    var modal = $(this);
+    modal.find('.modal-body #nombreEditarCategoria').val(nombreCategoria);
+    modal.find('.modal-body #imgVistaPreviaEditarCategoria').attr("src","/images/categorias/"+img_url);
+    modal.find('.modal-body #descripcionEditarCategoria').val(descripcion);
+    modal.find(".modal-body #tipoCategoriaEditar").val(id_tipo_categoria).change();
+    modal.find('.modal-footer #idCategoria').val(idCategoria);
+});
+
 /****---------------------------------------------------------------------*/
 
 $('#modalBorrarTipoCategoria').on('show.bs.modal', function (event) {

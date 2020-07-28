@@ -61,7 +61,7 @@
             </tr>
             </thead>
             <tbody>
-            @if($tiposCategorias)
+            @if($tiposCategorias->count()>0)
                 @foreach($tiposCategorias as $categoria)
                     <tr>
                         <td>{{$noPagina++}}</td>

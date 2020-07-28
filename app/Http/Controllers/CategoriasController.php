@@ -7,6 +7,7 @@ use App\Empresa;
 use App\ResourcesMedia;
 use App\TipoCategoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class CategoriasController extends Controller
 {
@@ -62,6 +63,58 @@ class CategoriasController extends Controller
 
 
 
+    public function borrarCategoria(Request $request){
+        //TODO verificar si hay recursos usados por este registro
+
+        $categoria= Categorias::findOrFail($request->id);
+        $image_ruta= public_path()."/images/categorias/".$categoria->img_url;
+        if(File::exists($image_ruta)){
+         File::delete($image_ruta);
+        }
+        $categoria->delete();
+
+        return redirect()->route("categorias")
+            ->withExito("Se eliminó exitosamente la categoria y sus imagenes");
+
+
+    }
+
+    public function editarCategoria(Request $request){
+        $this->validate($request,[
+            "name"=>"required|max:100"
+        ]);
+
+        $path = public_path() . '/images/categorias';//Carpeta publica de las imagenes
+
+
+        $categoria = Categorias::findOrFail($request->id);
+
+        $categoria->name= $request->input("name");
+        if ($request->imagen_url) {
+            /***Si la imagen es enviada por el usuario se debe eliminar la anterior **/
+            $img_anterior=public_path()."/images/categorias/".$categoria->img_url;
+            if (File::exists($img_anterior)){
+                File::delete($img_anterior);
+            }
+            /**-------------------------------------------*/
+            $imagenEditada = $_FILES["imagen_url"]["name"];
+            $ruta = $_FILES["imagen_url"]["tmp_name"];
+            //-------------VALIDAR SI LA CARPETA EXISTE---------------------
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true, true);
+            }
+            //-------------------------------------------------------------
+            $destino = "images/categorias/" . $imagenEditada;
+            copy($ruta, $destino);
+            $categoria->img_url = $imagenEditada;
+        }
+        $categoria->descripcion=$request->input("descripcion");
+        $categoria->id_categoria=$request->input("id_categoria");
+
+        $categoria->save();
+        return redirect()->route("categorias")->withExito("Categoria editada exitosamente");
+
+    }
 
 
 

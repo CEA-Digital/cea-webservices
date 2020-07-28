@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Empresa;
 use Illuminate\Http\Request;
 
 class EmpresaController extends Controller
 {
 
     public function index(){
-        return view("Empresas.empresas_dashboard");
+        $empresas = Empresa::paginate(10);
+        return view("Empresas.empresas_dashboard")->withEmpresas($empresas);
+
     }
 }
