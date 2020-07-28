@@ -13,4 +13,7 @@ class EmpresaController extends Controller
         return view("Empresas.empresas_dashboard")->withEmpresas($empresas);
 
     }
+    public function nuevaEmpresaForm(){
+        return view("Empresas.nueva_empresa");
+    }
 }

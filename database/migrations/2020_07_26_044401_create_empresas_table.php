@@ -19,8 +19,8 @@ class CreateEmpresasTable extends Migration
             $table->string("direccion");
             $table->foreignId("id_categoria")->references("id")->on("categorias");
             $table->foreignId("id_contacto")->references("id")->on("contactos");
-            $table->foreignId("id_profile_img")->references("id")->on("resources_media");
-            $table->foreignId("id_portada_img")->references("id")->on("resources_media");
+            $table->string("profile_img_url")->nullable();
+            $table->string("portada_img_url")->nullable();
             $table->timestamps();
         });
     }

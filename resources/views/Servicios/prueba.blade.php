@@ -50,7 +50,7 @@
                 _token: $("input[name='_token']").val(),
             };
         },
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        allowedFileExtensions: ["jpeg",'jpg', 'png', 'gif'],
         overwriteInitial: false,
         maxFileSize:2000,
         maxFilesNum: 10,

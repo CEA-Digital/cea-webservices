@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 //-----------------------------------------PRODUCTOS ROUTES---------------------------------------------------------
 Route::get("/empresas","EmpresaController@index")->name("empresas");//Permite mostrar las empresas asociadas
+Route::get("/empresa/nueva","EmpresaController@nuevaEmpresaForm")->name("nuevaEmpresaForm");
 //--------------------------------------------CATEGORIAS ROUTES------------------------------------------------------
 Route::get("/categorias","CategoriasController@index")->name("categorias");//Muestra las categorias de productos y/o empresas
 Route::post("/categoria/nueva","CategoriasController@storeCategoria")->name("nuevaCategoria");

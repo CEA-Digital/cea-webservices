@@ -15,6 +15,8 @@
     <link href="{{asset("https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css")}}"
           rel="stylesheet"/>
     <link href="{{asset("css/main.css")}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+
 
 </head>
 <body class="sb-nav-fixed">
@@ -151,6 +153,9 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
 <script src="js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/chart-area-demo.js"></script>
@@ -158,14 +163,11 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/datatables-demo.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXv2h62wQdmOwlslSDo-nc2064sJhayc8&libraries=places&callback=initMap" async bdefer ></script>
+<script src="{{asset("js/mapInput.js")}}"></script>
 <script src="{{asset("js/categorias.js")}}"></script>
+<script src="{{asset("js/empresas.js")}}"></script>
 <script src="{{asset("js/servicio.js")}}"></script>
-
-<script src = "https://code.jquery.com/jquery-3.2.1.min.js" > </script>
-<script src = "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type = "text / javascript" > </script>
-<script src = "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type = "text / javascript" > </script>
-<script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type = "text / javascript" > </script>
-<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type = "text / javascript" > </script>
 
 <script type="text/javascript">
     $("#file-1").fileinput({
@@ -176,9 +178,9 @@
                 _token: $("input[name='_token']").val(),
             };
         },
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        allowedFileExtensions: ["jpeg",'jpg', 'png', 'gif'],
         overwriteInitial: false,
-        maxFileSize:4000,
+        maxFileSize:10000,
         maxFilesNum: 10,
         initialPreviewAsData:true,
         slugCallback: function (filename) {
