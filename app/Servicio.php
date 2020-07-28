@@ -22,10 +22,6 @@ class Servicio extends Model
             }
             $imageName = Str::random(20).'.jpg';
             $imagen = Image::make($foto)->encode('jpg',75);
-            $imagen->resize(450,450,function ($constraint){
-
-                $constraint->upsize();
-            });
 
             Storage::disk('public')->put("images/servicio/$imageName",$imagen->stream());
             return $imageName;

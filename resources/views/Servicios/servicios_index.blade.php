@@ -52,17 +52,30 @@
 
 
         </div>
+        <div class="container" >
+            <div class="row"  >
+                <div class="col-md-4 main-section" >
+
+                    {!! csrf_field() !!}
+                    <div class="file-loading">
+                        <input id="file-1" type="file" name="file"    data-overwrite-initial="true" data-min-file-count="1">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <table class="table">
             <thead class="thead-dark">
             <tr>
                 <th>#</th>
+                <th>Imagen</th>
                 <th>Nombre</th>
                  <th>Descripción</th>
                 <th>Condiciones</th>
                 <th>Pecio</th>
                 <th>Empresa</th>
                 <th>Categoria</th>
-                <th>Imagen</th>
 
                 <th><span class="fas fa-info-circle"></span></th>
             </tr>
@@ -76,6 +89,18 @@
             @foreach($servicios as $servicio)
                 <tr>
                     <td>{{$noPagina++}}</td>
+                    <td>
+                        <button id="callModalVistaPreviaServicio{{$servicio->id}}"
+                                data-src_img="{{$servicio->servicio_img_id}}"
+                                @if($servicio->servicio_img_id)
+                                data-toggle="modal"
+                                data-target="#modalVistaPreviaServicio"
+                                @endif
+                                style="opacity: 0"></button>
+                        <img  src="storage/images/servicio/{{$servicio->servicio_img_id}}"
+                              onclick="$('#callModalVistaPreviaServicio{{$servicio->id}}').click()"
+                              width="150px" height="150px" style="object-fit: contain"
+                              onerror="this.src='/images/noimage.jpg'"> </td>
 
                     <td>{{$servicio->name}}</td>
                      @if(!$servicio->descripcion)
@@ -91,18 +116,7 @@
                     <td>{{$servicio->precio}}</td>
                     <td>{{$servicio->name_empresa}}</td>
                     <td>{{$servicio->name_categoria}}</td>
-                     <td>
-                        <button id="callModalVistaPrevia{{$servicio->id}}"
-                                data-src_img="{{$servicio->servicio_img_id}}"
-                                @if($servicio->servicio_img_id)
-                                data-toggle="modal"
-                                data-target="#modalVistaPrevia"
-                                @endif
-                                style="opacity: 0"></button>
-                        <img  src="storage/images/servicio/{{$servicio->servicio_img_id}}"
-                             onclick="$('#callModalVistaPrevia{{$servicio->id}}').click()"
-                             width="250px" height="250px" style="object-fit: contain"
-                             onerror="this.src='/images/noimage.jpg'"> {{$servicio->name}}</td>
+
 
 
 
@@ -245,26 +259,19 @@
                         </div>
                         <label for="imagenServicio">Seleccione una imagen (opcional): </label>
 
-                        <div class="input-group image-preview">
+                        <div class="container" >
+                            <div class="row"  >
+                                <div class="col-md-4 main-section" >
 
-                            <input type="text" class="form-control image-preview-filename" disabled="disabled">
-                            <!-- don't give a name === doesn't send on POST/GET -->
-                            <span class="input-group-btn">
-                                <!-- image-preview-clear button -->
-                                <button type="button" class="btn btn-outline-danger image-preview-clear"
-                                        style="display:none;">
-                                    <span class="fas fa-times"></span> Clear
-                                </button>
-                                <!-- image-preview-input -->
-                                <div class="btn btn-default image-preview-input">
-                                    <span class="fas fa-folder-open"></span>
-                                    <span class="image-preview-input-title">Seleccionar</span>
-                                    <input type="file" accept="image/png, image/jpeg, image/gif"
-                                           name="servicio_img_id"/>
-                                    <!-- rename it -->
+                                    {!! csrf_field() !!}
+                                    <div class="file-loading">
+                                        <input id="file-1" type="file" name="file"    data-overwrite-initial="true" data-min-file-count="1">
+
+                                    </div>
+
                                 </div>
-                            </span>
-                        </div><!-- /input-group image-preview [TO HERE]-->
+                            </div>
+                        </div>
 
 
                     </div>
@@ -305,7 +312,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalVistaPrevia" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalVistaPreviaServicio" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background: #2a2a35">
@@ -356,5 +363,21 @@
             margin-left: 2px;
         }
     </style>
-@endsection
+
+
+    <style media="screen">
+        #uploadForm,
+        #imagePreview{
+            width: 150px;
+            margin:  auto;
+        }
+
+        img{
+            max-width: 150px;
+            height: 150px;
+        }
+    </style>
+
+
+ @endsection
 

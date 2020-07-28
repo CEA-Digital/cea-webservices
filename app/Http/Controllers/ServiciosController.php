@@ -35,7 +35,7 @@ class ServiciosController extends Controller
 
             $categorias = Categorias::Orderby('name', 'ASC')->get();
             $empresas = Empresa::Orderby('name', 'ASC')->get();
-            return view('Servicios.servicios_index')->with("categorias", $categorias)->with("empresas", $empresas)->with("servicios", $servicios)->withNoPagina(1);
+            return view('Servicios.prueba')->with("categorias", $categorias)->with("empresas", $empresas)->with("servicios", $servicios)->withNoPagina(1);
         }
     }
 
