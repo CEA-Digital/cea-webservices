@@ -20,7 +20,6 @@ class CreateProductosTable extends Migration
             $table->decimal("unit_price",7,2);
             $table->decimal("lote_price",7,2);
             $table->boolean("disponible")->default(false);
-            $table->foreignId("id_product_img")->references("id")->on("resources_media");
             $table->foreignId("id_categoria")->references("id")->on("categorias");
             $table->foreignId("id_empresa")->references("id")->on("empresas");
             $table->timestamps();
