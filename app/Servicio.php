@@ -33,6 +33,21 @@ class Servicio extends Model
 
 
 
+
+    }
+
+    public static function deleteCaratula($foto)
+    {
+        if ($foto){
+                 Storage::disk('public')->delete("images/servicio/$foto");
+
+        }else{
+            return false;
+        }
+
+
+
+
     }
 
 }

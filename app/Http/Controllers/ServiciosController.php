@@ -6,7 +6,9 @@ use App\Categorias;
 use App\Empresa;
 
 use App\Http\Requests\CreateServiciosRequest;
+use App\ResourcesMedia;
 use App\Servicio;
+use App\TipoCategoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,7 +37,8 @@ class ServiciosController extends Controller
 
             $categorias = Categorias::Orderby('name', 'ASC')->get();
             $empresas = Empresa::Orderby('name', 'ASC')->get();
-            return view('Servicios.servicios_index')->with("categorias", $categorias)->with("empresas", $empresas)->with("servicios", $servicios)->withNoPagina(1);
+            $tipoCategorias = TipoCategoria::Orderby('name', 'ASC')->get();
+            return view('Servicios.servicios_index')->with("tipoCategorias", $tipoCategorias)->with("categorias", $categorias)->with("empresas", $empresas)->with("servicios", $servicios)->withNoPagina(1);
         }
     }
 
@@ -164,9 +167,48 @@ class ServiciosController extends Controller
     {
 
         $servicio = Servicio::findOrFail($request->id);
+        $resorces = ResourcesMedia::where("id_serv",'=',$request->id)->get();
+
+         Servicio::deleteCaratula($servicio->servicio_img_id);
+
+        foreach ($resorces as $resorce)
+        {
+            Servicio::deleteCaratula($resorce->ruta);
+
+        }
+
         $servicio->delete();
+        ResourcesMedia::where("id_serv",'=',$request->id)->delete();
 
 
         return redirect()->route("servicios.index")
-            ->withExito("Se eliminó el servicio  '");    }
+            ->withExito("Se eliminó el servicio  '");
+
+    }
+    public function nuevaCategoria(Request $request)
+    {
+        $path = public_path() . '/images/categorias';//Carpeta publica de las imagenes
+
+        $nuevaCategoria = new Categorias();
+        if ($request->imagen_url) {
+            $imagen = $_FILES["imagen_url"]["name"];
+            $ruta = $_FILES["imagen_url"]["tmp_name"];
+            //-------------VALIDAR SI LA CARPETA EXISTE---------------------
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true, true);
+            }
+            //-------------------------------------------------------------
+            $destino = "images/categorias/" . $imagen;
+            copy($ruta, $destino);
+            $nuevaCategoria->img_url = $imagen;
+        }
+        $nuevaCategoria->name = $request->input("name");
+        $nuevaCategoria->id_categoria = $request->input("id_categoria");
+        $nuevaCategoria->descripcion = $request->input("descripcion");
+        $nuevaCategoria->save();
+
+        return redirect()->route("servicios.index")->with("idNuevaCategoria", $nuevaCategoria->id)
+            ->withExito("Se creó nueva categoria con nombre '"
+                . $request->input("name") . "' con ID= " . $nuevaCategoria->id . "");
+    }
 }

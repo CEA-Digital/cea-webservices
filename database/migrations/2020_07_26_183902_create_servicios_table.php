@@ -21,10 +21,11 @@ class CreateServiciosTable extends Migration
             $table->string("descripcion",192)->nullable();
             $table->string("condiciones")->nullable();
             $table->double("precio");
-            $table->string("servicio_img_id")->nullable();
+            $table->string("servicio_img_id");
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
