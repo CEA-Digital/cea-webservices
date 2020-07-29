@@ -63,7 +63,7 @@ $(function () {
 
 /**CARGA EL INPUT PARA VARIOS ARCHIVOS**/
 $("#imagenes_empresa").fileinput({
-    theme: 'fas',
+    theme: 'fa',
     language:"es",
     uploadUrl: "/image-view",
     uploadExtraData: function() {
@@ -72,7 +72,7 @@ $("#imagenes_empresa").fileinput({
         };
     },
     allowedFileExtensions: ["jpeg",'jpg', 'png', 'gif'],
-    overwriteInitial: false,
+    overwriteInitial: true,
     maxFileSize:10000,
     maxFilesNum: 10,
     slugCallback: function (filename) {

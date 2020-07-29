@@ -86,7 +86,7 @@
                     empresas ingresadas aún.</h4>
                 <hr>
                 <p class="mb-0">Pulsa el boton superior <span class="fas fa-plus"></span> para agregar una nueva empresa
-                    o presiona <a href="#">aquí</a></p>
+                    o presiona <a href="{{route("nuevaEmpresaForm")}}">aquí</a></p>
             </div>
         @endif
     </div>

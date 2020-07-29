@@ -29,50 +29,73 @@
         @endif
 
         <div class="card card-body">
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><span class="fas fa-heading"></span></div>
+            <div id="wizard-empresa">
+                <h3>
+                    <div class="media">
+                        <div class="bd-wizard-step-icon"><i class="fas  fa-info-circle"></i></div>
+                        <div class="media-body">
+                            <div class="bd-wizard-step-title"> Datos generales</div>
+                            <div class="bd-wizard-step-subtitle">Paso 1</div>
+                        </div>
+                    </div>
+                </h3>
+                <section>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><span class="fas fa-heading"></span></div>
+                                    </div>
+                                    <input class="form-control"
+                                           required
+                                           placeholder="Ingrese el nombre de la empresa"
+                                           name="name" id="nombre_empresa" type="text"
+                                           max="100">
+                                </div>
                             </div>
-                            <input class="form-control"
-                                   placeholder="Ingrese el nombre de la empresa"
-                                   name="name" id="nombre_empresa" type="text"
-                                   max="100">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6" id="locationField">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><span class="fas fa-map-marker-alt"></span></div>
+                            <div class="form-group col-md-6" id="locationField">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><span class="fas fa-map-marker-alt"></span></div>
+                                    </div>
+                                    <textarea class="form-control" name="direccion"
+                                              id="autocomplete"
+                                              type="text"
+                                              required
+                                              placeholder="Ingrese una dirección"></textarea>
+
+                                </div>
+                                <small class="text-muted">
+                                    Se podrán agregar más direcciones en la información de la empresa</small>
                             </div>
-                            <textarea class="form-control" name="direccion"
-                                      id="autocomplete"
-                                      type="text"
-                                      required
-                                      placeholder="Ingrese una dirección"></textarea>
+
 
                         </div>
-                        <small class="text-muted">
-                            Se podrán agregar más direcciones en la información de la empresa</small>
-                    </div>
 
-
-                </div>
-
-
-                <div class="card card-body">
-                    <label>Selecciona una o varias imagenes <span class="badge badge-dark"> (opcional)</span>: </label>
-                    <div class="form-group">
-                        <div class="file-loading">
-                            <input id="imagenes_empresa" type="file" name="file" multiple class="file"
-                                   data-overwrite-initial="false" data-min-file-count="2">
+                        <label>Selecciona una o varias imagenes <span class="badge badge-dark"> (opcional)</span>:
+                        </label>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input id="imagenes_empresa" type="file" name="file" multiple class="file"
+                                       data-overwrite-initial="false" data-max-file-count="10" data-min-file-count="1">
+                            </div>
+                        </div>
+                        <button class="btn btn-success pull-right" style=" -webkit-box-pack: end;
+            justify-content: flex-end;">Siguiente</button>
+                    </form>
+                </section>
+                <h3>
+                    <div class="media">
+                        <div class="bd-wizard-step-icon"><i class="fas  fa-info-circle"></i></div>
+                        <div class="media-body">
+                            <div class="bd-wizard-step-title"> Datos generales</div>
+                            <div class="bd-wizard-step-subtitle">Step 1</div>
                         </div>
                     </div>
-                </div>
-
-            </form>
+                </h3>
+                <section></section>
+            </div>
         </div>
     </div>
     <style>

@@ -8,14 +8,17 @@
     <meta name="author" content=""/>
     <title>Eureka Admin</title>
     <link href="{{asset("css/styles.css")}}" rel="stylesheet"/>
+    <link href="{{asset("css/file-input.css")}}" media="all" rel="stylesheet" type="text/css"/>
+
+
     <link href="{{asset("https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css")}}" rel="stylesheet"
           crossorigin="anonymous"/>
-    <script src="{{asset("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js")}}"
+    <script src="{{asset("js/font-awesome.js")}}"
             crossorigin="anonymous"></script>
     <link href="{{asset("https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css")}}"
           rel="stylesheet"/>
     <link href="{{asset("css/main.css")}}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{{asset("css/bd-wizard.css")}}" rel="stylesheet">
 
 
 </head>
@@ -154,9 +157,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/js/fileinput.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.7/themes/fa/theme.js" type="text/javascript"></script>
+<script src="{{asset("js/bootstrap-fileinput.js")}}" type="text/javascript"></script>
+<script src="{{asset("js/bootstrap-fileinput-theme.js")}}" type="text/javascript"></script>
 
+<script src="{{asset("js/jquery.steps.min.js")}}"></script>
+<script src="{{asset("js/bd-wizard.js")}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/chart-area-demo.js"></script>
 <script src="assets/demo/chart-bar-demo.js"></script>
@@ -170,6 +175,8 @@
 
 
 <script src="{{asset("js/servicio.js")}}"></script>
+
+<script src="{{asset("js/empresas.js")}}"></script>
 
 </body>
 </html>
