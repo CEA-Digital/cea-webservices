@@ -128,7 +128,11 @@
                             <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-sm btn-danger"
-                                title="Borrar">
+                                title="Borrar"
+                                data-toggle="modal"
+                                data-id_servicio="{{$servicio->id}}"
+                                data-nombre="{{$servicio->name}}"
+                                data-target="#modalBorrarServicio">
                             <span class="fas fa-trash"></span>
                         </button>
                     </td>
@@ -426,6 +430,34 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalBorrarServicio" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <form method="post" action="{{route("destroyServicio")}}" enctype="multipart/form-data">
+                    @method("DELETE")
+                    @csrf
+                    <div class="modal-header" style="background: #2a2a35">
+                        <h5 class="modal-title" style="color: white"><span class="fas fa-trash"></span> Borrar Servicio
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span style="color: white" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro que deseas borrar este servicio con nombre ' <label
+                                id="nombreservicio"></label>'?</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input id="idservicio" name="id" type="hidden" value="">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 

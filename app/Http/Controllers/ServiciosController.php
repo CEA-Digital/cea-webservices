@@ -160,8 +160,13 @@ class ServiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyServicio(Request $request)
     {
-        //
-    }
+
+        $servicio = Servicio::findOrFail($request->id);
+        $servicio->delete();
+
+
+        return redirect()->route("servicios.index")
+            ->withExito("Se eliminó el servicio  '");    }
 }

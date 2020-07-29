@@ -67,20 +67,19 @@ $(function () {
         reader.readAsDataURL(file);
     });
 });
-$('#modalBorrarCategoria').on('show.bs.modal', function (event) {
+$('#modalBorrarServicio').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
-    var idCategoria = button.data("id_categoria");
-    var nombreCategoria = button.data("nombre");
-
-    var modal = $(this);
-    modal.find('.modal-body #nombreCategoriaBorrarModal').text(nombreCategoria)
-    modal.find('.modal-footer #idCategoria').val(idCategoria);
+    var idServicio = button.data("id_servicio");
+    var nombreServicio = button.data("nombre");
+     var modal = $(this);
+    modal.find('.modal-body #nombreservicio').text(nombreServicio)
+    modal.find('.modal-footer #idservicio').val(idServicio);
 });
 
 $('#modalEditarServicio').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var idServicio = button.data("id");
-    var nombreServicio = button.data("nombre");
+     var nombreServicio = button.data("nombre");
     var descripcion = button.data("descripcion");
     var condiciones = button.data("condiciones");
     var precio = button.data("precio");
@@ -143,11 +142,4 @@ $('#modalVistaPreviaServicio').on('show.bs.modal', function (event) {
     modal.find('.modal-body #img').attr("src","storage/images/servicio/"+src_imagen);
 
 });
-$('#modalVistaPreviaProductos').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var src_imagen = button.data("src_img");
 
-    var modal = $(this);
-    modal.find('.modal-body #img').attr("src","/images/productos/"+src_imagen);
-
-});

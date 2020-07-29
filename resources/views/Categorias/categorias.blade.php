@@ -378,7 +378,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>¿Estás seguro que deseas borrar este la categoria con nombre ' <label
+                        <p> ¿Estás seguro que deseas borrar este la categoria con nombre ' <label
                                 id="nombreCategoriaBorrarModal"></label>'?</p>
 
                     </div>
