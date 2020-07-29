@@ -18,7 +18,7 @@ class Servicio extends Model
     {
         if ($foto){
             if($actual){
-                Storage::disk('public')->delete("images/servivio/$actual");
+                Storage::disk('public')->delete("images/servicio/$actual");
             }
             $imageName = Str::random(20).'.jpg';
             $imagen = Image::make($foto)->encode('jpg',75);

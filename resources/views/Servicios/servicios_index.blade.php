@@ -295,11 +295,11 @@
     </div>
 
     <div class="modal fade" id="modalEditarServicio" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background: #2a2a35">
                     <h5 class="modal-title" style="color: white"><span class="fas fa-pencil-alt"></span> Editar
-                        categoria</h5>
+                        servicio</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span style="color: white" aria-hidden="true">&times;</span>
                     </button>
@@ -319,16 +319,39 @@
                             <input id="precioEditarServicio" placeholder="precio" name="precio" class="form-control" max="100" required>
                         </div>
                         <div class="form-group">
-                            <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
+                            <label for="tipoNuevaCategoria">Seleccione la empresa
+                            </label>
+                            <br>
+                            <select name="id_empresa"
+                                    required
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="idEmpresaEditar">
+                                <option disabled selected value="">Seleccione</option>
+                                @foreach($empresas as $empresa)
+                                    <option value="{{$empresa->id}}" >{{$empresa->name}}</option>
+                                @endforeach
+                            </select>
+                            <!---- Boton para crear un nuevo tipo de categoria- -->
+                            <a class="btn btn-sm btn-outline-success"
+                               data-toggle="modal"
+                               data-target="#modalNuevoTipoCategoria">
+                                <i class="fas fa-plus" style="color: green"></i></a>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="nuevaCategoria">Seleccione la categoria
                             </label>
                             <br>
                             <select name="id_categoria"
                                     required
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control" id="tipoCategoriaEditar">
+                                    class="select2TipoCategoria form-control" id="idCategoriaEditar">
                                 <option disabled selected value="">Seleccione</option>
-
-
+                                @foreach($categorias as $categoria)
+                                    <option value="{{$categoria->id}}" >{{$categoria->name}}</option>
+                                @endforeach
                             </select>
                             <!---- Boton para crear un nuevo tipo de categoria- -->
                             <a class="btn btn-sm btn-outline-success"
@@ -345,13 +368,13 @@
                                       id="descripcionEditarServicio"
                                       maxlength="192"></textarea>
                         </div>
-                        <img id="imgVistaPreviaEditarCategoria"
+                        <img id="imgVistaPreviaEditarservicio"
                              height="150px" width="150px"
                              style="object-fit: contain"
                              onerror="this.src='/images/noimage.jpg'">
                         <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
                         <div class="input-group image-preview">
-                            <input type="text" name="imagen_url" class="form-control image-preview-filename"
+                            <input type="text" name="servicio_img_id" class="form-control image-preview-filename"
                                    disabled="disabled">
                             <!-- don't give a name === doesn't send on POST/GET -->
                             <span class="input-group-btn">
@@ -365,7 +388,7 @@
                                     <span class="fas fa-folder-open"></span>
                                     <span class="image-preview-input-title">Seleccionar</span>
                                     <input type="file" accept="image/png, image/jpeg, image/gif"
-                                           name="imagen_url"/>
+                                           name="servicio_img_id"/>
                                     <!-- rename it -->
                                 </div>
                             </span>
@@ -373,7 +396,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <input id="idCategoria" name="id" type="hidden" >
+                        <input id="idServicio" name="id" type="hidden" >
                         <button type="submit" class="btn btn-success">Editar</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>

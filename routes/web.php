@@ -33,7 +33,7 @@ Route::delete("/categoria/tipos/borrar","CategoriasController@borrarTipoCategori
 Route::post("/tipo_categoria/nueva","CategoriasController@nuevoTipoCategoria")->name("nuevoTipoCategoria");// Crea una nueva categoria
  //--------------------------------------------Servivios ROUTES------------------------------------------------------
 Route::resource("/servicios", "ServiciosController");
-Route::put("/servicios/update", "ServiciosController@updateServicio")->name("editarServicio");
+Route::put("/editarServivio", "ServiciosController@editarServicio")->name("editarServicio");
 
 //--------------------------------------------Productos ROUTES------------------------------------------------------
 Route::post("/productos/nuevo","ProductosController@storeProductos")->name("nuevoProducto");
