@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class CreateProductosRequest extends FormRequest
 {
@@ -28,6 +29,7 @@ class CreateProductosRequest extends FormRequest
             'description'=>'max:192',
             'unit_price'=>'required|numeric|max:9',
             'lote_price'=>'required|numeric|max:9',
+            'profile_img_url'=>'nullable',
             'disponible'=>'required|boolean',
             'id_empresa'=>'required|integer',
             'id_categoria'=>'required|integer',

@@ -8,6 +8,7 @@ use App\ResourcesMedia;
 use App\TipoCategoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ProductosController extends Controller
 {
@@ -17,9 +18,9 @@ class ProductosController extends Controller
         ->leftJoin("categorias","productos.id_categoria","=","categorias.id")
             ->leftJoin("tipo_categorias", "categorias.id_categoria", "=", "tipo_categorias.id")
             ->leftJoin("empresas","productos.id_empresa","=","empresas.id")
-        ->leftJoin("resources_media","productos.id","=","id_serv_produc")
+        ->leftJoin("resources_media","productos.id","=","resources_media.id_prod")
         ->select("productos.id","productos.name","productos.description","productos.unit_price","productos.lote_price",
-            "productos.disponible","empresas.name AS nombre_empresa","resources_media.ruta As imagen_url","categorias.name as nombre_categoria",
+            "productos.disponible","empresas.name AS nombre_empresa","productos.profile_img_url as imagen_url","categorias.name as nombre_categoria",
             "productos.id_categoria","productos.id_empresa")->paginate(10);
         $empresas = Empresa::all();
         $tipo_Categoria = TipoCategoria::all();
@@ -41,8 +42,7 @@ class ProductosController extends Controller
             $nuevoProducto->id_categoria=$request->input('id_categoria');
             $nuevoProducto->id_empresa=$request->input('id_empresa');
             $nuevoProducto->disponible=$request->input('disponible');
-            $nuevoProducto->save();
-            $id = $nuevoProducto->id;
+
 
         $path = public_path() . '\images\productos';//Carpeta publica de las imagenes
 
@@ -56,10 +56,9 @@ class ProductosController extends Controller
             //-------------------------------------------------------------
             $destino = "images/productos/" . $imagen;
             copy($ruta, $destino);
-            $resources = ResourcesMedia::create([
-                'ruta' => $imagen,
-                'id_serv_produc'=>$id
-            ]);
+            $nuevoProducto->profile_img_url=$imagen;
+
+            $nuevoProducto->save();
 
             return redirect()->route("productos")->withExito("Se creó un producto con nombre '"
                 . $request->input("name"));
@@ -73,15 +72,42 @@ class ProductosController extends Controller
         $editarProductos->lote_price=$request->input('lote_price');
         $editarProductos->id_categoria=$request->input('id_categoria');
         $editarProductos->id_empresa=$request->input('id_empresa');
+        $editarProductos->disponible=$request->input('disponible');
+
+        $path = public_path() . '\images\productos';//Carpeta publica de las imagenes
+        if ($request->imagen_url) {
+            /***Si la imagen es enviada por el usuario se debe eliminar la anterior **/
+            $img_anterior=public_path()."/images/productos/".$editarProductos->img_url;
+            if (File::exists($img_anterior)){
+                File::delete($img_anterior);
+            }
+            /**-------------------------------------------*/
+            $imagenEditada = $_FILES["imagen_url"]["name"];
+            $ruta = $_FILES["imagen_url"]["tmp_name"];
+            //-------------VALIDAR SI LA CARPETA EXISTE---------------------
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true, true);
+            }
+            //-------------------------------------------------------------
+            $destino = "images/productos/" . $imagenEditada;
+            copy($ruta, $destino);
+            $editarProductos->profile_img_url = $imagenEditada;
+        }
+
         $editarProductos->save();
+        return redirect()->route("productos")->withExito("Se editó un producto con nombre "
+            . $request->input("name"));
 
     }
     public function borrarProducto(Request $request){
 
         $producto = $request->input('id');
         $borrar = Producto::findOrFail($producto);
+        $image_ruta= public_path()."/images/productos/".$borrar->img_url;
+        if(File::exists($image_ruta)){
+            File::delete($image_ruta);
+        }
         $borrar->delete();
-        return redirect()->route("productos")->withExito("Se borró un producto con nombre "
-            . $request->input("name"));
+        return redirect()->route("productos")->withExito("Se borró el producto satisfactoriamente");
     }
 }

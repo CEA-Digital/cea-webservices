@@ -25,9 +25,9 @@ $('#modalEditarProducto').on('show.bs.modal',function (e) {
     modal.find('.modal-body #precioUnitarioProducto').val(unit_prince);
     modal.find('.modal-body #precioLoteProducto').val(lote_price);
     modal.find('.modal-body #descripcionEditarProducto').val(description);
-    modal.find('.modal-body #disponible').val(disponible);
-    modal.find('.modal-body #tipoEditarCategoria').val(categoria);
-    modal.find('.modal-body #empresa').val(empresa);
+    modal.find('.modal-body #disponible').val(disponible).change();
+    modal.find('.modal-body #tipoEditarCategoria').val(categoria).change();
+    modal.find('.modal-body #empresa').val(empresa).change();
     modal.find('.modal-body #imgVistaPreviaEditarCategoria').attr("src","/images/productos/"+img_url);
 });
 $('#modalBorrarProducto').on('show.bs.modal', function (e) {
@@ -36,7 +36,6 @@ $('#modalBorrarProducto').on('show.bs.modal', function (e) {
     var name= button.data('name');
 
     var modal=$(this);
-
     modal.find('.modal-footer #id').val(id);
-    modal.find('.modal-body #nombreProducto').val(name);
-})
+    modal.find('.modal-body #nombreProducto').text(name);
+});

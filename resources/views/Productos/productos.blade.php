@@ -183,15 +183,16 @@
                                       id="descripcionNuevaCategoria"
                                       maxlength="192"></textarea>
                         </div>
+
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Unitario</label>
                             <input required class="form-control" name="unit_price" id="precioUnitarioProducto" maxlength="8" type="number">
                         </div>
+
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Lote</label>
                             <input required class="form-control" name="lote_price" id="precioLoteProducto" maxlength="8" type="number">
                         </div>
-
 
                         <div class="form-group">
                             <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
@@ -213,24 +214,27 @@
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
                                data-target="#modalNuevoTipoCategoria">
-                                <i class="fas fa-plus" style="color: green"></i></a>
+                                <i class="fas fa-plus" style="color: green"></i>
+                            </a>
                         </div>
+
                         <div class="form-group">
                             <label for="empresa">Seleccione la empresa</label>
                             <br>
                             <select name="id_empresa"
                                     required
-                            style="width: 85%"
-                            class="select2TipoCategoria form-control" id="empresa">
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="empresa">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($empresas as $empresa)
                                     <option value="{{$empresa->id}}" @if(session("idEmpresa"))
-                                            {{session("idEmpresa")==$empresa->id ? 'selected="selected"':''}}
-                                    @endif>{{$empresa->name}}
+                                        {{session("idEmpresa")==$empresa->id ? 'selected="selected"':''}}
+                                        @endif>{{$empresa->name}}
                                     </option>
-                                    @endforeach
+                                @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="tipoNuevaCategoria">Seleccion si esta disponible
                             </label>
@@ -322,9 +326,8 @@
                             <input required class="form-control" name="lote_price" id="precioLoteProducto" maxlength="8" type="number">
                         </div>
 
-
                         <div class="form-group">
-                            <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
+                            <label for="tipoEditarCategoria">Seleccione el tipo de Categoria
                             </label>
                             <br>
                             <select name="id_categoria"
@@ -333,10 +336,7 @@
                                     class="select2TipoCategoria form-control" id="tipoEditarCategoria">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($tipoCategoria as $categoria)
-                                    <option value="{{$categoria->id}}"
-                                    @if(session("idNuevaCategoria"))
-                                        {{session("idNuevaCategoria") == $categoria->id ? 'selected="selected"':''}}
-                                        @endif>{{$categoria->name}}</option>
+                                    <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                                 @endforeach
                             </select>
                             <!---- Boton para crear un nuevo tipo de categoria- -->
@@ -354,9 +354,7 @@
                                     class="select2TipoCategoria form-control" id="empresa">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($empresas as $empresa)
-                                    <option value="{{$empresa->id}}" @if(session("idEmpresa"))
-                                        {{session("idEmpresa")==$empresa->id ? 'selected="selected"':''}}
-                                        @endif>{{$empresa->name}}
+                                    <option value="{{$empresa->id}}">{{$empresa->name}}
                                     </option>
                                 @endforeach
                             </select>
@@ -367,6 +365,7 @@
                             <br>
                             <select name="disponible"
                                     required
+                                    style="width: 85%"
                                     style="width: 85%"
                                     class="select2TipoCategoria form-control" id="disponible">
                                 <option disabled selected value="">Seleccione</option>
@@ -421,15 +420,15 @@
                     @method("DELETE")
                     @csrf
                     <div class="modal-header" style="background: #2a2a35">
-                        <h5 class="modal-title" style="color: white"><span class="fas fa-trash"></span> Borrar Categoria
+                        <h5 class="modal-title" style="color: white"><span class="fas fa-trash"></span> Borrar Producto
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span style="color: white" aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>¿Estás seguro que deseas borrar este producto con nombre ' <label
-                                id="nombreProducto"></label>'?</p>
+                        <p>¿Estás seguro que deseas borrar este producto con nombre <label
+                                id="nombreProducto"></label>?</p>
 
                     </div>
                     <div class="modal-footer">
