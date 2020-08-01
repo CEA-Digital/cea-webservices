@@ -11,6 +11,7 @@ use App\Servicio;
 use App\TipoCategoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ServiciosController extends Controller
 {
@@ -125,31 +126,57 @@ class ServiciosController extends Controller
 
     public function editarServicio(Request $request)
     {
-              $servicio =  Servicio::findOrFail($request->id);
+
+        try {
+            $this->validate($request, [
+                'name'=>'required|string|max:100',
+                'descripcion'=>'max:192',
+                'condiciones'=>'required|string|max:100',
+                'precio'=>'required|numeric',
+                'id_empresa'=>'required|integer',
+                'id_categoria'=>'required|integer',
+             ],$messages = [
+                'name.required' => 'El nombre del servicio es requerido.',
+                'condiciones.required' => 'Escriba una condición para este servivio.',
+                'descripcion.max:192' => 'La descripción  no debe de llevar mas de 192 caracteres.',
+                'precio.numeric' => 'El precio debe ser un valor numérico.',
+                'id_empresa.required' => 'Se requiere una empresa para este servivio.',
+                'id_categoria.required' => 'Se requiere una categoria para este servivio.',
+                 ]);
 
 
-            if($foto = Servicio::setCaratula($request->servicio_img_id, $servicio->servicio_img_id)){
+
+            $servicioRegsitro =  Servicio::findOrFail($request->id);
+
+
+
+            if($foto = Servicio::setCaratula($request->servicio_img_id, $servicioRegsitro->servicio_img_id)){
                 $request->request->add(['imagen_servicio'=>$foto]);
-                $servicio->servicio_img_id = $request->imagen_servicio;
-
+                $servicioRegsitro->servicio_img_id = $request->imagen_servicio;
 
             }
 
+            $servicioRegsitro->name = $request->get('name');
+            $servicioRegsitro->condiciones = $request->get('condiciones');
+            $servicioRegsitro->precio = $request->get('precio');
+            $servicioRegsitro->id_empresa = $request->get('id_empresa');
+            $servicioRegsitro->id_categoria = $request->get('id_categoria');
+            $servicioRegsitro->descripcion= $request->get('descripcion');
+            $servicioRegsitro->update();
 
-            $servicio->name = $request->get('name');
-            $servicio->condiciones = $request->get('condiciones');
-            $servicio->precio = $request->get('precio');
-            $servicio->id_empresa = $request->get('id_empresa');
-            $servicio->id_categoria = $request->get('id_categoria');
-            $servicio->descripcion= $request->get('descripcion');
+            return redirect()->route("servicios.index")
+                ->withExito("Se actualizó un nuevo servicioRegsitro con nombre '");
+        }
+        catch (ValidationException $exception) {
+
+
+             return redirect()->route("servicios.index")->with( 'img',$request->imagen_servicio)->with( 'idServicio',$request->id)->with( 'errores' ,'errores')->withErrors($exception->errors())
+                ->withExito("hubo un error'");
 
 
 
+        }
 
-        $servicio->update();
-
-        return redirect()->route("servicios.index")
-            ->withExito("Se actualizó un nuevo servicio con nombre '");
 
 
 

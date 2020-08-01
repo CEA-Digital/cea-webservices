@@ -17,22 +17,31 @@
                 <li class="breadcrumb-item active" aria-current="page">Servicios</li>
             </ol>
         </nav>
-        @if(session("exito"))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{session("exito")}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @if ($errors->any())
+
+        @if(session("errores"))
+
+            <input id="idServicio" name="idServicio" value="{{session("idServicio")}}" type="hidden" >
+
             <script>
+                var idServicio=document.getElementById("idServicio").value;
+
                 document.onreadystatechange = function () {
                     if (document.readyState) {
-                        document.getElementById("botonAbrirModalNuevoServicio").click();
+                        document.getElementById("botonAbrirModalEditarServicio"+idServicio).click();
                     }
                 }
             </script>
+        @else
+
+            @if ($errors->any())
+                <script>
+                    document.onreadystatechange = function () {
+                        if (document.readyState) {
+                            document.getElementById("botonAbrirModalNuevoServicio").click();
+                        }
+                    }
+                </script>
+            @endif
         @endif
         <div class="pagination pagination-sm ">
 
@@ -59,7 +68,7 @@
                 <th>#</th>
                 <th>Imagen</th>
                 <th>Nombre</th>
-                 <th>Descripción</th>
+                <th>Descripción</th>
                 <th>Condiciones</th>
                 <th>Pecio</th>
                 <th>Empresa</th>
@@ -91,7 +100,7 @@
                               onerror="this.src='/images/noimage.jpg'"> </td>
 
                     <td>{{$servicio->name}}</td>
-                     @if(!$servicio->descripcion)
+                    @if(!$servicio->descripcion)
                         <td>N/A</td>
                     @else
                         <td>{{$servicio->descripcion}}</td>
@@ -111,8 +120,10 @@
 
 
                     <td>
+
                         <button class="btn btn-sm btn-success"
                                 data-toggle="modal"
+                                id="botonAbrirModalEditarServicio{{$servicio->id}}"
                                 data-target="#modalEditarServicio"
                                 data-nombre="{{$servicio->name}}"
                                 data-id="{{$servicio->id}}"
@@ -142,6 +153,7 @@
             </tbody>
         </table>
 
+
         @if(session("idNuevaCategoria"))
             <script>
                 document.onreadystatechange = function () {
@@ -166,6 +178,7 @@
                 </div>
                 <form method="POST" action="{{route('servicios.store')}}" enctype="multipart/form-data">
 
+
                     @include('Alerts.errors')
 
 
@@ -173,7 +186,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nombreNuevoServicio">Nombre del servicio</label>
-                            <input  name="name" id="nombreNuevoServicio" maxlength="100"  class="form-control @error('name') is-invalid @enderror">
+                            <input  name="name" id="nombreNuevoServicio" maxlength="100" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -185,7 +198,7 @@
 
                         <div class="form-group">
                             <label for="condicionesNuevoServicio">Condiciones</label>
-                            <input required class="form-control @error('condiciones') is-invalid @enderror" name="condiciones" id="condicionesNuevoServicio" maxlength="192">
+                            <input required class="form-control @error('condiciones') is-invalid @enderror" value="{{ old('condiciones') }}" name="condiciones" id="condicionesNuevoServicio" maxlength="192">
                             @error('condiciones')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -196,7 +209,7 @@
 
                         <div class="form-group">
                             <label for="precioNuevoServicio">Precio</label>
-                            <input type="text" required class="form-control @error('precio') is-invalid @enderror" name="precio" id="precioNuevoServicio"  maxlength="8"  pattern="[0-9]+">
+                            <input type="text" required class="form-control @error('precio') is-invalid @enderror" value="{{ old('precio') }}" name="precio" id="precioNuevoServicio"  maxlength="8"  pattern="[0-9]+">
                             @error('precio')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -212,10 +225,11 @@
                             <select name="id_empresa"
                                     required
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control @error('id_empresa') is-invalid @enderror" id="tipoNuevaCategoria">
+                                    class="select2TipoCategoria form-control @error('id_empresa') is-invalid @enderror"  id="id_empresa">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($empresas as $empresa)
-                                    <option value="{{$empresa->id}}">{{$empresa->name}}</option>
+
+                                    <option value="{{$empresa->id}}"@if (old('id_empresa') == $empresa->id) {{ 'selected' }} @endif>{{$empresa->name}}</option>
 
                                 @endforeach
                             </select>
@@ -238,8 +252,10 @@
                                     class="select2TipoCategoria form-control @error('id_categoria') is-invalid @enderror" id="id_categoria">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($categorias as $categoria)
-                                    <option value="{{$categoria->id}}"@if(session("idNuevaCategoria"))
-                                            {{session("idNuevaCategoria") == $categoria->id ? 'selected="selected"':''}}
+
+
+                                    <option value="{{$categoria->id}}"@if (old('id_categoria') == $categoria->id) {{ 'selected' }}@endif @if(session("idNuevaCategoria"))
+                                        {{session("idNuevaCategoria") == $categoria->id ? 'selected="selected"':''}}
                                         @endif>{{$categoria->name}}</option>
 
                                 @endforeach
@@ -259,7 +275,7 @@
                             <textarea class="form-control"
                                       name="descripcion"
                                       id="descripcionNuevaCategoria"
-                                      maxlength="192"></textarea>
+                                      maxlength="192">{{Request::old('descripcion')}}</textarea>
                         </div>
 
                         <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
@@ -310,9 +326,13 @@
                 <form method="post" action="{{route("editarServicio")}}" enctype="multipart/form-data">
                     @method("PUT")
                     @csrf
+
+
+                    @include('Alerts.errors')
+
                     <div class="modal-body">
                         <div class="form-group">
-                            <input id="nombreEditarServicio" placeholder="Nombre de servicio" name="name" class="form-control" max="100" required>
+                            <input id="nombreEditarServicio" value="{{ old('name') }}" placeholder="Nombre de servicio" name="name" class="form-control" max="100" required>
                         </div>
                         <div class="form-group">
                             <input id="condicionesEditarServicio" placeholder="Condiciones" name="condiciones" class="form-control" max="100" required>
@@ -563,8 +583,15 @@
     </style>
 
 
+    <script>
+        $(document).ready(function() {
+            const genderOldValue = '{{ old('id_empresa') }}';
+
+            if(genderOldValue !== '') {
+                $('#id_empresa').val(genderOldValue);
+            }
+        });
+    </script>
 
 
-
- @endsection
-
+@endsection

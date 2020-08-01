@@ -33,6 +33,7 @@ class CreateProductosRequest extends FormRequest
             'disponible'=>'required|boolean',
             'id_empresa'=>'required|integer',
             'id_categoria'=>'required|integer',
+
         ];
     }
     public function messages()
