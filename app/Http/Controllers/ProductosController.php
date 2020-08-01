@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use App\Http\Requests\CreateProductosRequest;
 use App\Producto;
 use App\ResourcesMedia;
 use App\TipoCategoria;
@@ -32,7 +33,7 @@ class ProductosController extends Controller
             ->withTipoCategoria($tipo_Categoria);
     }
 
-    public function storeProductos(Request $request){
+    public function storeProductos(CreateProductosRequest $request){
         $nuevoProducto = new Producto();
 
             $nuevoProducto->name=$request->input('name');
@@ -51,18 +52,17 @@ class ProductosController extends Controller
             $ruta = $_FILES["imagen_url"]["tmp_name"];
             //-------------VALIDAR SI LA CARPETA EXISTE---------------------
             if (!file_exists($path)) {
-                mkdir($path, 0777);
+                mkdir($path, 0777, true, true);
             }
             //-------------------------------------------------------------
             $destino = "images/productos/" . $imagen;
             copy($ruta, $destino);
             $nuevoProducto->profile_img_url=$imagen;
-
-            $nuevoProducto->save();
-
-            return redirect()->route("productos")->withExito("Se creó un producto con nombre '"
-                . $request->input("name"));
         }
+        $nuevoProducto->save();
+
+        return redirect()->route("productos")->withExito("Se creó un producto con nombre '"
+            . $request->input("name"));
     }
     public function editarProductos(Request $request){
         $editarProductos=Producto::findOrFail($request->id);

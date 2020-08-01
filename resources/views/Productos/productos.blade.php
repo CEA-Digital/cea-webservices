@@ -116,11 +116,11 @@
 
             </tbody>
         </table>
-        @if (session("idNuevoProducto"))
+        @if ($errors->any())
             <script>
                 document.onreadystatechange = function () {
                     if (document.readyState) {
-                        document.getElementById("botonAbrirModalNuevoServicio").click();
+                        document.getElementById("botonAbrirModalNuevoProducto").click();
                     }
                 }
             </script>
@@ -168,7 +168,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nombreNuevoProducto">Nombre Producto</label>
-                            <input required class="form-control @error('name') is-invalid @enderror" name="name" id="nombreNuevoProducto" maxlength="100">
+                            <input class="form-control @error('name') is-invalid @enderror" name="name" id="nombreNuevoProducto" maxlength="100"  value="{{ old('name') }}">
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
