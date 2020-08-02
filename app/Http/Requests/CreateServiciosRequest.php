@@ -30,7 +30,6 @@ class CreateServiciosRequest extends FormRequest
              'precio'=>'required|numeric',
             'id_empresa'=>'required|integer',
             'id_categoria'=>'required|integer',
-             'servicio_img_id' => 'required',
 
 
         ];
@@ -46,7 +45,6 @@ class CreateServiciosRequest extends FormRequest
 
             'id_empresa.required' => 'Se requiere una empresa para este servivio.',
             'id_categoria.required' => 'Se requiere una categoria para este servivio.',
-            'servicio_img_id.required' => 'Se requiere una imagen para este servivio.',
-        ];
+         ];
     }
 }

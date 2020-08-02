@@ -490,7 +490,7 @@
                         <span aria-hidden="true" style="color: white">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{route("nuevaCategoria")}}" enctype="multipart/form-data">
+                <form method="POST" action="{{route("nuevaCategoriaModal")}}" enctype="multipart/form-data">
 
                     @csrf
                     <div class="modal-body">
