@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateResourcesMediaTable extends Migration
+class CreateMarcaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateResourcesMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('resources_media', function (Blueprint $table) {
+        Schema::create('marca', function (Blueprint $table) {
             $table->id();
-            $table->string("ruta");
-            $table->tinyInteger("id_prod")->default(0);
-            $table->tinyInteger("id_serv")->default(0);
-            $table->tinyInteger("id_empresa")->default(0);
+            $table->string("name",50);
+            $table->string("description",100)->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateResourcesMediaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resources_media');
+        Schema::dropIfExists('marca');
     }
 }

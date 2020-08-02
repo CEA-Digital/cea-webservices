@@ -84,9 +84,18 @@
                     <td>{{$productos->name}}</td>
                     <td>{{$productos->unit_price}}</td>
                     <td>{{$productos->lote_price}}</td>
-                    <td>{{$productos->disponible}}</td>
+                     @if($productos->disponible=1)
+                            <td>Disponible</td>
+                            @else
+                         <td>No Disponible</td>
+                            @endif
+
 
                     <td>
+                        <button class="btn btn-sm btn-info"
+                                title="Ver">
+                            <span class="fas fa-eye"></span>
+                        </button>
                         <button class="btn btn-sm btn-success"
                                 data-toggle="modal"
                                 data-target="#modalEditarProducto"
@@ -178,20 +187,43 @@
 
                         <div class="form-group">
                             <label for="descripcionNuevoProducto">Descripción de nuevo Producto (Opcional):</label>
-                            <textarea class="form-control"
-                                      name="descripcion"
+                            <textarea class="form-control @error('description') is-invalid @enderror"
+                                      name="description"
                                       id="descripcionNuevaCategoria"
-                                      maxlength="192"></textarea>
+                                      maxlength="192"
+                            >{{Request::old('description')}}</textarea>
+                            @error('description')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Unitario</label>
-                            <input required class="form-control" name="unit_price" id="precioUnitarioProducto" maxlength="8" type="number">
+                            <input required class="form-control @error('unit_price') is-invalid @enderror" name="unit_price"
+                                   id="precioUnitarioProducto" maxlength="8"
+                                   type="number"
+                                   value="{{old('unit_price')}}">
+                            @error('unit_price')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Lote</label>
-                            <input required class="form-control" name="lote_price" id="precioLoteProducto" maxlength="8" type="number">
+                            <input required class="form-control @error('lote_price') is-invalid @enderror" name="lote_price" id="precioLoteProducto"
+                                   maxlength="8"
+                                   type="number"
+                                   value="{{old('lote_price')}}">
+                            @error('lote_price')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+
                         </div>
 
                         <div class="form-group">
@@ -201,15 +233,21 @@
                             <select name="id_categoria"
                                     required
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control" id="tipoNuevaCategoria">
+                                    class="select2TipoCategoria form-control @error('id_categoria') is-invalid @enderror"
+                                    id="tipoNuevaCategoria">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($tipoCategoria as $categoria)
-                                    <option value="{{$categoria->id}}"
+                                    <option value="{{$categoria->id}}" @if(Request::old('id_categoria')==$categoria->id){{'selected'}}@endif
                                     @if(session("idNuevaCategoria"))
                                         {{session("idNuevaCategoria") == $categoria->id ? 'selected="selected"':''}}
                                         @endif>{{$categoria->name}}</option>
                                 @endforeach
                             </select>
+                            @error('id_categoria')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                        @enderror
                             <!---- Boton para crear un nuevo tipo de categoria- -->
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
@@ -313,7 +351,7 @@
                         <div class="form-group">
                             <label for="descripcionNuevoProducto">Descripción de nuevo Producto (Opcional):</label>
                             <textarea class="form-control"
-                                      name="descripcion"
+                                      name="description"
                                       id="descripcionEditarProducto"
                                       maxlength="192"></textarea>
                         </div>

@@ -37,7 +37,7 @@ class ProductosController extends Controller
         $nuevoProducto = new Producto();
 
             $nuevoProducto->name=$request->input('name');
-            $nuevoProducto->description=$request->input('descripcion');
+            $nuevoProducto->description=$request->input('description');
             $nuevoProducto->unit_price=$request->input('unit_price');
             $nuevoProducto->lote_price=$request->input('lote_price');
             $nuevoProducto->id_categoria=$request->input('id_categoria');
@@ -63,11 +63,12 @@ class ProductosController extends Controller
 
         return redirect()->route("productos")->withExito("Se creó un producto con nombre '"
             . $request->input("name"));
+
     }
     public function editarProductos(Request $request){
         $editarProductos=Producto::findOrFail($request->id);
         $editarProductos->name=$request->input('name');
-        $editarProductos->description=$request->input('descripcion');
+        $editarProductos->description=$request->input('description');
         $editarProductos->unit_price=$request->input('unit_price');
         $editarProductos->lote_price=$request->input('lote_price');
         $editarProductos->id_categoria=$request->input('id_categoria');
@@ -103,9 +104,15 @@ class ProductosController extends Controller
 
         $producto = $request->input('id');
         $borrar = Producto::findOrFail($producto);
-        $image_ruta= public_path()."/images/productos/".$borrar->img_url;
+        $image_ruta= public_path()."/images/productos/".$borrar->profile_img_url;
         if(File::exists($image_ruta)){
             File::delete($image_ruta);
+        }
+        $catalogo_producto=ResourcesMedia::where("id_prod","=",$producto)->get();
+        foreach ($catalogo_producto as $catalogo){
+            if(File::exists($catalogo->ruta)){
+                File::delete($catalogo->ruta);
+            }
         }
         $borrar->delete();
         return redirect()->route("productos")->withExito("Se borró el producto satisfactoriamente");
