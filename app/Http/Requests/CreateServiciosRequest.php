@@ -42,6 +42,8 @@ class CreateServiciosRequest extends FormRequest
             'condiciones.required' => 'Escriba una condición para este servivio.',
             'descripcion.max:192' => 'La descripción  no debe de llevar mas de 192 caracteres.',
             'precio.numeric' => 'El precio debe ser un valor numérico.',
+            'precio.required' => 'El precio es requerido.',
+
             'id_empresa.required' => 'Se requiere una empresa para este servivio.',
             'id_categoria.required' => 'Se requiere una categoria para este servivio.',
             'servicio_img_id.required' => 'Se requiere una imagen para este servivio.',
