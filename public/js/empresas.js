@@ -79,3 +79,20 @@ $("#imagenes_empresa").fileinput({
         return filename.replace('(', '_').replace(']', '_');
     }
 });
+$('#modalNuevaUbicacion').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var latitud = document.getElementById("latitud").value;
+    var longitud = document.getElementById("longitud").value;
+
+    var modal = $(this);
+    modal.find('.modal-footer #latitud_modal').val(latitud);
+    modal.find('.modal-footer #longitud_modal').val(longitud);
+});
+$('#modalEliminarUbicacion').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var id = button.data("id");
+
+    console.log(id);
+    var modal = $(this);
+    modal.find('.modal-footer #id_ubicacion').val(id);
+});

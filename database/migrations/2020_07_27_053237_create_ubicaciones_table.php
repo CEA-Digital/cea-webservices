@@ -18,6 +18,7 @@ class CreateUbicacionesTable extends Migration
             $table->foreignId("id_empresa")->references("id")->on("empresas");
             $table->string("latitud");
             $table->string("longitud");
+            $table->string("descripcion");
             $table->timestamps();
         });
     }

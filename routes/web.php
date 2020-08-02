@@ -19,6 +19,12 @@ Route::get('/', function () {
 //-----------------------------------------PRODUCTOS ROUTES---------------------------------------------------------
 Route::get("/empresas","EmpresaController@index")->name("empresas");//Permite mostrar las empresas asociadas
 Route::get("/empresa/nueva","EmpresaController@nuevaEmpresaForm")->name("nuevaEmpresaForm");
+Route::get("/empresa/{id}/ver","EmpresaController@show")->name("verEmpresa");
+Route::get("/empresa/{id}/ubicacion/nueva","EmpresaController@nuevaUbicacionEmpresa")->name("nuevaUbicacionEmpresa");
+Route::post("/empresa/nueva","EmpresaController@store")->name("nuevaEmpresa");
+//---------------------------------------------UBICACIONES ROUTES-----------------------------------------------------
+Route::post("/ubicacion/nueva","UbicacionesController@store")->name("nuevaUbicacion");
+Route::delete("/ubicacion/eliminar","UbicacionesController@destroy")->name("eliminarUbicacion");
 //--------------------------------------------CATEGORIAS ROUTES------------------------------------------------------
 Route::get("/categorias","CategoriasController@index")->name("categorias");//Muestra las categorias de productos y/o empresas
 Route::post("/categoria/nueva","CategoriasController@storeCategoria")->name("nuevaCategoria");

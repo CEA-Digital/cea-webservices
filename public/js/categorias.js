@@ -3,6 +3,10 @@ $(document).ready(function () {
         theme: "classic",
         placeholder: "Seleccione una opción"
     });
+    $(".select2Empresa").select2({
+        theme: "classic",
+        placeholder: "Seleccione una opción"
+    });
 });
 /**------------------PERMITE VER LA IMG SELECCIONA EN UN INPUT EN POPOVER-------------------------------------*/
 $(document).on('click', '#close-preview', function () {

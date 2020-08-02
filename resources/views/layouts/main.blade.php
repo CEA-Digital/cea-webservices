@@ -21,8 +21,15 @@
     <link href="{{asset("css/bd-wizard.css")}}" rel="stylesheet">
 
 
+    <link href='{{asset("https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css")}}' rel='stylesheet' />
+    <link
+        rel="stylesheet"
+        href="{{asset("https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css")}}"
+        type="text/css"
+    />
+
 </head>
-<body class="sb-nav-fixed">
+<body id="body" class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand" href="index.html">Eureka Admón</a>
     <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i>
@@ -168,10 +175,13 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/datatables-demo.js"></script>
+
+<script src="{{asset("https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js")}}"></script>
+<script src='{{asset("https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js")}}'></script>
+<script src="{{asset("js/mapbox-scripts.js")}}"></script>
 <script src="{{asset("js/categorias.js")}}"></script>
 
 <script src="{{asset("js/productos.js")}}"></script>
-
 
 
 <script src="{{asset("js/servicio.js")}}"></script>

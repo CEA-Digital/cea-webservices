@@ -1,7 +1,7 @@
 @extends("layouts.main")
 @section("content")
     <div class="container-fluid">
-        <h1 class="mt-4">Empresas Asociadas
+        <h3 class="mt-4">Empresas Asociadas
             <div class="btn-group" role="group">
                 <a class="btn btn-sm btn-success"
                         id="botonAbrirModalNuevaCategoria"
@@ -9,7 +9,7 @@
                     <span class="fas fa-plus"></span> Nueva
                 </a>
             </div>
-        </h1>
+        </h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background: white">
                 <li class="breadcrumb-item" aria-current="page"><a href="/">Inicio</a></li>
@@ -64,21 +64,27 @@
         @if($empresas->count()>0)
             <div class="row">
                 @foreach($empresas as $empresa)
-                    <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12 mb-2">
-                        <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 mb-2">
+                        <div class="card" style="width: 100%;   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+                            <img class="card-img-top"
+                                 style="height:150px; max-height: 300px;object-fit: contain"
+                                 src="/images/empresas/profiles/{{$empresa->profile_img_url}}"
+                                 onerror="this.src='/images/noimage.jpg'" alt="Card image cap">
+                            <hr>
                             <div class="card-body">
                                 <h5 class="card-title">{{$empresa->name}}</h5>
                                 <p class="card-text">
                                     <span class="fas fa-map-marker-alt"
                                           style="color: red"></span> {{$empresa->direccion}}
                                 </p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <a href="{{route("verEmpresa",["id"=>$empresa->id])}}" class="btn btn-primary"><span class="fas fa-eye"></span> Ver</a>
                             </div>
                         </div>
                     </div>
-
                 @endforeach
+            </div>
+            <div class="pagination pagination-sm">
+                {{$empresas->links()}}
             </div>
         @else
             <div class="alert alert-info  alert-dismissible" role="alert">
