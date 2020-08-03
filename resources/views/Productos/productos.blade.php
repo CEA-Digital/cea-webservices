@@ -93,7 +93,17 @@
 
                     <td>
                         <button class="btn btn-sm btn-info"
-                                title="Ver">
+                                title="Ver"
+                                data-toggle="modal"
+                                data-target="#modalVerProducto"
+                                data-name="{{$productos->name}}"
+                                data-description="{{$productos->description}}"
+                                data-id_categoria="{{$productos->id_categoria}}"
+                                data-id_empresa="{{$productos->id_empresa}}"
+                                data-unit_price="{{$productos->unit_price}}"
+                                data-lote_price="{{$productos->lote_price}}"
+                                data-disponible="{{$productos->disponible}}"
+                                data-img_url="{{$productos->imagen_url}}">
                             <span class="fas fa-eye"></span>
                         </button>
                         <button class="btn btn-sm btn-success"
@@ -223,11 +233,10 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                             @enderror
-
                         </div>
 
                         <div class="form-group">
-                            <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
+                            <label for="tipoNuevaCategoria">Seleccione la Categoria
                             </label>
                             <br>
                             <select name="id_categoria"
@@ -236,11 +245,11 @@
                                     class="select2TipoCategoria form-control @error('id_categoria') is-invalid @enderror"
                                     id="tipoNuevaCategoria">
                                 <option disabled selected value="">Seleccione</option>
-                                @foreach($tipoCategoria as $categoria)
-                                    <option value="{{$categoria->id}}" @if(Request::old('id_categoria')==$categoria->id){{'selected'}}@endif
+                                @foreach($categoria as $categorias)
+                                    <option value="{{$categorias->id}}" @if(Request::old('id_categoria')==$categorias->id){{'selected'}}@endif
                                     @if(session("idNuevaCategoria"))
-                                        {{session("idNuevaCategoria") == $categoria->id ? 'selected="selected"':''}}
-                                        @endif>{{$categoria->name}}</option>
+                                        {{session("idNuevaCategoria") == $categorias->id ? 'selected="selected"':''}}
+                                        @endif>{{$categorias->name}}</option>
                                 @endforeach
                             </select>
                             @error('id_categoria')
@@ -251,7 +260,7 @@
                             <!---- Boton para crear un nuevo tipo de categoria- -->
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
-                               data-target="#modalNuevoTipoCategoria">
+                               data-target="#modalNuevaCategoria">
                                 <i class="fas fa-plus" style="color: green"></i>
                             </a>
                         </div>
@@ -286,6 +295,16 @@
                                 <option value="0">No</option>
                             </select>
                             <!---- Boton para crear un nuevo tipo de categoria- -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="empresa">Seleccione la marca</label>
+                            <br>
+                            <select name="id_marca"
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="marca">
+                                <option disabled selected value="">Seleccione:</option>
+                            </select>
                         </div>
 
                         <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
@@ -365,7 +384,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="tipoEditarCategoria">Seleccione el tipo de Categoria
+                            <label for="tipoEditarCategoria">Seleccione la Categoria
                             </label>
                             <br>
                             <select name="id_categoria"
@@ -373,14 +392,14 @@
                                     style="width: 85%"
                                     class="select2TipoCategoria form-control" id="tipoEditarCategoria">
                                 <option disabled selected value="">Seleccione</option>
-                                @foreach($tipoCategoria as $categoria)
-                                    <option value="{{$categoria->id}}">{{$categoria->name}}</option>
+                                @foreach($categoria as $categorias)
+                                    <option value="{{$categorias->id}}">{{$categorias->name}}</option>
                                 @endforeach
                             </select>
                             <!---- Boton para crear un nuevo tipo de categoria- -->
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
-                               data-target="#modalNuevoTipoCategoria">
+                               data-target="#modalNuevaCategoria">
                                 <i class="fas fa-plus" style="color: green"></i></a>
                         </div>
                         <div class="form-group">
@@ -411,6 +430,17 @@
                                 <option value="0">No</option>
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label for="empresa">Seleccione la marca</label>
+                            <br>
+                            <select name="id_marca"
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="marca">
+                                <option disabled selected value="">Seleccione:</option>
+                            </select>
+                        </div>
+
 
                         <img id="imgVistaPreviaEditarCategoria"
                              height="150px" width="150px"
@@ -450,6 +480,107 @@
         </div>
     </div>
 
+    <!------------------MODAL VER PRODUCTO-------------------------------->
+    <div class="modal fade" id="modalVerProducto" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #2a2a35">
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-plus"></span> Agregar Producto
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white">&times;</span>
+                    </button>
+                </div>
+                    @include('Alerts.errors')
+
+                    @csrf
+                    <div class="modal-body row">
+
+                        <div class="col-sm-6">
+                            <div class="form-group" >
+                                <img id="imgVistaPreviaEditarCategoria"
+                                     height="200px" width="200px"
+                                     style="object-fit: contain"
+                                     onerror="this.src='/images/noimage.jpg'">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="nombreNuevoProducto">Nombre Producto</label>
+                                <input  disabled
+                                        class="form-control @error('name') is-invalid @enderror" name="name" id="nombreNuevoProducto"
+                                        maxlength="100"  value="{{ old('name') }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="descripcionNuevoProducto">Descripción de nuevo Producto (Opcional):</label>
+                                <textarea disabled class="form-control @error('description') is-invalid @enderror"
+                                          name="description"
+                                          id="descripcionNuevaCategoria"
+                                          maxlength="192"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="precioUnitarioProducto">Precio Unitario</label>
+                                <input disabled required class="form-control @error('unit_price') is-invalid @enderror" name="unit_price"
+                                       id="precioUnitarioProducto">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="precioUnitarioProducto">Precio Lote</label>
+                                <input disabled required class="form-control @error('lote_price') is-invalid @enderror" name="lote_price" id="precioLoteProducto">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tipoNuevaCategoria">Categoria
+                                </label>
+                                <br>
+                                <input name="id_categoria"
+                                       required disabled
+                                       style="width: 85%"
+                                       class="form-control @error('id_categoria') is-invalid @enderror"
+                                       id="tipoNuevaCategoria">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="empresa">Empresa:</label>
+                                <br>
+                                <input name="id_empresa"
+                                       required disabled
+                                       style="width: 85%"
+                                       class="form-control" id="empresa">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tipoNuevaCategoria">Disponibilidad:
+                                </label>
+                                <br>
+                                <input name="disponible"
+                                        required disabled
+                                        style="width: 85%"
+                                        class="form-control" id="disponible">
+                                <!---- Boton para crear un nuevo tipo de categoria- -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="empresa">Marca:</label>
+                                <br>
+                                <input name="id_marca"
+                                       required disabled
+                                       style="width: 85%"
+                                       class="form-control" id="marca">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" data-dismiss="modal" class="btn btn-success">Aceptar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
     <!------------------MODAL BORRAR PRODUCTO---------------------------->
     <div class="modal fade" id="modalBorrarProducto" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -477,6 +608,85 @@
                 </form>
             </div>
 
+        </div>
+    </div>
+
+    <!-------------------MODAL NUEVO CATEGORIA------------------------------>
+    <div class="modal fade" id="modalNuevaCategoria" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #2a2a35">
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-plus"></span> Agregar Categoría
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color: white">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{route("nuevaCategoriaModal")}}" enctype="multipart/form-data">
+
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nombreNuevaCategoria">Nombre de categoria</label>
+                            <input required class="form-control" name="name"
+                                   id="nombreNuevaCategoria" maxlength="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoNuevaCategoria">Seleccione el tipo de Categoria
+
+                            </label>
+                            <br>
+                            <select name="id_categoria"
+                                    required
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="tipoNuevaCategoria">
+                                <option disabled selected value="">Seleccione</option>
+                                @foreach($tipoCategorias as $tipoCategoria)
+                                    <option value="{{$tipoCategoria->id}}" @if(session("idNuevaCategoria"))
+                                        {{session("idNuevaCategoria") == $tipoCategoria->id ? 'selected="selected"':''}}
+                                        @endif>{{$tipoCategoria->name}}</option>
+                                @endforeach
+                            </select>
+                            <!---- Boton para crear un nuevo tipo de categoria- -->
+
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcionNuevaCategoria">Descripción de nueva categoria (Opcional):</label>
+                            <textarea class="form-control"
+                                      name="descripcion"
+                                      id="descripcionNuevaCategoria"
+                                      maxlength="192"></textarea>
+                        </div>
+                        <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
+                        <div class="input-group image-preview">
+
+                            <input type="text" name="imagen_url" class="form-control image-preview-filename"
+                                   disabled="disabled">
+                            <!-- don't give a name === doesn't send on POST/GET -->
+                            <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-outline-danger image-preview-clear"
+                                        style="display:none;">
+                                    <span class="fas fa-times"></span> Clear
+                                </button>
+                                <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="fas fa-folder-open"></span>
+                                    <span class="image-preview-input-title">Seleccionar</span>
+                                    <input type="file" accept="image/png, image/jpeg, image/gif"
+                                           name="imagen_url"/>
+                                    <!-- rename it -->
+                                </div>
+                            </span>
+                        </div><!-- /input-group image-preview [TO HERE]-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Crear</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 
