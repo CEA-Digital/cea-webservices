@@ -120,6 +120,14 @@
 
 
                     <td>
+                        <a href="{{route('imagenes',$servicio->id)}}">
+                        <button class="btn btn-sm btn-warning"
+                                title="Borrar"
+                           >
+                            <span class="fas fa-info-square"></span>
+                        </button>
+                        </a>
+
 
                         <button class="btn btn-sm btn-success"
                                 data-toggle="modal"

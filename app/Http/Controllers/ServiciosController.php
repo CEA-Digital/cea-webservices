@@ -49,10 +49,6 @@ class ServiciosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -215,16 +211,16 @@ class ServiciosController extends Controller
     public function nuevaCategoria(Request $request)
     {
         $path = public_path() . '/images/categorias';//Carpeta publica de las imagenes
-
+        //-------------VALIDAR SI LA CARPETA EXISTE---------------------
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+        //-------------------------------------------------------------
         $nuevaCategoria = new Categorias();
         if ($request->imagen_url) {
             $imagen = $_FILES["imagen_url"]["name"];
             $ruta = $_FILES["imagen_url"]["tmp_name"];
-            //-------------VALIDAR SI LA CARPETA EXISTE---------------------
-            if (!file_exists($path)) {
-                mkdir($path, 0777, true, true);
-            }
-            //-------------------------------------------------------------
+
             $destino = "images/categorias/" . $imagen;
             copy($ruta, $destino);
             $nuevaCategoria->img_url = $imagen;
@@ -238,4 +234,29 @@ class ServiciosController extends Controller
             ->withExito("Se creó nueva categoria con nombre '"
                 . $request->input("name") . "' con ID= " . $nuevaCategoria->id . "");
     }
+
+    public function indexImagenes($idServicio){
+
+        $imagenes = ResourcesMedia::where("id_serv","=",$idServicio)->get();
+
+        $servicio = DB::table("servicios")
+            ->leftJoin("empresas", "servicios.id_empresa", "=", "empresas.id")
+            ->select("servicios.id","servicios.name", "empresas.name As name_empresa")
+            ->where('servicios.id','LIKE',$idServicio)->get();
+
+      $servicio=  json_decode($servicio,true);
+
+        return view('Servicios.imagenes_servicio')->with("imagenes", $imagenes)->with("servicio", $servicio);
+
+
+    }
+    public function agregarImg($idServicio){
+
+
+        return view('servicios.agregarimg')->with('idServicio',$idServicio);
+
+
+
+    }
+
 }

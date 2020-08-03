@@ -38,15 +38,17 @@ class CategoriasController extends Controller
     {
         $path = public_path() . '/images/categorias';//Carpeta publica de las imagenes
 
+        //-------------VALIDAR SI LA CARPETA EXISTE---------------------
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        //-------------------------------------------------------------
         $nuevaCategoria = new Categorias();
         if ($request->imagen_url) {
             $imagen = $_FILES["imagen_url"]["name"];
             $ruta = $_FILES["imagen_url"]["tmp_name"];
-            //-------------VALIDAR SI LA CARPETA EXISTE---------------------
-            if (!file_exists($path)) {
-                mkdir($path, 0777, true, true);
-            }
-            //-------------------------------------------------------------
             $destino = "images/categorias/" . $imagen;
             copy($ruta, $destino);
             $nuevaCategoria->img_url = $imagen;
