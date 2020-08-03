@@ -7,6 +7,7 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <title>Eureka Admin</title>
+
     <link href="{{asset("css/styles.css")}}" rel="stylesheet"/>
     <link href="{{asset("css/file-input.css")}}" media="all" rel="stylesheet" type="text/css"/>
 
@@ -182,6 +183,8 @@
 <script src="{{asset("js/categorias.js")}}"></script>
 
 <script src="{{asset("js/productos.js")}}"></script>
+
+
 
 
 <script src="{{asset("js/servicio.js")}}"></script>

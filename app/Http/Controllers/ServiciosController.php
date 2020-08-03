@@ -49,10 +49,6 @@ class ServiciosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -238,4 +234,29 @@ class ServiciosController extends Controller
             ->withExito("Se creó nueva categoria con nombre '"
                 . $request->input("name") . "' con ID= " . $nuevaCategoria->id . "");
     }
+
+    public function indexImagenes($idServicio){
+
+        $imagenes = ResourcesMedia::where("id_serv","=",$idServicio)->get();
+
+        $servicio = DB::table("servicios")
+            ->leftJoin("empresas", "servicios.id_empresa", "=", "empresas.id")
+            ->select("servicios.id","servicios.name", "empresas.name As name_empresa")
+            ->where('servicios.id','LIKE',$idServicio)->get();
+
+      $servicio=  json_decode($servicio,true);
+
+        return view('Servicios.imagenes_servicio')->with("imagenes", $imagenes)->with("servicio", $servicio);
+
+
+    }
+    public function agregarImg($idServicio){
+
+
+        return view('servicios.agregarimg')->with('idServicio',$idServicio);
+
+
+
+    }
+
 }

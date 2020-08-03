@@ -41,7 +41,13 @@ Route::post("/tipo_categoria/nueva","CategoriasController@nuevoTipoCategoria")->
 Route::resource("/servicios", "ServiciosController");
 Route::put("/editarServivio", "ServiciosController@editarServicio")->name("editarServicio");
 Route::delete("/destroyServicio","ServiciosController@destroyServicio")->name("destroyServicio");
+Route::delete("/destroyImagen/{idServicio}","ServiciosController@destroyImagen")->name("destroyImagen");
+Route::put("/editarImagen/{idServicio}", "ServiciosController@editarImagen")->name("editarImagen");
 Route::post("/nuevaCategoriaModal", "ServiciosController@nuevaCategoria")->name("nuevaCategoriaModal");
+Route::get("/imagenes/{idServicio}","ServiciosController@indexImagenes")->name("imagenes");
+Route::get("/agregarImg/{idServicio}","ServiciosController@agregarImg")->name("agregarImg");
+
+
 
 //--------------------------------------------Productos ROUTES------------------------------------------------------
 Route::post("/productos/nuevo","ProductosController@storeProductos")->name("nuevoProducto");

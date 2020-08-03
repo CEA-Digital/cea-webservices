@@ -139,7 +139,9 @@ $('#modalVistaPreviaServicio').on('show.bs.modal', function (event) {
     var src_imagen = button.data("src_img");
 
     var modal = $(this);
-    modal.find('.modal-body #img').attr("src","storage/images/servicio/"+src_imagen);
+    modal.find('.modal-body #img').attr("src","/storage/images/servicio/"+src_imagen);
 
 });
+
+
 
