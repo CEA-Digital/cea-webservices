@@ -53,26 +53,27 @@ class EmpresaController extends Controller
         $nuevaEmpresa->id_categoria=$request->input("id_categoria");
 
         /** Validando y creando la imagen de portada y perfil si estas son enviadas por el usuaio*/
+        if (!file_exists($pathPortadas)) {
+            mkdir($pathPortadas, 0777, true);
+        }
         if($request->portada_img_url){
             $imagenPortada= $_FILES["portada_img_url"]["name"];
             $ruta = $_FILES["portada_img_url"]["tmp_name"];
             //-------------VALIDAR SI LA CARPETA EXISTE---------------------
-            if (!file_exists($pathPortadas)) {
-                mkdir($pathPortadas, 0777, true, true);
-            }
+
             //-------------------------------------------------------------
             $destino = "images/empresas/portadas/" . $imagenPortada;
             copy($ruta, $destino);
             $nuevaEmpresa->portada_img_url=$imagenPortada;
         }
-
+        if (!file_exists($pathProfile)) {
+            mkdir($pathProfile, 0777, true);
+        }
         if($request->profile_img_url){
             $imagenProfile= $_FILES["profile_img_url"]["name"];
             $ruta = $_FILES["profile_img_url"]["tmp_name"];
             //-------------VALIDAR SI LA CARPETA EXISTE---------------------
-            if (!file_exists($pathProfile)) {
-                mkdir($pathProfile, 0777, true, true);
-            }
+
             //-------------------------------------------------------------
             $destino = "images/empresas/profiles/" . $imagenProfile;
             copy($ruta, $destino);
