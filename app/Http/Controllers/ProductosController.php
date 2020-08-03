@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Categorias;
 use App\Empresa;
 use App\Http\Requests\CreateProductosRequest;
+use App\Marca;
 use App\Producto;
 use App\ResourcesMedia;
 use App\TipoCategoria;
@@ -17,20 +19,23 @@ class ProductosController extends Controller
     public function index(){
         $productos=DB::table("productos")
         ->leftJoin("categorias","productos.id_categoria","=","categorias.id")
-            ->leftJoin("tipo_categorias", "categorias.id_categoria", "=", "tipo_categorias.id")
             ->leftJoin("empresas","productos.id_empresa","=","empresas.id")
         ->leftJoin("resources_media","productos.id","=","resources_media.id_prod")
         ->select("productos.id","productos.name","productos.description","productos.unit_price","productos.lote_price",
             "productos.disponible","empresas.name AS nombre_empresa","productos.profile_img_url as imagen_url","categorias.name as nombre_categoria",
             "productos.id_categoria","productos.id_empresa")->paginate(10);
         $empresas = Empresa::all();
-        $tipo_Categoria = TipoCategoria::all();
+        $categoria = Categorias::all();
+        $tipoCategoria = TipoCategoria::all();
+        $marca = Marca::paginate(10);
 
         return view("Productos.productos")
             ->withNoPagina(1)
             ->withProductos($productos)
             ->withEmpresas($empresas)
-            ->withTipoCategoria($tipo_Categoria);
+            ->withCategoria($categoria)
+            ->withTipoCategorias($tipoCategoria)
+            ->withMarca($marca);
     }
 
     public function storeProductos(CreateProductosRequest $request){

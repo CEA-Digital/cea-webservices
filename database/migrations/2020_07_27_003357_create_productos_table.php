@@ -23,6 +23,7 @@ class CreateProductosTable extends Migration
             $table->string("profile_img_url")->nullable();
             $table->foreignId("id_categoria")->references("id")->on("categorias");
             $table->foreignId("id_empresa")->references("id")->on("empresas");
+            $table->foreignId("id_marca")->references("id")->on("marcas");
             $table->timestamps();
         });
     }
