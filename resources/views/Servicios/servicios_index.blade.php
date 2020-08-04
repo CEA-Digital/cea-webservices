@@ -427,7 +427,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <input id="idServicio" name="id" type="hidden" >
+                        <input id="idServicio" name="idServicio" type="hidden" >
                         <button type="submit" class="btn btn-success">Editar</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>

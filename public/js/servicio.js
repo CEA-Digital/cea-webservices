@@ -18,6 +18,27 @@ $(document).on('click', '#close-preview', function () {
     );
 });
 
+$("#imagenesgaleria").fileinput({
+
+    theme: 'fa',
+    language:"es",
+    uploadUrl: "/imageview",
+    uploadExtraData: function() {
+        return {
+            _token: $("input[name='_token']").val(),
+            idServicio: $("input[name='idServicio']").val(),
+
+        };
+    },
+    allowedFileExtensions: ["jpeg",'jpg', 'png', 'gif'],
+    overwriteInitial: true,
+    maxFileSize:10000,
+    maxFilesNum: 10,
+    slugCallback: function (filename) {
+        return filename.replace('(', '_').replace(']', '_');
+    }
+});
+
 $(function () {
     // Create the close button
     var closebtn = $('<button/>', {

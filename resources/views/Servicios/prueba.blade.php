@@ -27,7 +27,7 @@
             {!! csrf_field() !!}
             <div class="form-group">
                 <div class="file-loading">
-                    <input id="file-1" type="file" name="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
+                    <input id="file-1" type="file" name="file" multiple class="file"   data-overwrite-initial="true"    data-min-file-count="2">
                 </div>
             </div>
 

@@ -835,7 +835,7 @@
                 },
                 fileActionSettings: {
                     showRemove: true,
-                    showUpload: false,
+                    showUpload: true,
                     showDownload: true,
                     showZoom: true,
                     showDrag: true,
@@ -4103,7 +4103,7 @@
         showBrowse: true,
         showPreview: true,
         showRemove: true,
-        showUpload: false,
+        showUpload: true,
         showCancel: true,
         showClose: true,
         showUploadedThumbs: true,

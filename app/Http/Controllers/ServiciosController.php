@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categorias;
 use App\Empresa;
-
-use App\Http\Requests\CreateServiciosRequest;
+  use App\Http\Requests\CreateServiciosRequest;
 use App\ResourcesMedia;
 use App\Servicio;
 use App\TipoCategoria;
@@ -258,5 +257,28 @@ class ServiciosController extends Controller
 
 
     }
+
+    public function storeImagen(Request $request){
+
+
+        $imagenResource = new ResourcesMedia();
+
+        $foto ='';
+
+
+        if($foto = Servicio::setCaratula($request->file)){
+            $request->request->add(['imagen_galeria'=>$foto]);
+            $imagenResource->ruta = $request->imagen_galeria;
+            $imagenResource->id_serv = $request->idServicio;
+             $imagenResource->save();
+
+            return response()->json(['uploaded' => '/upload/'.$imagenResource->ruta]);
+
+
+        }
+
+
+    }
+
 
 }

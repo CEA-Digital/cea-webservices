@@ -46,7 +46,7 @@
                                                   onclick="$('#callModalVistaPreviaGaleria{{$imagen->id}}').click()"
 
                                                   width="180px" height="180px"    style="height:150px; max-height: 300px;object-fit: contain"
-                                                  onerror="this.src='/images/noimage.jpg'"  alt="Card image cap">
+                                                  onerror="this.src='/images/noimage.jpg'"   alt="profile-sample1">
                                         </div>
 
                                         <ul class="list-group list-group-unbordered mb-2">
