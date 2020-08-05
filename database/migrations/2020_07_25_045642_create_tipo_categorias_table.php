@@ -16,6 +16,7 @@ class CreateTipoCategoriasTable extends Migration
         Schema::create('tipo_categorias', function (Blueprint $table) {
             $table->id();
             $table->string("name",100);
+            $table->string("img_url",192)->nullable();
             $table->timestamps();
         });
     }

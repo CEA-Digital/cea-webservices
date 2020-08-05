@@ -132,12 +132,27 @@ class CategoriasController extends Controller
 
     public function nuevoTipoCategoria(Request $request)
     {
+        $path = public_path() . '/images/categorias/tipos';//Carpeta publica de las imagenes
+
+        //-------------VALIDAR SI LA CARPETA EXISTE---------------------
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
 
         $this->validate($request, [
             "name" => "string|max:100|required"
         ]);
         $nuevoTipoCategoria = new TipoCategoria();
         $nuevoTipoCategoria->name = $request->input("name");
+
+        if ($request->imagen_url) {
+            $imagen = $_FILES["imagen_url"]["name"];
+            $ruta = $_FILES["imagen_url"]["tmp_name"];
+            $destino = "images/categorias/tipos/" . $imagen;
+            copy($ruta, $destino);
+            $nuevoTipoCategoria->img_url = $imagen;
+        }
+
         $nuevoTipoCategoria->save();
 
         return redirect()->route($request->input("fuenteRuta"))
@@ -181,11 +196,29 @@ class CategoriasController extends Controller
 
     public function editarTipoCategoria(Request $request)
     {
+        $path = public_path() . '/images/categorias/tipos';//Carpeta publica de las imagenes
+
+        //-------------VALIDAR SI LA CARPETA EXISTE---------------------
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
         $this->validate($request, [
             "name" => "required|max:100",
         ]);
         $tipoCategoria = TipoCategoria::findOrFail($request->input("id"));
         $tipoCategoria->name = $request->input("name");
+        if ($request->imagen_url) {
+            /***Si la imagen es enviada por el usuario se debe eliminar la anterior **/
+            $img_anterior=public_path()."/images/categorias/tipos/".$tipoCategoria->img_url;
+            if (File::exists($img_anterior)){
+                File::delete($img_anterior);
+            }
+            $imagen = $_FILES["imagen_url"]["name"];
+            $ruta = $_FILES["imagen_url"]["tmp_name"];
+            $destino = "images/categorias/tipos/" . $imagen;
+            copy($ruta, $destino);
+            $tipoCategoria->img_url = $imagen;
+        }
         $tipoCategoria->save();
 
         return redirect()->route("verTipoCategorias")

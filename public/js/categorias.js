@@ -123,10 +123,13 @@ $('#modalEditarTipoCategoria').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var idCategoria = button.data("id_categoria");
     var nombreCategoria = button.data("nombre");
+    var src_img= button.data("src_img");
 
     var modal = $(this);
     modal.find('.modal-body #nombre_categoria').val(nombreCategoria)
     modal.find('.modal-footer #id').val(idCategoria);
+    modal.find('.modal-body #imgVistaPreviaEditarCategoria').attr("src","/images/categorias/tipos/"+src_img);
+
 });
 
 $('#modalVistaPrevia').on('show.bs.modal', function (event) {
@@ -138,3 +141,75 @@ $('#modalVistaPrevia').on('show.bs.modal', function (event) {
 
 });
 
+/**------------------PERMITE VER LA IMG SELECCIONA EN UN INPUT EN POPOVER-------------------------------------*/
+$(document).on('click', '#close-preview', function () {
+    $('.image-preview-tipo-categoria').popover('hide');
+    // Hover befor close the preview
+    $('.image-preview-tipo-categoria').hover(
+        function () {
+            $('.image-preview-tipo-categoria').popover('show');
+        },
+        function () {
+            $('.image-preview-tipo-categoria').popover('hide');
+        }
+    );
+});
+
+$(function () {
+    // Create the close button
+    var closebtn = $('<button/>', {
+        type: "button",
+        text: "x",
+        id: 'close-preview',
+        style: 'font-size: initial;',
+    });
+    closebtn.attr("class", "close pull-right");
+    // Set the popover default content
+    $('.image-preview-tipo-categoria').popover({
+        trigger: 'manual',
+        html: true,
+        title: "<strong>Vista Previa </strong>" + $(closebtn)[0].outerHTML,
+        content: "No hay una imagen seleccionada",
+        placement: 'auto',
+        sanitize: false
+    });
+    // Clear event
+    $('.image-preview-clear-tipo-categoria').click(function () {
+        $('.image-preview-tipo-categoria').attr("data-content", "").popover('hide');
+        $('.image-preview-filename-tipo-categoria').val("");
+        $('.image-preview-clear-tipo-categoria').hide();
+        $('.image-preview-input-tipo-categoria input:file').val("");
+        $(".image-preview-input-title-tipo-categoria").text("Seleccionar");
+    });
+    // Create the preview image
+    $(".image-preview-input-tipo-categoria input:file").change(function () {
+        var img = $('<img/>', {
+            id: 'dynamic',
+            width: 250,
+            height: 200,
+            objectFit: "contain"
+        });
+        var file = this.files[0];
+        var reader = new FileReader();
+        // Set preview image into the popover data-content
+        reader.onload = function (e) {
+            $(".image-preview-input-title-tipo-categoria").text("Cambiar");
+            $(".image-preview-clear-tipo-categoria").show();
+            $(".image-preview-filename-tipo-categoria").val(file.name);
+          //  $("#imgVistaPreviaEditarCategoria").attr("src",e.target.result);
+            img.attr('src', e.target.result);
+            img.attr("width", 250)
+            $(".image-preview-tipo-categoria").attr("data-content", $(img)[0].outerHTML).popover("show").attr("width", 250).attr("height", 250);
+        }
+        reader.readAsDataURL(file);
+    });
+});
+/** Modal vista previa tipo categora*/
+$('#modalVistaPreviaTipoCategorias').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var src_imagen = button.data("src_img");
+
+    var modal = $(this);
+    modal.find('.modal-body #img').attr("src","/images/categorias/tipos/"+src_imagen);
+
+});

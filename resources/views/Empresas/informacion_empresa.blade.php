@@ -1,6 +1,7 @@
 @extends("layouts.main")
 @section("content")
     <div class="container-fluid">
+        <input id="saved_markers" type="hidden" value="{{$empresa->ubicaciones}}">
         <h3 class="mt-4">Detalle Empresa
         </h3>
         <nav aria-label="breadcrumb">
@@ -29,8 +30,7 @@
             </div>
         @endif
         <div class="row my-2">
-            <div class="col-lg-4 order-lg-1 text-center">
-
+            <div class="col-lg-4 order-lg-2 text-center">
                 <div class="card profile-card-3">
                     <div class="background-block">
                         <img src="/images/empresas/portadas/{{$empresa->portada_img_url}}"
@@ -48,24 +48,32 @@
                              alt="profile-image" class="profile"/>
                     </div>
                     <div class="card-content">
-                        <h2>{{$empresa->name}}<small>Designer</small></h2>
+                        <h2>{{$empresa->name}}<small>Plan Adquirido</small></h2>
                         <div class="icon-block">
                                 <span class="fas fa-map-marker-alt"
                                       style="color: red"></span> {{$empresa->direccion}}
                         </div>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="mt-4">
+                            <span class="fas fa-map-marker-alt" style="color: red"></span>
+                            Ubicaciones de la empresa</h4>
+                        <div class="pt-2" id="direcciones_empresa" style="width: 100%; height: 250px;"></div>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-8 order-lg-2">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                        <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Perfil</a>
                     </li>
                     <li class="nav-item">
                         <a href="" data-target="#messages" data-toggle="tab" class="nav-link">Messages</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
+                        <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Editar</a>
                     </li>
                 </ul>
                 <div class="tab-content py-4">
@@ -73,17 +81,18 @@
                         <h5 class="mb-3">Perfil de la empresa</h5>
                         <div class="row">
                             <div class="col-md-6">
-                                <h6>Dirección</h6>
+                                <h6><strong>Dirección</strong></h6>
                                 <p>
                                     {{$empresa->direccion}}
                                 </p>
-                                <h6>Categoria</h6>
+                                <h6><strong>Categoria</strong></h6>
                                 <p>
-                                    {{$empresa->nombre_categoria}}
+                                    <a class=" btn-link" title="Ver" href="{{route("buscarTipoCategorias",["busqueda"=>$empresa->nombre_categoria])}}">
+                                    {{$empresa->nombre_categoria}} <span class="fas fa-external-link-alt "></span></a>
                                 </p>
                             </div>
                             <div class="col-md-6">
-                                <h6>Recent badges</h6>
+                                <h6><span class="fas fa-store"></span> Tiendas:</h6>
                                 <a href="#" class="badge badge-dark badge-pill">html5</a>
                                 <a href="#" class="badge badge-dark badge-pill">react</a>
                                 <a href="#" class="badge badge-dark badge-pill">codeply</a>
@@ -93,12 +102,18 @@
                                 <a href="#" class="badge badge-dark badge-pill">bootstrap</a>
                                 <a href="#" class="badge badge-dark badge-pill">responsive-design</a>
                                 <hr>
-                                <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
-                                <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Forks</span>
-                                <span class="badge badge-danger"><i class="fa fa-eye"></i> 245 Views</span>
+                                <span class="badge badge-primary"><i class="fab fa-product-hunt"></i> 900 Productos</span>
+                                <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Servicios</span>
+                                <span class="badge badge-danger"><i class="fa fa-eye"></i> 245 Seguidores</span>
                             </div>
+
                             <div class="col-md-12">
-                                <h5 class="mt-2"><span class="fas fa-map-marked-alt float-right"></span> Ubicaciones
+                                <hr>
+                                <h5 class="mt-2">
+                                    <span class="fas fa-map-marked-alt float-right"></span>
+                                    <a class="btn btn-sm btn-success float-right mr-2"
+                                       href="{{route("nuevaUbicacionEmpresa",["id"=>$empresa->id])}}">
+                                        <span class="fas fa-pencil-alt"></span></a> Ubicaciones
                                     Guardadas</h5>
                                 <table class="table table-sm table-hover table-striped">
                                     <tbody>
@@ -106,10 +121,11 @@
                                         @foreach($empresa->ubicaciones as $ubicacion)
                                             <tr>
                                                 <td>
-                                                   <a target="popup"
+                                                    <a target="popup"
                                                        href="https://www.google.com/maps?q={{$ubicacion->latitud}},{{$ubicacion->longitud}}">
-                                                       <span class="fas fa-map-marker-alt" style="color: red"></span> {{$ubicacion->descripcion}}
-                                                   <span class="fas fa-external-link-alt"></span></a>
+                                                        <span class="fas fa-map-marker-alt"
+                                                              style="color: red"></span> {{$ubicacion->descripcion}}
+                                                        <span class="fas fa-external-link-alt"></span></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -165,101 +181,238 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="edit">
-                        <form role="form">
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="Jane">
+                        @include("Alerts.errors")
+                        <form id="fase1" method="POST" action="{{route("nuevaEmpresa")}}" enctype="multipart/form-data">
+                            @csrf
+                            @method("post")
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="nombre_empresa"><strong style="color: red">*</strong>Nombre de la
+                                        empresa:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><span class="fas fa-heading"></span></div>
+                                        </div>
+                                        <input class="form-control"
+                                               required
+                                               value="{{old("name")}}"
+                                               placeholder="Ingrese el nombre de la empresa"
+                                               name="name" id="nombre_empresa" type="text"
+                                               max="80">
+                                    </div>
+
+                                    <small class="text-muted">
+                                        Este es el nombre será público y es el distintivo de la empresa</small>
+                                </div>
+                                <div class="form-group col-md-6" id="locationField">
+                                    <label for="direccion"><strong style="color: red">*</strong>Dirección de la
+                                        empresa:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><span class="fas fa-map-marker-alt"></span>
+                                            </div>
+                                        </div>
+                                        <textarea class="form-control" name="direccion"
+                                                  id="direccion"
+                                                  type="text"
+                                                  required
+                                                  placeholder="Ingrese una dirección">{{old("direccion")}}</textarea>
+
+                                    </div>
+                                    <small class="text-muted">
+                                        Se podrán agregar más direcciones en la información de la empresa</small>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="Bishop">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="email" value="email@gmail.com">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Company</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Website</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="url" value="">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Address</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="" placeholder="Street">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label"></label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" type="text" value="" placeholder="City">
-                                </div>
-                                <div class="col-lg-3">
-                                    <input class="form-control" type="text" value="" placeholder="State">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                                <div class="col-lg-9">
-                                    <select id="user_time_zone" class="form-control" size="0">
-                                        <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                        <option value="Alaska">(GMT-09:00) Alaska</option>
-                                        <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US
-                                            &amp; Canada)
-                                        </option>
-                                        <option value="Arizona">(GMT-07:00) Arizona</option>
-                                        <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US
-                                            &amp; Canada)
-                                        </option>
-                                        <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00)
-                                            Central Time (US &amp; Canada)
-                                        </option>
-                                        <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US
-                                            &amp; Canada)
-                                        </option>
-                                        <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="tipoNuevaCategoria"><strong style="color: red">*</strong>Seleccione el
+                                        tipo de Categoria que pertenece la empresa :
+                                    </label>
+                                    <br>
+                                    <select name="id_categoria"
+                                            required
+                                            style="width: 90%"
+                                            class="select2TipoCategoria form-control  @error('id_categoria') is-invalid @enderror"
+                                            id="tipoNuevaCategoria">
+                                        <option disabled selected value="">Seleccione</option>
+                                        @foreach($tipoCategorias as $categoria)
+                                            <option value="{{$categoria->id}}"
+                                                    @if(session("idNuevaCategoria"))
+                                                    value="{{session("idNuevaCategoria")}}"
+                                                {{session("idNuevaCategoria") == $categoria->id ? 'selected="selected"':''}}
+                                                @endif
+                                            @if(old("id_categoria"))
+                                                {{old("id_categoria") == $categoria->id ? 'selected="selected"':''}}
+                                                @endif
+                                            >{{$categoria->name}}
+
+                                            </option>
+                                        @endforeach
                                     </select>
+                                    <!---- Boton para crear un nuevo tipo de categoria- -->
+                                    <button class="btn btn-sm btn-outline-success"
+                                            data-toggle="modal"
+                                            data-target="#modalNuevoTipoCategoria">
+                                        <i class="fas fa-plus" style="color: green"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="janeuser">
+
+                            <hr>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="telefono"><strong style="color: red">*</strong>Telefono #1 :</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><span class="fas fa-phone"></span></div>
+                                        </div>
+                                        <input class="form-control @error('telefono') is-invalid @enderror" name="telefono"
+                                               required
+                                               max="99999999"
+                                               value="{{old("telefono")}}"
+                                               type="number"
+                                               aria-valuemax="8"
+                                               maxlength="8"
+                                               min="1"
+                                               id="telefono" placeholder="9999-9999">
+
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="telefono">Telefono #2 (opcional)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><span class="fas fa-phone"></span></div>
+                                        </div>
+                                        <input class="form-control @error('telefono_opcional') is-invalid @enderror" name="telefono_opcional"
+                                               max="99999999"
+                                               min="1"
+                                               value="{{old("telefono_opcional")}}"
+                                               maxlength="8"
+                                               id="telefono_opcional" type="number" placeholder="9999-9999">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="password" value="11111122333">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="correo"><strong style="color: red">*</strong>Ingrese el correo
+                                        empresarial:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">@</div>
+                                        </div>
+                                        <input name="correo" type="email"
+                                               placeholder="ejemplo@ejemplo.com"
+                                               value="{{old("correo")}}"
+                                               required id="correo" class="form-control @error('correo') is-invalid @enderror">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="sitio_web">Ingrese el sitio web:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">@</div>
+                                        </div>
+                                        <input name="sitio_web"
+                                               value="{{old("sitio_web")}}"
+                                               placeholder="www.empresa.com" type="text" id="sitio_web"
+                                               class="form-control">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="password" value="11111122333">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="facebook">Facebook:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><span class="fab fa-facebook"></span></div>
+                                        </div>
+                                        <input class="form-control"
+                                               name="facebook"
+                                               value="{{old("facebook")}}"
+                                               placeholder="www.facebook.com/ejemplo" id="facebook">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="instagram">Instagram:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><span class="fab fa-instagram"></span></div>
+                                        </div>
+                                        <input class="form-control"
+                                               value="{{old("instagram")}}"
+                                               name="instagram"
+                                               placeholder="www.instagram.com/ejemplo" id="instagram">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label"></label>
-                                <div class="col-lg-9">
-                                    <input type="reset" class="btn btn-secondary" value="Cancel">
-                                    <input type="button" class="btn btn-primary" value="Save Changes">
+
+
+                            <hr>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="imagenCategoria">Seleccione una imagen de perfil (opcional): </label>
+                                    <div class="input-group image-preview-profile">
+
+                                        <input type="text" name="imagen_url"
+                                               class="form-control image-preview-filename-profile"
+                                               disabled="disabled">
+                                        <!-- don't give a name === doesn't send on POST/GET -->
+                                        <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-outline-danger image-preview-clear-profile"
+                                        style="display:none;">
+                                    <span class="fas fa-times"></span> Clear
+                                </button>
+                                            <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input-profile">
+                                    <span class="fas fa-folder-open"></span>
+                                    <span class="image-preview-input-title-profile">Seleccionar</span>
+                                    <input type="file" accept="image/png, image/jpeg, image/gif"
+                                           name="profile_img_url"/>
+                                    <!-- rename it -->
+                                </div>
+                            </span>
+                                    </div><!-- /input-group image-preview [TO HERE]-->
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
+                                    <div class="input-group image-preview">
+
+                                        <input type="text" name="imagen_url"
+                                               class="form-control image-preview-filename"
+                                               disabled="disabled">
+                                        <!-- don't give a name === doesn't send on POST/GET -->
+                                        <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-outline-danger image-preview-clear"
+                                        style="display:none;">
+                                    <span class="fas fa-times"></span> Clear
+                                </button>
+                                            <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input">
+                                    <span class="fas fa-folder-open"></span>
+                                    <span class="image-preview-input-title">Seleccionar</span>
+                                    <input type="file" accept="image/png, image/jpeg, image/gif"
+                                           name="portada_img_url"/>
+                                    <!-- rename it -->
+                                </div></span>
+                                    </div><!-- /input-group image-preview [TO HERE]-->
                                 </div>
                             </div>
+                            <input name="fase" value="1" type="hidden">
+
+                            <button class="btn btn-success pull-right" style=" -webkit-box-pack: end;
+            justify-content: flex-end;">Siguiente
+                            </button>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -301,9 +454,9 @@
         float: left;
         overflow: hidden;
         width: 100%;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
         text-align: center;
         height: 368px;
+        margin-bottom: 5px;
         border: none;
     }
 
@@ -348,7 +501,7 @@
     }
 
     .profile-card-3 .profile {
-        border-radius: 25%;
+        border-radius: 50%;
         position: absolute;
         bottom: 50%;
         height: 150px;
@@ -405,4 +558,78 @@
     }
 
 
+    .image-preview-input-tipo-categoria {
+        position: relative;
+        overflow: hidden;
+        margin: 0px;
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+
+    .image-preview-input-tipo-categoria input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+
+    .image-preview-input-title-tipo-categoria {
+        margin-left: 2px;
+    }
+    .image-preview-input-profile {
+        position: relative;
+        overflow: hidden;
+        margin: 0px;
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+
+    .image-preview-input-profile input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+
+    .image-preview-input-title-profile {
+        margin-left: 2px;
+    }
+
+
+    .image-preview-input {
+        position: relative;
+        overflow: hidden;
+        margin: 0px;
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+
+    .image-preview-input input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+
+    .image-preview-input-title {
+        margin-left: 2px;
+    }
 </style>

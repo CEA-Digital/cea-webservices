@@ -12,7 +12,7 @@ var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/satellite-streets-v11', // stylesheet location
     center: user_location, // starting position [lng, lat]
-    zoom: 9, // starting zoom,
+    zoom: 14, // starting zoom,
 
 });
 map.addControl(new mapboxgl.GeolocateControl({

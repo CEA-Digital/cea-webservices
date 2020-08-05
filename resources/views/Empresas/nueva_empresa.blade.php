@@ -99,6 +99,7 @@
                                         @foreach($tipoCategorias as $categoria)
                                             <option value="{{$categoria->id}}"
                                             @if(session("idNuevaCategoria"))
+                                                value="{{session("idNuevaCategoria")}}"
                                                 {{session("idNuevaCategoria") == $categoria->id ? 'selected="selected"':''}}
                                                 @endif
                                             @if(old("id_categoria"))
@@ -110,24 +111,23 @@
                                         @endforeach
                                     </select>
                                     <!---- Boton para crear un nuevo tipo de categoria- -->
-                                    <a class="btn btn-sm btn-outline-success"
+                                    <button class="btn btn-sm btn-outline-success"
                                        data-toggle="modal"
                                        data-target="#modalNuevoTipoCategoria">
                                         <i class="fas fa-plus" style="color: green"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
 
                             <hr>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="telefono"><strong style="color: red">*</strong>Telefono #1 :</label>
+                                        <label for="telefono"><strong style="color: red">*</strong>Telefono #1 :</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><span class="fas fa-phone"></span></div>
                                         </div>
-                                        <input class="form-control @error('telefono') is-invalid @enderror"
-                                               name="telefono"
+                                        <input class="form-control @error('telefono') is-invalid @enderror" name="telefono"
                                                required
                                                max="99999999"
                                                value="{{old("telefono")}}"
@@ -145,8 +145,7 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><span class="fas fa-phone"></span></div>
                                         </div>
-                                        <input class="form-control @error('telefono_opcional') is-invalid @enderror"
-                                               name="telefono_opcional"
+                                        <input class="form-control @error('telefono_opcional') is-invalid @enderror" name="telefono_opcional"
                                                max="99999999"
                                                min="1"
                                                value="{{old("telefono_opcional")}}"
@@ -168,8 +167,7 @@
                                         <input name="correo" type="email"
                                                placeholder="ejemplo@ejemplo.com"
                                                value="{{old("correo")}}"
-                                               required id="correo"
-                                               class="form-control @error('correo') is-invalid @enderror">
+                                               required id="correo" class="form-control @error('correo') is-invalid @enderror">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -244,7 +242,7 @@
                                     </div><!-- /input-group image-preview [TO HERE]-->
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="imagenCategoria">Seleccione una imagen de portada (opcional): </label>
+                                    <label for="imagenCategoria">Seleccione una imagen (opcional): </label>
                                     <div class="input-group image-preview">
 
                                         <input type="text" name="imagen_url"
@@ -310,7 +308,85 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalNuevoTipoCategoria" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #2a2a35">
+                    <h5 class="modal-title" style="color: white">Crear nuevo tipo de categoria</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span style="color: white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{route("nuevoTipoCategoria")}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nombreNuevoTipoCategoria">Ingrese el nombre:</label>
+                            <input class="form-control"
+                                   required name="name" id="nombreNuevoTipoCategoria" maxlength="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="imagenCategoria">Seleccione una imagen de portada (opcional): </label>
+                            <div class="input-group image-preview-tipo-categoria">
+
+                                <input type="text" name="imagen_url"
+                                       class="form-control image-preview-filename-tipo-categoria"
+                                       disabled="disabled">
+                                <!-- don't give a name === doesn't send on POST/GET -->
+                                <span class="input-group-btn">
+                                <!-- image-preview-clear button -->
+                                <button type="button" class="btn btn-outline-danger image-preview-clear-tipo-categoria"
+                                        style="display:none;">
+                                    <span class="fas fa-times"></span> Clear
+                                </button>
+                                    <!-- image-preview-input -->
+                                <div class="btn btn-default image-preview-input-tipo-categoria">
+                                    <span class="fas fa-folder-open"></span>
+                                    <span class="image-preview-input-title-tipo-categoria">Seleccionar</span>
+                                    <input type="file" accept="image/png, image/jpeg, image/gif"
+                                           name="imagen_url"/>
+                                    <!-- rename it -->
+                                </div></span>
+                            </div><!-- /input-group image-preview [TO HERE]-->
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="fuenteRuta"
+                               value="{{\Illuminate\Support\Facades\Route::currentRouteName()}}">
+                        <button type="submit" class="btn btn-success">Crear</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <style>
+        .image-preview-input-tipo-categoria {
+            position: relative;
+            overflow: hidden;
+            margin: 0px;
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+
+        .image-preview-input-tipo-categoria input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+        .image-preview-input-title-tipo-categoria {
+            margin-left: 2px;
+        }
         .image-preview-input-profile {
             position: relative;
             overflow: hidden;

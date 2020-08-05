@@ -20,10 +20,12 @@ class EmpresaController extends Controller
     }
     public function show($id){
         $empresa = Empresa::findOrFail($id);
+        $categorias = TipoCategoria::all();
         $contacto= Contacto::where("id","=",$empresa->id_contacto)->get();
 
         return view("Empresas.informacion_empresa")
             ->withEmpresa($empresa)
+            ->withTipoCategorias($categorias)
             ->withContacto($contacto);
     }
     public function nuevaEmpresaForm($fase=1){
@@ -35,16 +37,20 @@ class EmpresaController extends Controller
     public function store(CreateEmpresasRequest $request){
         $pathPortadas = public_path() . '/images/empresas/portadas/';//Carpeta publica de las imagenes
         $pathProfile = public_path() . '/images/empresas/profiles/';//Carpeta publica de las imagenes
-        /**Primero se inserta el contacto para asi asignarselo a la empresa*/
-        $nuevoContacto = new Contacto();
-        $nuevoContacto->telefono = $request->input("telefono");
-        $nuevoContacto->telefono_opcional= $request->input("telefono_opcional");
-        $nuevoContacto->correo= $request->input("correo");
-        $nuevoContacto->sitio_web= $request->input("sitio_web");
-        $nuevoContacto->facebook=$request->input("facebook");
-        $nuevoContacto->instagram=$request->input("instagram");
-        $nuevoContacto->save();
 
+
+        $validados = $request->validated();
+        if ($validados) {
+            /**Primero se inserta el contacto para asi asignarselo a la empresa*/
+            $nuevoContacto = new Contacto();
+            $nuevoContacto->telefono = $request->input("telefono");
+            $nuevoContacto->telefono_opcional = $request->input("telefono_opcional");
+            $nuevoContacto->correo = $request->input("correo");
+            $nuevoContacto->sitio_web = $request->input("sitio_web");
+            $nuevoContacto->facebook = $request->input("facebook");
+            $nuevoContacto->instagram = $request->input("instagram");
+            $nuevoContacto->save();
+        }
         /** Creando una nueva empresa**/
         $nuevaEmpresa= new Empresa();
         $nuevaEmpresa->id_contacto=$nuevoContacto->id;
@@ -87,6 +93,9 @@ class EmpresaController extends Controller
 
     }
 
+    public function editarEmpresa(Request $request){
+
+    }
     public function nuevaUbicacionEmpresa($id){
         $ubicaciones=Ubicaciones::where("id_empresa","=",$id)->get();
         $empresa = Empresa::findOrFail($id);

@@ -8,7 +8,9 @@
             <ol class="breadcrumb" style="background: white">
                 <li class="breadcrumb-item" aria-current="page"><a href="/">Inicio</a></li>
                 <li class="breadcrumb-item" aria-current="page"><a href="{{route("empresas")}}">Empresas</a></li>
-                <li class="breadcrumb-item" aria-current="page">{{$empresa->name}} / Ubicaciones</li>
+                <li class="breadcrumb-item" aria-current="page"><a href="{{route("verEmpresa",["id"=> $empresa->id])}}">{{$empresa->name}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Ubicaciones</li>
+
             </ol>
         </nav>
 
@@ -51,7 +53,7 @@
                         <span class="fas fa-map-marker-alt"></span>
                         Agregar ubicación
                     </button>
-                    <a class="btn btn-outline-danger btn-sm" href="#"><span class="fas fa-times"></span> Finalizar</a>
+                    <a class="btn btn-outline-danger btn-sm" href="{{route("verEmpresa",["id"=>$empresa->id])}}" ><span class="fas fa-times"></span> Finalizar</a>
                     <input type="hidden" name="latitud" id="latitud" placeholder="latitud">
                     <input type="hidden" name="longitud" id="longitud" placeholder="Longitud">
                     <hr>

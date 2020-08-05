@@ -499,7 +499,7 @@
                     </button>
                 </div>
                 <form method="POST" action="{{route("nuevaCategoriaModal")}}" enctype="multipart/form-data">
-
+                    @method("post")
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">

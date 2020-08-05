@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoCategoria extends Model
 {
-    protected $fillable=["name"];
+    protected $fillable=["name","img_url"];
 }
