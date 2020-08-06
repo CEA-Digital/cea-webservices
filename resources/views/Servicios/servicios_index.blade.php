@@ -18,6 +18,15 @@
             </ol>
         </nav>
 
+        @if(session("exito"))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span class="fas fa-check"></span> {{session("exito")}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         @if(session("errores"))
 
             <input id="idServicio" name="idServicio" value="{{session("idServicio")}}" type="hidden" >

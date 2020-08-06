@@ -145,7 +145,7 @@ class ServiciosController extends Controller
 
 
 
-            if($foto = Servicio::setCaratula($request->servicio_img_id, $servicioRegsitro->servicio_img_id)){
+            if($foto = Servicio::setCaratula($request->resource_img_id, $servicioRegsitro->ruta)){
                 $request->request->add(['imagen_servicio'=>$foto]);
                 $servicioRegsitro->servicio_img_id = $request->imagen_servicio;
 
@@ -279,6 +279,51 @@ class ServiciosController extends Controller
 
 
     }
+    public function editarImagen(Request $request)
+    {
+
+
+
+            $imagenResource =  ResourcesMedia::findOrFail($request->id);
+
+
+
+            if($foto = Servicio::setCaratula($request->ruta, $imagenResource->ruta)){
+                $request->request->add(['imagen_servicio'=>$foto]);
+                $imagenResource->ruta = $request->imagen_servicio;
+
+            }
+
+            $imagenResource->update();
+
+            return redirect()->route("imagenes",$request->idServicio)
+                ->withExito("Se actualizó la imagen");
+        }
+
+    public function destroyImagen(Request $request)
+    {
+
+        $resource = ResourcesMedia::findOrFail($request->id);
+
+        Servicio::deleteCaratula($resource->ruta);
+
+
+        $resource->delete();
+
+
+        return redirect()->route("imagenes",$request->idServicio)
+            ->withExito("Se eliminó la imagen '");
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

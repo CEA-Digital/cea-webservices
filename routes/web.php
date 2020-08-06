@@ -47,6 +47,10 @@ Route::post("/nuevaCategoriaModal", "ServiciosController@nuevaCategoria")->name(
 Route::get("/imagenes/{idServicio}","ServiciosController@indexImagenes")->name("imagenes");
 Route::get("/agregarImg/{idServicio}","ServiciosController@agregarImg")->name("agregarImg");
 Route::post('/imageview','ServiciosController@storeImagen');
+Route::put("/editarImagen", "ServiciosController@editarImagen")->name("editarImagen");
+Route::delete("/destroyImagen","ServiciosController@destroyImagen")->name("destroyImagen");
+
+
 
 
 

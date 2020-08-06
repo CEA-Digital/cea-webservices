@@ -155,6 +155,19 @@ $('#modalEditarTipoCategoria').on('show.bs.modal', function (event) {
     modal.find('.modal-footer #id').val(idCategoria);
 });
 
+$('#modalEditarImagen').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var id = button.data("id");
+    var ruta = button.data("ruta");
+
+
+    var modal = $(this);
+     modal.find('.modal-footer #id').val(id)
+    modal.find('.modal-body #imgVistaPreviaEditarservicio').attr("src","/storage/images/servicio/"+ruta);
+
+
+});
+
 $('#modalVistaPreviaServicio').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var src_imagen = button.data("src_img");
@@ -163,6 +176,14 @@ $('#modalVistaPreviaServicio').on('show.bs.modal', function (event) {
     modal.find('.modal-body #img').attr("src","/storage/images/servicio/"+src_imagen);
 
 });
+
+$('#modalBorrarImagen').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+     var id = button.data("id");
+
+    var modal = $(this);
+    modal.find('.modal-footer #id').val(id)
+ });
 
 
 
