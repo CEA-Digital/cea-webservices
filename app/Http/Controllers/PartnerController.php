@@ -22,7 +22,7 @@ class PartnerController extends Controller
 
 
 
-            $partners = Partner::Orderby('name', 'ASC')->get();
+            $partners = Partner::where('name','like','%'.$query.'%')->Orderby('name', 'ASC')->get();
              return view('Partners.partners_index')->with("partners", $partners)->withNoPagina(1);
         }
     }
@@ -59,7 +59,7 @@ class PartnerController extends Controller
             $partnersRegsitro->update();
 
             return redirect()->route("partners.index")
-                ->withExito("Se actualizó el paterns '".$request->name);
+                ->withExito("Se actualizó el paterns: ".$request->name);
         }
         catch (ValidationException $exception) {
 
@@ -159,8 +159,20 @@ class PartnerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyPartners(Request $request)
     {
-        //
+
+
+        $resource = Partner::findOrFail($request->id);
+
+        Partner::deleteCaratula($resource->ruta_img);
+
+
+        $resource->delete();
+
+
+        return redirect()->route("partners.index")
+            ->withExito("Se eliminó el partners: ".$request->name);
+
     }
 }

@@ -98,7 +98,7 @@
                     <td>{{$noPagina++}}</td>
                     <td>
                         <button id="callModalVistaPreviaPartners{{$partners->id}}"
-                                data-src_img="{{$partners->servicio_img_id}}"
+                                data-src_img="{{$partners->ruta_img}}"
                                 @if($partners->ruta_img)
                                 data-toggle="modal"
                                 data-target="#modalVistaPreviaPartners"
@@ -133,7 +133,7 @@
                         <button class="btn btn-sm btn-danger"
                                 title="Borrar"
                                 data-toggle="modal"
-                                data-id_servicio="{{$partners->id}}"
+                                data-id_partners="{{$partners->id}}"
                                 data-nombre="{{$partners->name}}"
                                 data-target="#modalBorrarPartners">
                             <span class="fas fa-trash"></span>
@@ -253,15 +253,6 @@
                         <div class="form-group">
                             <input id="nombreEditarPartners" value="{{ old('name') }}" placeholder="Nombre de servicio" name="name" class="form-control" max="100"  >
                         </div>
-
-
-
-
-
-
-
-
-
                         <div class="form-group">
                             <label for="descripcionNuevoPartners">Descripción de partners (Opcional):</label>
                             <textarea class="form-control"
@@ -343,12 +334,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>¿Estás seguro que deseas borrar este Partners con nombre ' <label
-                                id="nombrePartnes"></label>'?</p>
+                        <p>¿Estás seguro que deseas borrar Partners ' <label
+                                id="nombrePartners"></label>'?</p>
 
                     </div>
                     <div class="modal-footer">
                         <input id="idPartners" name="id" type="hidden" value="">
+                        <input id="nombre_hidden" name="name" type="hidden" value="">
+
                         <button type="submit" class="btn btn-danger">Borrar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     </div>

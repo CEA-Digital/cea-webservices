@@ -75,6 +75,8 @@ $('#modalBorrarPartners').on('show.bs.modal', function (event) {
     var nombrePartners = button.data("nombre");
      var modal = $(this);
     modal.find('.modal-body #nombrePartners').text(nombrePartners)
+    modal.find('.modal-footer #nombre_hidden').val(nombrePartners)
+
     modal.find('.modal-footer #idPartners').val(idPartners);
 });
 
@@ -95,47 +97,11 @@ $('#modalEditarPartners').on('show.bs.modal', function (event) {
 
 /****---------------------------------------------------------------------*/
 
-$('#modalBorrarTipoCategoria').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var idCategoria = button.data("id_categoria");
-    var nombreCategoria = button.data("nombre");
-
-    var modal = $(this);
-    modal.find('.modal-body #nombreTipoCategoriaBorrarModal').text(nombreCategoria)
-    modal.find('.modal-footer #idCategoria').val(idCategoria);
-});
-
-$("#busquedaInput").on("keyup change", function () {
-    var input = $("#busquedaInput");
-    if(input.val()){
-        $("#borrarBusqueda").classList.remove("hideClearSearch")
-    }else{
-        $("#borrarBusqueda").classList.add("hideClearSearch");
-    }
-});
-
-$('#modalEditarTipoCategoria').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var idCategoria = button.data("id_categoria");
-    var nombreCategoria = button.data("nombre");
-
-    var modal = $(this);
-    modal.find('.modal-body #nombre_categoria').val(nombreCategoria)
-    modal.find('.modal-footer #id').val(idCategoria);
-});
-
-$('#modalEditarImagen').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var id = button.data("id");
-    var ruta = button.data("ruta");
 
 
-    var modal = $(this);
-     modal.find('.modal-footer #id').val(id)
-    modal.find('.modal-body #imgVistaPreviaEditarservicio').attr("src","/storage/images/servicio/"+ruta);
 
 
-});
+
 
 $('#modalVistaPreviaServicio').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
@@ -146,13 +112,7 @@ $('#modalVistaPreviaServicio').on('show.bs.modal', function (event) {
 
 });
 
-$('#modalBorrarImagen').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-     var id = button.data("id");
 
-    var modal = $(this);
-    modal.find('.modal-footer #id').val(id)
- });
 
 
 
