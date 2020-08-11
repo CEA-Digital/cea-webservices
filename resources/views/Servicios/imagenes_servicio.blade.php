@@ -50,8 +50,7 @@
 
                                             <img class="card-img-top" src="/storage/images/servicio/{{$imagen->ruta}}"
                                                   onclick="$('#callModalVistaPreviaGaleria{{$imagen->id}}').click()"
-
-                                                  width="180px" height="180px"    style="height:150px; max-height: 300px;object-fit: contain"
+                                                  width="150px" height="150px"    style="height:150px; max-height: 300px;object-fit: contain"
                                                   onerror="this.src='/images/noimage.jpg'"   alt="profile-sample1">
                                         </div>
 

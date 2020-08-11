@@ -27,7 +27,10 @@
             </div>
         @endif
 
-        @if(session("errores"))
+
+
+    @if(session("errores"))
+
 
             <input id="idServicio" name="idServicio" value="{{session("idServicio")}}" type="hidden" >
 
@@ -105,8 +108,8 @@
                                 style="opacity: 0"></button>
                         <img  src="storage/images/servicio/{{$servicio->servicio_img_id}}"
                               onclick="$('#callModalVistaPreviaServicio{{$servicio->id}}').click()"
-                              width="150px" height="150px" style="object-fit: contain"
-                              onerror="this.src='/images/noimage.jpg'"> </td>
+                              width="150px" height="150px"  style="height:150px; max-height: 300px;object-fit: contain"
+                              onerror="this.src='/images/noimage.jpg'"  alt="profile-sample1"> </td>
 
                     <td>{{$servicio->name}}</td>
                     @if(!$servicio->descripcion)
@@ -196,7 +199,14 @@
                 <form method="POST" action="{{route('servicios.store')}}" enctype="multipart/form-data">
 
 
-                    @include('Alerts.errors')
+                    @if(session("errores"))
+
+                    @else
+
+                        @include('Alerts.errors')
+
+                    @endif
+
 
 
                     @csrf
@@ -204,35 +214,21 @@
                         <div class="form-group">
                             <label for="nombreNuevoServicio">Nombre del servicio</label>
                             <input  name="name" id="nombreNuevoServicio" maxlength="100" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
-                            @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
 
-                                    </span>
-                            @enderror
+
                         </div>
 
 
                         <div class="form-group">
                             <label for="condicionesNuevoServicio">Condiciones</label>
                             <input  class="form-control @error('condiciones') is-invalid @enderror" value="{{ old('condiciones') }}" name="condiciones" id="condicionesNuevoServicio" maxlength="192">
-                            @error('condiciones')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
 
-                                    </span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="precioNuevoServicio">Precio</label>
                             <input type="text"  class="form-control @error('precio') is-invalid @enderror" value="{{ old('precio') }}" name="precio" id="precioNuevoServicio"  maxlength="8"  pattern="[0-9]+">
-                            @error('precio')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
 
-                                    </span>
-                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="EmpresaNuevoServicio">Seleccione la empresa
@@ -250,11 +246,7 @@
 
                                 @endforeach
                             </select>
-                            @error('id_empresa')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
+
 
                         </div>
 
@@ -277,11 +269,7 @@
 
                                 @endforeach
                             </select>
-                            @error('id_categoria')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
+
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
                                data-target="#modalNuevaCategoria">
@@ -300,11 +288,7 @@
 
                             <input type="text" name="servicio_img_id" class="form-control image-preview-filename @error('servicio_img_id') is-invalid @enderror"
                                    disabled="disabled">
-                            @error('servicio_img_id')
-                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                        @enderror
+
 
                             <!-- don't give a name === doesn't send on POST/GET -->
                             <span class="input-group-btn">
@@ -351,25 +335,29 @@
                     @csrf
 
 
-                    @include('Alerts.errors')
+                    @if(session("errores"))
+                        @include('Alerts.errors')
 
+                    @else
+
+                    @endif
                     <div class="modal-body">
                         <div class="form-group">
-                            <input id="nombreEditarServicio" value="{{ old('name') }}" placeholder="Nombre de servicio" name="name" class="form-control" max="100" required>
+                            <input id="nombreEditarServicio" value="{{ old('name') }}" placeholder="Nombre de servicio" name="name" class="form-control" max="100"  >
                         </div>
                         <div class="form-group">
-                            <input id="condicionesEditarServicio" placeholder="Condiciones" name="condiciones" class="form-control" max="100" required>
+                            <input id="condicionesEditarServicio" placeholder="Condiciones" name="condiciones" class="form-control" max="100"  >
                         </div>
 
                         <div class="form-group">
-                            <input id="precioEditarServicio" placeholder="precio" name="precio" class="form-control" max="100" required>
+                            <input id="precioEditarServicio" placeholder="precio" name="precio" class="form-control" max="100"  >
                         </div>
                         <div class="form-group">
                             <label for="tipoNuevaCategoria">Seleccione la empresa
                             </label>
                             <br>
                             <select name="id_empresa"
-                                    required
+
                                     style="width: 85%"
                                     class="select2TipoCategoria form-control" id="idEmpresaEditar">
                                 <option disabled selected value="">Seleccione</option>
@@ -388,8 +376,7 @@
                             </label>
                             <br>
                             <select name="id_categoria"
-                                    required
-                                    style="width: 85%"
+                                      style="width: 85%"
                                     class="select2TipoCategoria form-control" id="idCategoriaEditar">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($categorias as $categoria)
@@ -436,7 +423,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <input id="idServicio" name="idServicio" type="hidden" >
+                        <input id="idServicio" name="id" type="hidden" >
                         <button type="submit" class="btn btn-success">Editar</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
@@ -458,7 +445,7 @@
                 </div>
                 <div class="modal-body" style="object-fit: fill">
                     <img id="img"
-                         style="display:block; width: 100%; margin-left: auto; margin-right: auto;"
+                         style="display:block; width: 47%; margin-left: auto; margin-right: auto;"
                          onerror="this.src='/images/noimage.jpg'"
                     >
                 </div>

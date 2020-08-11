@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Categorias;
 use App\Empresa;
-  use App\Http\Requests\CreateServiciosRequest;
+use App\Http\Requests\CreateCategoriaRequest;
+use App\Http\Requests\CreateServiciosRequest;
 use App\ResourcesMedia;
 use App\Servicio;
 use App\TipoCategoria;
@@ -135,13 +136,17 @@ class ServiciosController extends Controller
                 'condiciones.required' => 'Escriba una condición para este servivio.',
                 'descripcion.max:192' => 'La descripción  no debe de llevar mas de 192 caracteres.',
                 'precio.numeric' => 'El precio debe ser un valor numérico.',
+                'precio.required' => 'El precio es requerido.',
+
                 'id_empresa.required' => 'Se requiere una empresa para este servivio.',
                 'id_categoria.required' => 'Se requiere una categoria para este servivio.',
                  ]);
 
 
 
+
             $servicioRegsitro =  Servicio::findOrFail($request->id);
+
 
 
 
@@ -207,7 +212,7 @@ class ServiciosController extends Controller
             ->withExito("Se eliminó el servicio  '");
 
     }
-    public function nuevaCategoria(Request $request)
+    public function nuevaCategoria(CreateCategoriaRequest $request)
     {
         $path = public_path() . '/images/categorias';//Carpeta publica de las imagenes
         //-------------VALIDAR SI LA CARPETA EXISTE---------------------

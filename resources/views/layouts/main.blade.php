@@ -82,6 +82,7 @@
                             <a class="nav-link" href="{{route("empresas")}}">Empresas Asociadas</a>
                             <a class="nav-link" href="{{route("categorias")}}">Categorias</a>
                             <a class="nav-link" href="{{ url('servicios') }}">Servicios</a>
+                            <a class="nav-link" href="{{ url('partners') }}">Partners</a>
                             <a class="nav-link" href="{{url('productos')}}">Productos</a>
 
                         </nav>
@@ -188,6 +189,8 @@
 
 
 <script src="{{asset("js/servicio.js")}}"></script>
+<script src="{{asset("js/partners.js")}}"></script>
+
 
 <script src="{{asset("js/empresas.js")}}"></script>
 

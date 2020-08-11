@@ -49,6 +49,13 @@ Route::get("/agregarImg/{idServicio}","ServiciosController@agregarImg")->name("a
 Route::post('/imageview','ServiciosController@storeImagen');
 Route::put("/editarImagen", "ServiciosController@editarImagen")->name("editarImagen");
 Route::delete("/destroyImagen","ServiciosController@destroyImagen")->name("destroyImagen");
+//--------------------------------------------Partners ROUTES------------------------------------------------------
+Route::resource("/partners", "PartnerController");
+Route::put("/editarPartners", "PartnerController@editarPartners")->name("editarPartners");
+Route::delete("/destroyPartners","PartnerController@destroyPartners")->name("destroyPartners");
+
+
+
 
 
 
