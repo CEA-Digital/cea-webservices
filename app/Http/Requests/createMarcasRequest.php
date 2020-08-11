@@ -25,7 +25,7 @@ class createMarcasRequest extends FormRequest
     {
         return [
             'name'=> 'required|string|max:30',
-            'description'=>'string|max:100'
+            'description'=>'max:100'
             //
         ];
     }
@@ -34,6 +34,8 @@ class createMarcasRequest extends FormRequest
     {
         return [
             'name.required'=>'El nombre de la marca es requerido',
+            'name.max:30'=>'El nombre no puede exceder 30 caracteres',
+            'name.string'=>'El nombre no deben de ser solamente numeros',
             'description.max:100'=>'La descripcion no debe de excceder de 100 caracteres'
         ];
     }

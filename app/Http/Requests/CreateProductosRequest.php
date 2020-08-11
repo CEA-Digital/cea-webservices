@@ -26,7 +26,7 @@ class CreateProductosRequest extends FormRequest
     {
         return [
             'name'=>'required|string|max:100',
-            'description'=>'required|max:192',
+            'description'=>'max:192',
             'unit_price'=>'required|numeric|max:9999',
             'lote_price'=>'required|numeric|max:99999',
             'profile_img_url'=>'nullable',
@@ -41,7 +41,6 @@ class CreateProductosRequest extends FormRequest
         return [
             'name.required' => 'El nombre del producto es requerido.',
             'description.max:192' => 'La descripción  no debe de tener más de 192 caracteres.',
-            'description.required' =>'La descripcion es requerida',
             'unit_price.numeric' => 'El precio debe ser un valor numérico.',
             'unit_price.max:9999' =>'El precio unitario no debe de exceder de 9 caracteres',
             'lote_price.max:99999' =>'El precio de lote no debe de exceder de 9 caracteres',

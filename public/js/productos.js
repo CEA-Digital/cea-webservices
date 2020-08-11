@@ -17,6 +17,7 @@ $('#modalEditarProducto').on('show.bs.modal',function (e) {
     var categoria = button.data('id_categoria');
     var empresa = button.data('id_empresa');
     var img_url = button.data('img_url');
+    var id_marca = button.data('id_marca');
 
     var modal = $(this);
 
@@ -28,8 +29,10 @@ $('#modalEditarProducto').on('show.bs.modal',function (e) {
     modal.find('.modal-body #disponible').val(disponible).change();
     modal.find('.modal-body #tipoEditarCategoria').val(categoria).change();
     modal.find('.modal-body #empresa').val(empresa).change();
+    modal.find('.modal-body #marca').val(id_marca).change();
     modal.find('.modal-body #imgVistaPreviaEditarCategoria').attr("src","/images/productos/"+img_url);
 });
+
 $('#modalBorrarProducto').on('show.bs.modal', function (e) {
     var button = $(e.relatedTarget);
     var id = button.data('id');

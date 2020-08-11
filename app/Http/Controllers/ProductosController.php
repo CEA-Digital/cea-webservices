@@ -21,13 +21,14 @@ class ProductosController extends Controller
         ->leftJoin("categorias","productos.id_categoria","=","categorias.id")
             ->leftJoin("empresas","productos.id_empresa","=","empresas.id")
         ->leftJoin("resources_media","productos.id","=","resources_media.id_prod")
+            ->leftJoin("marcas","productos.id_marca","=","marcas.id")
         ->select("productos.id","productos.name","productos.description","productos.unit_price","productos.lote_price",
             "productos.disponible","empresas.name AS nombre_empresa","productos.profile_img_url as imagen_url","categorias.name as nombre_categoria",
-            "productos.id_categoria","productos.id_empresa")->paginate(10);
+            "productos.id_categoria","productos.id_empresa","productos.id_marca")->paginate(10);
         $empresas = Empresa::all();
         $categoria = Categorias::all();
         $tipoCategoria = TipoCategoria::all();
-        $marca = Marca::paginate(10);
+        $marca = Marca::all();
 
         return view("Productos.productos")
             ->withNoPagina(1)
@@ -48,6 +49,7 @@ class ProductosController extends Controller
             $nuevoProducto->id_categoria=$request->input('id_categoria');
             $nuevoProducto->id_empresa=$request->input('id_empresa');
             $nuevoProducto->disponible=$request->input('disponible');
+            $nuevoProducto->id_marca=$request->input("id_marca");
 
 
         $path = public_path() . '\images\productos';//Carpeta publica de las imagenes
@@ -70,7 +72,7 @@ class ProductosController extends Controller
             . $request->input("name"));
 
     }
-    public function editarProductos(Request $request){
+    public function editarProductos(CreateProductosRequest $request){
         $editarProductos=Producto::findOrFail($request->id);
         $editarProductos->name=$request->input('name');
         $editarProductos->description=$request->input('description');
@@ -79,6 +81,8 @@ class ProductosController extends Controller
         $editarProductos->id_categoria=$request->input('id_categoria');
         $editarProductos->id_empresa=$request->input('id_empresa');
         $editarProductos->disponible=$request->input('disponible');
+        $editarProductos->id_marca=$request->input("id_marca");
+
 
         $path = public_path() . '\images\productos';//Carpeta publica de las imagenes
         if ($request->imagen_url) {
