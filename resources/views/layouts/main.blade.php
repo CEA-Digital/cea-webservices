@@ -84,6 +84,8 @@
                             <a class="nav-link" href="{{ url('servicios') }}">Servicios</a>
                             <a class="nav-link" href="{{ url('partners') }}">Partners</a>
                             <a class="nav-link" href="{{url('productos')}}">Productos</a>
+                            <a class="nav-link" href="{{ url('promociones') }}">Promociones</a>
+
 
                         </nav>
                     </div>
@@ -190,6 +192,9 @@
 
 <script src="{{asset("js/servicio.js")}}"></script>
 <script src="{{asset("js/partners.js")}}"></script>
+<script src="{{asset("js/promociones.js")}}"></script>
+
+
 
 
 <script src="{{asset("js/empresas.js")}}"></script>

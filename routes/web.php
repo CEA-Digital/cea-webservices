@@ -53,6 +53,8 @@ Route::delete("/destroyImagen","ServiciosController@destroyImagen")->name("destr
 Route::resource("/partners", "PartnerController");
 Route::put("/editarPartners", "PartnerController@editarPartners")->name("editarPartners");
 Route::delete("/destroyPartners","PartnerController@destroyPartners")->name("destroyPartners");
+//--------------------------------------------Promociones ROUTES------------------------------------------------------
+Route::resource("/promociones", "PromocionesController");
 
 
 
