@@ -72,5 +72,5 @@ Route::delete("/productos/borrar","ProductosController@borrarProducto")->name("b
 //--------------------------------------------Marca ROUTES-------------------------------------------------------->
 Route::get("/marcas","MarcaController@index")->name("marcas");
 Route::post("/marcas/nuevo","MarcaController@storeMarca")->name("nuevaMarca");
-Route::put("marcas/editar","MarcaController@editarMarca")->name("editarMarca");
-Route::delete("marcas/borrar","MarcaController@borrarMarca")->name("borrarMarca");
+Route::put("/marcas/editar","MarcaController@editarMarca")->name("editarMarca");
+Route::delete("/marcas/borrar","MarcaController@borrarMarca")->name("borrarMarca");

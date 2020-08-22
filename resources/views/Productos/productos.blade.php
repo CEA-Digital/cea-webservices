@@ -16,6 +16,21 @@
                 <li class="breadcrumb-item" aria-current="page" ><a href="/">Inicio</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Productos</li>
             </ol>
+            <div class="pagination pagination-sm">
+
+                <form  class="d-none d-md-inline-block form-inline
+                           ml-auto mr-0 mr-md-2 my-0 my-md-0 mb-md-2">
+                    <div class="input-group" style="width: 300px">
+                        <input class="form-control" name="search" type="search" placeholder="Search"
+                               aria-label="Search">
+                        <div class="input-group-append">
+                            <a id="borrarBusqueda" class="btn btn-danger hideClearSearch" style="color: white"
+                               href="{{route("productos")}}">&times;</a>
+                            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
          </nav>
 
         @if(session("exito"))
@@ -33,16 +48,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
         @endif
+
         @if ($errors->any())
-            <script>
+            <script >
                 document.onreadystatechange = function () {
                     if (document.readyState) {
-                        document.getElementById("botonAbrirModalNuevoProducto").click();
+                    document.getElementById("editarProducto").click();
                     }
                 }
             </script>
         @endif
+
 
         <table class="table">
             <thead class="thead-dark">
@@ -84,7 +102,7 @@
                     <td>{{$productos->name}}</td>
                     <td>{{$productos->unit_price}}</td>
                     <td>{{$productos->lote_price}}</td>
-                     @if($productos->disponible=1)
+                     @if($productos->disponible===1)
                             <td>Disponible</td>
                             @else
                          <td>No Disponible</td>
@@ -107,6 +125,7 @@
                             <span class="fas fa-eye"></span>
                         </button>
                         <button class="btn btn-sm btn-success"
+                                id="editarProducto"
                                 data-toggle="modal"
                                 data-target="#modalEditarProducto"
                                 data-id="{{$productos->id}}"
@@ -118,15 +137,16 @@
                                 data-lote_price="{{$productos->lote_price}}"
                                 data-disponible="{{$productos->disponible}}"
                                 data-img_url="{{$productos->imagen_url}}"
+                                data-id_marca="{{$productos->id_marca}}"
                                 title="Editar">
                             <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-sm btn-danger"
                                 title="Borrar"
-                        data-toggle="modal"
-                        data-target="#modalBorrarProducto"
-                        data-id="{{$productos->id}}"
-                        data-name="{{$productos->name}}">
+                                data-toggle="modal"
+                                data-target="#modalBorrarProducto"
+                                data-id="{{$productos->id}}"
+                                data-name="{{$productos->name}}">
                             <span class="fas fa-trash"></span>
                         </button>
                     </td>
@@ -135,15 +155,7 @@
 
             </tbody>
         </table>
-        @if ($errors->any())
-            <script>
-                document.onreadystatechange = function () {
-                    if (document.readyState) {
-                        document.getElementById("botonAbrirModalNuevoProducto").click();
-                    }
-                }
-            </script>
-        @endif
+
     </div>
     <!-----vista previa imagen------->
     <div class="modal fade" id="modalVistaPreviaProductos" tabindex="-1" role="dialog">
@@ -169,7 +181,7 @@
         </div>
     </div>
 
-<!------------------------MODAL NUEVO PRODUCTO------------------------------------->
+<!----------------------------------------------------MODAL NUEVO PRODUCTO------------------------------------------------------->
     <div class="modal fade" id="modalNuevoProducto" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -199,7 +211,7 @@
                             <label for="descripcionNuevoProducto">Descripción de nuevo Producto (Opcional):</label>
                             <textarea class="form-control @error('description') is-invalid @enderror"
                                       name="description"
-                                      id="descripcionNuevaCategoria"
+                                      id="descripcionNuevoProducto"
                                       maxlength="192"
                             >{{Request::old('description')}}</textarea>
                             @error('description')
@@ -274,7 +286,8 @@
                                     class="select2TipoCategoria form-control" id="empresa">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($empresas as $empresa)
-                                    <option value="{{$empresa->id}}" @if(session("idEmpresa"))
+                                    <option value="{{$empresa->id}}" @if(Request::old('id_empresa')==$empresa->id){{'selecte'}}@endif
+                                    @if(session("idEmpresa"))
                                         {{session("idEmpresa")==$empresa->id ? 'selected="selected"':''}}
                                         @endif>{{$empresa->name}}
                                     </option>
@@ -290,7 +303,7 @@
                                     required
                                     style="width: 85%"
                                     class="select2TipoCategoria form-control" id="disponible">
-                                <option disabled selected value="">Seleccione</option>
+                                <option disabled selected value="{{old('disponible')}}">Seleccione</option>
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select>
@@ -304,6 +317,13 @@
                                     style="width: 85%"
                                     class="select2TipoCategoria form-control" id="marca">
                                 <option disabled selected value="">Seleccione:</option>
+                                @foreach($marca as $marcas)
+                                    <option value="{{$marcas->id}}" @if(Request::old('id_marca')===$marcas->id){{'selecte'}}@endif
+                                    @if(session("idMarca"))
+                                        {{session("idMarca")==$marcas->id ? 'selected="selected"':''}}
+                                        @endif>{{$marcas->name}}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -331,7 +351,7 @@
                         </div><!-- /input-group image-preview [TO HERE]-->
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Crear</button>
+                        <button type="submit" id="nuevoP" value="nuevoP" class="btn btn-success">Crear</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
@@ -345,7 +365,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background: #2a2a35">
-                    <h5 class="modal-title" style="color: white"><span class="fas fa-plus"></span> Agregar Producto
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-plus"></span> Editar Producto
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="color: white">&times;</span>
@@ -353,27 +373,32 @@
                 </div>
                 <form method="POST" action="{{route("editarProducto")}}" enctype="multipart/form-data">
                     @method("PUT")
-                    @include('Alerts.errors')
 
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nombreNuevoProducto">Nombre Producto</label>
-                            <input required class="form-control @error('name') is-invalid @enderror" name="name" id="nombreEditarProducto" maxlength="100">
+                            <input  class="form-control @error('name') is-invalid @enderror" name="name" id="nombreEditarProducto" maxlength="100" value="{{old('name')}}">
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                             @enderror
                         </div>
-
                         <div class="form-group">
                             <label for="descripcionNuevoProducto">Descripción de nuevo Producto (Opcional):</label>
-                            <textarea class="form-control"
+                            <textarea class="form-control @error('description') is-invalid @enderror"
                                       name="description"
                                       id="descripcionEditarProducto"
-                                      maxlength="192"></textarea>
+                                      maxlength="192"
+                            >{{Request::old('description')}}</textarea>
+                            @error('description')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
+
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Unitario</label>
                             <input required class="form-control" name="unit_price" id="precioUnitarioProducto" maxlength="8" type="number">
@@ -400,7 +425,8 @@
                             <a class="btn btn-sm btn-outline-success"
                                data-toggle="modal"
                                data-target="#modalNuevaCategoria">
-                                <i class="fas fa-plus" style="color: green"></i></a>
+                                <i class="fas fa-plus" style="color: green"></i>
+                            </a>
                         </div>
                         <div class="form-group">
                             <label for="empresa">Seleccione la empresa</label>
@@ -437,7 +463,11 @@
                             <select name="id_marca"
                                     style="width: 85%"
                                     class="select2TipoCategoria form-control" id="marca">
-                                <option disabled selected value="">Seleccione:</option>
+                                <option disabled selected value="">Seleccione</option>
+                                @foreach($marca as $marca)
+                                    <option value="{{$marca->id}}">{{$marca->name}}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -471,7 +501,7 @@
                     </div>
                     <div class="modal-footer">
                         <input id="id" name="id" type="hidden" >
-                        <button type="submit" class="btn btn-success">Editar</button>
+                        <button type="submit" id="editarP" value="editarP" class="btn btn-success">Editar</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
