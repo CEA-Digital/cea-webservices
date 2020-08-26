@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePromocionRequest;
+use App\Promocione;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +28,16 @@ class PromocionesController extends Controller
                     "servicios.condiciones As servicio_condiciones", "servicios.precio As servicio_precio",
                   "servicios.servicio_img_id", "empresas.name As empresa_name")
                  ->where('promociones.name','LIKE','%'.$query.'%') ->where('promociones.id_producto','=','0') ->orwhere('promociones.id_producto','=',null)->get();
-            $promociones->first()->precio_menos_descuento = '';
+
+             if($promociones != '[]'){
+                $promociones->first()->precio_menos_descuento = '';
+
+            }
+
+            $servicios = DB::table("servicios")
+                ->leftJoin("empresas", "servicios.id_empresa", "=", "empresas.id")
+                ->select("servicios.id","servicios.name", "servicios.precio",
+                     "empresas.name As name_empresa")->orderby('empresas.name','asc')->get();
 
             foreach ($promociones as $promocione){
 
@@ -35,8 +46,7 @@ class PromocionesController extends Controller
 
             }
 
-
-               return view('Promociones.promociones_index')->with("promociones", $promociones);
+                return view('Promociones.promociones_index')->with("servicios", $servicios)->with("promociones", $promociones);
         }
     }
 
@@ -56,9 +66,27 @@ class PromocionesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePromocionRequest $request)
     {
-        //
+        $promocion = new Promocione();
+
+
+
+
+        $promocion->name = ucwords(strtolower($request->name));
+        $promocion->descripcion = $request->descripcion;
+        $promocion->id_servicio = $request->id_servicio;
+        $promocion->porcentaje_descuento = $request->porcentaje_descuento;
+        $promocion->fecha_inicio = $request->fecha_inicio;
+        $promocion->fecha_fin = $request->fecha_fin;
+
+
+        $promocion->save();
+
+
+        return redirect()->route("promociones.index")
+            ->withExito("Se creó un nuevo promocion con nombre '"
+                .$request->input("name")."' con ID= ".$promocion->id."");
     }
 
     /**

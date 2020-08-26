@@ -150,7 +150,7 @@ class ServiciosController extends Controller
 
 
 
-            if($foto = Servicio::setCaratula($request->resource_img_id, $servicioRegsitro->ruta)){
+            if($foto = Servicio::setCaratula($request->servicio_img_id, $servicioRegsitro->ruta)){
                 $request->request->add(['imagen_servicio'=>$foto]);
                 $servicioRegsitro->servicio_img_id = $request->imagen_servicio;
 

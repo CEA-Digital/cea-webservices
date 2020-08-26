@@ -211,11 +211,11 @@
 
 
 
-    <div class="modal fade" id="modalNuevoPartners" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalNuevaPromocion" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background: #2a2a35">
-                    <h5 class="modal-title" style="color: white"><span class="fas fa-plus"></span> Agregar Partners
+                    <h5 class="modal-title" style="color: white"><span class="fas fa-plus"></span> Agregar servicio de promoción
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="color: white">&times;</span>
@@ -237,45 +237,71 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="nombreNuevoServicio">Nombre del Partners</label>
-                            <input  name="name" id="nombreNuevoPartners" maxlength="100" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
+                            <label for="nombreNuevaPromocion">Nombre de la promoción</label>
+                            <input  name="name" id="nombreNuevaPromocion" maxlength="100" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PromocionNuevoServicio">Seleccione el servicio
+                                <!---- Boton para crear un nuevo tipo de categoria- -->
+                            </label>
+                            <br>
+                            <select name="id_servicio"
+
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control @error('id_servicio') is-invalid @enderror"  id="id_servicio">
+                                <option disabled selected value="">Seleccione</option>
+                                @foreach($servicios as $servicio)
+
+                                    <option value="{{$servicio->id}}"@if (old('id_servicio') == $servicio->id) {{ 'selected' }} @endif>{{$servicio->name}} , {{$servicio->precio}} Lps, {{$servicio->name_empresa}}</option>
+
+                                @endforeach
+                            </select>
 
 
                         </div>
 
 
+
                         <div class="form-group">
-                            <label for="descripcionNuevoServicio">Descripción del partners (Opcional):</label>
+                            <label for="descripcionNuevaPromocion">Descripción de la promoción (Opcional):</label>
                             <textarea class="form-control"
                                       name="descripcion"
                                       id="descripcionNuevaPartners"
                                       maxlength="192">{{Request::old('descripcion')}}</textarea>
                         </div>
 
-                        <label for="imagenPartners">Seleccione una imagen (opcional): </label>
-                        <div class="input-group image-preview">
+                        <div class="form-group">
+                            <label for="porcentajeDescPromocion">Porcentaje de descuento (opcional)</label>
+                            <input type="number"  class="form-control @error('porcentaje_descuento') is-invalid @enderror" value="{{ old('porcentaje_descuento') }}" name="porcentaje_descuento" id="porcentaje_descuento"  max="100" maxlength="3"  pattern="[0-9]+">
 
-                            <input type="text" name="ruta_img" class="form-control image-preview-filename @error('ruta_img') is-invalid @enderror"
-                                   disabled="disabled">
-
-
-                            <!-- don't give a name === doesn't send on POST/GET -->
-                            <span class="input-group-btn">
-                                <!-- image-preview-clear button -->
-                                <button type="button" class="btn btn-outline-danger image-preview-clear"
-                                        style="display:none;">
-                                    <span class="fas fa-times"></span> Clear
-                                </button>
-                                <!-- image-preview-input -->
-                                <div class="btn btn-default image-preview-input">
-                                    <span class="fas fa-folder-open"></span>
-                                    <span class="image-preview-input-title">Seleccionar</span>
-                                    <input type="file" accept="image/png, image/jpeg, image/gif"
-                                           name="ruta_img"/>
-                                    <!-- rename it -->
-                                </div>
-                            </span>
                         </div>
+
+                        <div class="form-group">
+                            <label for="fecha_inicio">Fecha de inicio </label>
+                            <input type="date" class="form-control @error('fecha_inicio') is-invalid @enderror" name="fecha_inicio" value="{{old('fecha_inicio')}}" id="fecha_inicio"    >
+                            @error('fecha_inicio')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+
+                                    </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fecha_fin">Fecha fin </label>
+                            <input type="date" class="form-control @error('fecha_fin') is-invalid @enderror" name="fecha_fin" value="{{old('fecha_fin')}}" id="fecha_fin"    >
+                            @error('fecha_fin')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+
+                                    </span>
+                            @enderror
+                        </div>
+
+
 
 
                     </div>
