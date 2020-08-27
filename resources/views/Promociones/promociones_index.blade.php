@@ -182,10 +182,17 @@
                           <button class="btn btn-sm btn-success"
                                  data-toggle="modal"
                                  id="botonAbrirModalEditarPromocion{{$promocion->id}}"
-                                 data-target="#modalEditarImagen"
-                                 data-ruta="{{$promocion->servicio_img_id}}"
-                                 data-id="{{$promocion->id}}"
-                                 title="Editar">
+                                 data-target="#modalEditarPromocion"
+                                  data-id="{{$promocion->id}}"
+                                  data-nombre="{{$promocion->name}}"
+                                  data-id_servicio="{{$promocion->servicio_id}}"
+                                  data-porcentaje_descuento="{{$promocion->porcentaje_descuento}}"
+                                  data-fecha_inicio="{{$promocion->fecha_inicio}}"
+                                  data-fecha_fin="{{$promocion->fecha_fin}}"
+                                  data-descripcion="{{$promocion->descripcion}}"
+
+
+                                  title="Editar">
                              <span class="fas fa-pencil-alt"></span>
                          </button>
                          <button class="btn btn-sm btn-danger"
@@ -315,7 +322,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalEditarPartners" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalEditarPromocion" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background: #2a2a35">
@@ -325,7 +332,7 @@
                         <span style="color: white" aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="{{route("promociones.store")}}" enctype="multipart/form-data">
+                <form method="post" action="{{route("editarPromocion")}}" enctype="multipart/form-data">
                     @method("PUT")
                     @csrf
 
@@ -338,44 +345,67 @@
                     @endif
                     <div class="modal-body">
                         <div class="form-group">
-                            <input id="nombreEditarPartners" value="{{ old('name') }}" placeholder="Nombre de servicio" name="name" class="form-control" max="100"  >
+                            <input id="name" value="{{ old('name') }}" placeholder="Nombre de promocion" name="name" class="form-control" max="100"  >
                         </div>
+
                         <div class="form-group">
-                            <label for="descripcionNuevoPartners">Descripción de partners (Opcional):</label>
+                            <label for="editarServicio">Seleccione el servicio
+                            </label>
+                            <br>
+                            <select name="id_servicio"
+                                    style="width: 85%"
+                                    class="select2TipoCategoria form-control" id="id_servicio">
+                                <option disabled selected value="">Seleccione</option>
+                                @foreach($servicios as $servicio)
+                                    <option value="{{$servicio->id}}" >{{$servicio->name}} , {{$servicio->precio}} Lps, {{$servicio->name_empresa}}</option>
+                                @endforeach
+                            </select>
+                            <!---- Boton para crear un nuevo tipo de categoria- -->
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcionNuevoPromocion">Porcentaje de desacuento (Opcional):</label>
+                            <input id="porcentaje_descuento" value="{{ old('porcentaje_descuento') }}" placeholder="Porcentaje de descuento" name="porcentaje_descuento" class="form-control" max="100"  >
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fecha_inicio">Fecha de inicio </label>
+                            <input type="date" class="form-control @error('fecha_inicio') is-invalid @enderror" name="fecha_inicio" value="{{old('fecha_inicio')}}" id="fecha_inicio"    >
+                            @error('fecha_inicio')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+
+                                    </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fecha_fin">Fecha fin </label>
+                            <input type="date" class="form-control @error('fecha_fin') is-invalid @enderror" name="fecha_fin" value="{{old('fecha_fin')}}" id="fecha_fin"    >
+                            @error('fecha_fin')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+
+                                    </span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcionNuevoPromocion">Descripción de promocion (Opcional):</label>
                             <textarea class="form-control"
                                       name="descripcion"
-                                      id="descripcionEditarPartners"
+                                      id="descripcion"
                                       maxlength="192"></textarea>
                         </div>
-                        <img id="imgVistaPreviaEditarPartners"
-                             height="150px" width="150px"
-                             style="object-fit: contain"
-                             onerror="this.src='/images/noimage.jpg'">
-                        <label for="imagenPartners">Seleccione una imagen (opcional): </label>
-                        <div class="input-group image-preview">
-                            <input type="text" name="ruta_img" class="form-control image-preview-filename"
-                                   disabled="disabled">
-                            <!-- don't give a name === doesn't send on POST/GET -->
-                            <span class="input-group-btn">
-                                <!-- image-preview-clear button -->
-                                <button type="button" class="btn btn-outline-danger image-preview-clear"
-                                        style="display:none;">
-                                    <span class="fas fa-times"></span> Limpiar
-                                </button>
-                                <!-- image-preview-input -->
-                                <div class="btn btn-default image-preview-input">
-                                    <span class="fas fa-folder-open"></span>
-                                    <span class="image-preview-input-title">Seleccionar</span>
-                                    <input type="file" accept="image/png, image/jpeg, image/gif"
-                                           name="ruta_img"/>
-                                    <!-- rename it -->
-                                </div>
-                            </span>
-                        </div><!-- /input-group image-preview [TO HERE]-->
+
 
                     </div>
                     <div class="modal-footer">
-                        <input id="idPartners" name="id" type="hidden" >
+                        <input id="id_promocion" name="id" type="hidden" >
                         <button type="submit" class="btn btn-success">Editar</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
@@ -407,27 +437,27 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalBorrarPartners" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalBorrarPromocion" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
-                <form method="post" action="{{route("destroyPartners")}}" enctype="multipart/form-data">
+                <form method="post" action="{{route("destroyPromocion")}}" enctype="multipart/form-data">
                     @method("DELETE")
                     @csrf
                     <div class="modal-header" style="background: #2a2a35">
-                        <h5 class="modal-title" style="color: white"><span class="fas fa-trash"></span> Borrar Partners
+                        <h5 class="modal-title" style="color: white"><span class="fas fa-trash"></span> Borrar Promoción
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span style="color: white" aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>¿Estás seguro que deseas borrar Partners ' <label
+                        <p>¿Estás seguro que deseas borrar esta promoción ' <label
                                 id="nombrePartners"></label>'?</p>
 
                     </div>
                     <div class="modal-footer">
-                        <input id="idPartners" name="id" type="hidden" value="">
-                        <input id="nombre_hidden" name="name" type="hidden" value="">
+                        <input id="id_promocion" name="id" type="hidden" value="">
+                        <input id="name" name="name" type="hidden" value="">
 
                         <button type="submit" class="btn btn-danger">Borrar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

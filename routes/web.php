@@ -55,6 +55,10 @@ Route::put("/editarPartners", "PartnerController@editarPartners")->name("editarP
 Route::delete("/destroyPartners","PartnerController@destroyPartners")->name("destroyPartners");
 //--------------------------------------------Promociones ROUTES------------------------------------------------------
 Route::resource("/promociones", "PromocionesController");
+Route::put("/editarPromocion", "PromocionesController@editarPromocion")->name("editarPromocion");
+Route::delete("/destroyPromocion","PromocionesController@destroyPromocion")->name("destroyPromocion");
+
+
 
 
 

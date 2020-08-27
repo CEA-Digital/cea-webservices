@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePromocionRequest;
+use App\Partner;
 use App\Promocione;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class PromocionesController extends Controller
 {
@@ -89,6 +91,8 @@ class PromocionesController extends Controller
                 .$request->input("name")."' con ID= ".$promocion->id."");
     }
 
+
+
     /**
      * Display the specified resource.
      *
@@ -98,6 +102,57 @@ class PromocionesController extends Controller
     public function show($id)
     {
         //
+    }
+    public function editarPromocion(Request $request)
+
+    {
+
+
+        try {
+            $this->validate($request, [
+                'name'=>'required|string|max:100',
+                'descripcion'=>'max:192',
+                'id_servicio'=>'required|integer',
+                'fecha_inicio'=>'required|date',
+                'fecha_fin'=>'required|date',
+
+            ], $messages = [
+                'name.required' => 'El nombre de la promoción es requerido.',
+                'descripcion.max:192' => 'La descripción  no debe de llevar mas de 192 caracteres.',
+                'id_servicio.required' => 'Se requiere un servicio para esta promoción.',
+                'fecha_inicio.required' => 'Se requiere una fecha de inicio para esta promoción.',
+                'fecha_fin.required' => 'Se requiere una fecha fin para esta promoción.',
+
+            ]);
+
+
+
+            $promocionRegsitro = Promocione::findOrFail($request->id);
+
+
+
+            $promocionRegsitro->name = $request->get('name');
+            $promocionRegsitro->descripcion = $request->get('descripcion');
+            $promocionRegsitro->porcentaje_descuento = $request->get('porcentaje_descuento');
+            $promocionRegsitro->id_servicio = $request->get('id_servicio');
+            $promocionRegsitro->fecha_inicio = $request->get('fecha_inicio');
+            $promocionRegsitro->fecha_fin = $request->get('fecha_fin');
+
+
+
+
+            $promocionRegsitro->update();
+
+            return redirect()->route("promociones.index")
+                ->withExito("Se actualizó la promocion: " . $request->name);
+        } catch (ValidationException $exception) {
+
+
+            return redirect()->route("promocion.index")->with('idPromocion', $request->id)->with('errores', 'errores')->withErrors($exception->errors())
+                ->withExito("hubo un error'");
+
+
+        }
     }
 
     /**
@@ -129,8 +184,19 @@ class PromocionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyPromocion(Request $request)
     {
-        //
+
+
+        $promocion = Promocione::findOrFail($request->id);
+
+
+
+        $promocion->delete();
+
+
+        return redirect()->route("promociones.index")
+            ->withExito("Se eliminó la promoción: ".$request->name);
+
     }
 }
