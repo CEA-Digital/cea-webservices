@@ -71,6 +71,7 @@
                                      alt="profile-sample1"
                                      data-src_img="portadas/{{$empresa->portada_img_url}}"
                                      data-toggle="modal"
+                                     onerror="this.src='/images/noimage.jpg'"
                                      data-target="#modalVistaPreviaImgEmpresa"
                                      class="background"/>
                             </div>
@@ -78,6 +79,7 @@
                                 <img src="/images/empresas/profiles/{{$empresa->profile_img_url}}"
                                      data-src_img="profiles/{{$empresa->profile_img_url}}"
                                      data-toggle="modal"
+                                     onerror="this.src='/images/noimage.jpg'"
                                      data-target="#modalVistaPreviaImgEmpresa"
                                      alt="profile-image" class="profile"/>
                             </div>

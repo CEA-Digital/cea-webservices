@@ -126,6 +126,7 @@
                                             <tr>
                                                 <td>
                                                     <a target="popup"
+                                                       title="Ver en Google Maps"
                                                        href="https://www.google.com/maps?q={{$ubicacion->latitud}},{{$ubicacion->longitud}}">
                                                         <span class="fas fa-map-marker-alt"
                                                               style="color: red"></span> {{$ubicacion->descripcion}}
