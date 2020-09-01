@@ -10,7 +10,7 @@ class Empresa extends Model
     protected $appends=["nombre_categoria","ubicaciones","contacto"];
 
     public function getNombreCategoriaAttribute(){
-        $categoria= Categorias::findOrFail($this->id_categoria);
+        $categoria= TipoCategoria::findOrFail($this->id_categoria);
         return $categoria->name;
     }
     public function getUbicacionesAttribute(){

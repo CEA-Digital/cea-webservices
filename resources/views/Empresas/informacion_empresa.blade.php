@@ -34,9 +34,9 @@
                 <div class="card profile-card-3">
                     <div class="background-block">
                         <img src="/images/empresas/portadas/{{$empresa->portada_img_url}}"
-                             alt="profile-sample1"
                              data-src_img="portadas/{{$empresa->portada_img_url}}"
                              data-toggle="modal"
+                             onerror="this.src='/images/noimage.jpg'"
                              data-target="#modalVistaPreviaImgEmpresa"
                              class="background"/>
                     </div>
@@ -44,8 +44,9 @@
                         <img src="/images/empresas/profiles/{{$empresa->profile_img_url}}"
                              data-src_img="profiles/{{$empresa->profile_img_url}}"
                              data-toggle="modal"
+                             onerror="this.src='/images/noimage.jpg'"
                              data-target="#modalVistaPreviaImgEmpresa"
-                             alt="profile-image" class="profile"/>
+                           class="profile"/>
                     </div>
                     <div class="card-content">
                         <h2>{{$empresa->name}}<small>Plan Adquirido</small></h2>
