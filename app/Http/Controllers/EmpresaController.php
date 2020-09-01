@@ -48,46 +48,52 @@ class EmpresaController extends Controller
             $nuevoContacto->facebook = $request->input("facebook");
             $nuevoContacto->instagram = $request->input("instagram");
             $nuevoContacto->save();
-        }
-        /** Creando una nueva empresa**/
-        $nuevaEmpresa= new Empresa();
-        $nuevaEmpresa->id_contacto=$nuevoContacto->id;
-        $nuevaEmpresa->name= $request->input("name");
-        $nuevaEmpresa->direccion=$request->input("direccion");
-        $nuevaEmpresa->id_categoria=$request->input("id_categoria");
 
-        /** Validando y creando la imagen de portada y perfil si estas son enviadas por el usuaio*/
-        if (!file_exists($pathPortadas)) {
-            mkdir($pathPortadas, 0777, true);
-        }
-        if($request->portada_img_url){
-            $imagenPortada= $_FILES["portada_img_url"]["name"];
-            $ruta = $_FILES["portada_img_url"]["tmp_name"];
-            //-------------VALIDAR SI LA CARPETA EXISTE---------------------
+            /** Creando una nueva empresa**/
+            $nuevaEmpresa = new Empresa();
+            $nuevaEmpresa->id_contacto = $nuevoContacto->id;
+            $nuevaEmpresa->name = $request->input("name");
+            $nuevaEmpresa->direccion = $request->input("direccion");
+            $nuevaEmpresa->id_categoria = $request->input("id_categoria");
 
-            //-------------------------------------------------------------
-            $destino = "images/empresas/portadas/" . $imagenPortada;
-            copy($ruta, $destino);
-            $nuevaEmpresa->portada_img_url=$imagenPortada;
-        }
-        if (!file_exists($pathProfile)) {
-            mkdir($pathProfile, 0777, true);
-        }
-        if($request->profile_img_url){
-            $imagenProfile= $_FILES["profile_img_url"]["name"];
-            $ruta = $_FILES["profile_img_url"]["tmp_name"];
-            //-------------VALIDAR SI LA CARPETA EXISTE---------------------
+            /** Validando y creando la imagen de portada y perfil si estas son enviadas por el usuaio*/
+            if (!file_exists($pathPortadas)) {
+                mkdir($pathPortadas, 0777, true);
+            }
+            if ($request->portada_img_url) {
+                $imagenPortada = $_FILES["portada_img_url"]["name"];
+                $ruta = $_FILES["portada_img_url"]["tmp_name"];
+                //-------------VALIDAR SI LA CARPETA EXISTE---------------------
 
-            //-------------------------------------------------------------
-            $destino = "images/empresas/profiles/" . $imagenProfile;
-            copy($ruta, $destino);
-            $nuevaEmpresa->profile_img_url=$imagenProfile;
-        }
+                //-------------------------------------------------------------
+                $destino = "images/empresas/portadas/" . $imagenPortada;
+                copy($ruta, $destino);
+                $nuevaEmpresa->portada_img_url = $imagenPortada;
+            }
+            if (!file_exists($pathProfile)) {
+                mkdir($pathProfile, 0777, true);
+            }
+            if ($request->profile_img_url) {
+                $imagenProfile = $_FILES["profile_img_url"]["name"];
+                $ruta = $_FILES["profile_img_url"]["tmp_name"];
+                //-------------VALIDAR SI LA CARPETA EXISTE---------------------
 
-        $nuevaEmpresa->save();
-        return redirect()->route("nuevaUbicacionEmpresa",["id"=>$nuevaEmpresa->id])
-            ->withExito("Se creó exitosamente la empresa con nombre ='{$request->input('name')}'
+                //-------------------------------------------------------------
+                $destino = "images/empresas/profiles/" . $imagenProfile;
+                copy($ruta, $destino);
+                $nuevaEmpresa->profile_img_url = $imagenProfile;
+            }
+
+            $nuevaEmpresa->save();
+            return redirect()->route("nuevaUbicacionEmpresa",["id"=>$nuevaEmpresa->id])
+                ->withExito("Se creó exitosamente la empresa con nombre ='{$request->input('name')}'
             con ID = {$nuevaEmpresa->id}");
+
+        }else{
+            return redirect()->route("empresas")
+                ->withError("No se pudo crear, reporte con sus ings de Sistemas ");
+
+        }
 
     }
 

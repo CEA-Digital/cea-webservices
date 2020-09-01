@@ -126,7 +126,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><span class="fas fa-phone"></span></div>
                                         </div>
-                                        <input class="form-control @error('telefono') is-invalid @enderror" name="telefono"
+                                        <input class="form-control @error('telefono') is-invalid @enderror"
+                                               name="telefono"
                                                required
                                                max="99999999"
                                                value="{{old("telefono")}}"
