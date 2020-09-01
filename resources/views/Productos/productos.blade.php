@@ -310,7 +310,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="tipoNuevaCategoria">Seleccion si esta disponible
+                            <label for="disponible">Seleccione si esta disponible
                             </label>
                             <br>
                             <select name="disponible"
@@ -325,11 +325,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="empresa">Seleccione la marca</label>
+                            <label for="id_marca">Seleccione la marca</label>
                             <br>
                             <select name="id_marca"
                                     style="width: 85%" required="required"
-                                    class="select2TipoCategoria form-control @error('id_marca') is-invalid @enderror" id="id_marca">
+                                    class="marca form-control @error('id_marca') is-invalid @enderror" id="marca">
                                 <option disabled selected value="s">Seleccione</option>
                                 @foreach($marca as $marcas)
                                     <option value="{{$marcas->id}}" @if(Request::old('id_marca')==$marcas->id){{'selected'}}@endif
@@ -365,7 +365,7 @@
                         </div><!-- /input-group image-preview [TO HERE]-->
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="nuevoP" onclick="n()" class="btn btn-success">Crear</button>
+                        <button type="submit" id="nuevoP" class="btn btn-success">Crear</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     </div>
                 </form>
@@ -456,6 +456,11 @@
                                data-target="#modalNuevaCategoria">
                                 <i class="fas fa-plus" style="color: green"></i>
                             </a>
+                            @error('id_categoria')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="empresa">Seleccione la empresa</label>
@@ -471,6 +476,11 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('id_empresa')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="tipoNuevaCategoria">Seleccion si esta disponible
@@ -486,6 +496,11 @@
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
                             </select>
+                            @error('disponible')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -501,6 +516,11 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('id_marca')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
 
 

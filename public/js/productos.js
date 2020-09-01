@@ -75,10 +75,7 @@ $('#modalBorrarProducto').on('show.bs.modal', function (e) {
     modal.find('.modal-footer #id_producto').val(id);
     modal.find('.modal-body #nombreProducto').text(name);
 });
-$('#modalNuevoProducto #tipoNuevaCategoria').val("s").change();
-$('#modalNuevoProducto #empresa').val("s").change();
-$('#modalNuevoProducto #disponible').val("s").change();
-$('#modalNuevoProducto #marca').val("s").change();
+
 
 
 

@@ -189,11 +189,23 @@
 
 <script src="{{asset("js/empresas.js")}}"></script>
 <script>
+
+</script>
+<script>
     $(document).ready(function () {
-        $(".select2TipoCategoria").select2({
+        $(".empresa2").select2({
             theme: "classic",
             placeholder: "Seleccione una opción"
         });
+
+        $(".disponible2").select2({
+            theme: "classic",
+            placeholder: "Seleccione una opción"
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
         $(".tipoCategoria").select2({
             theme: "classic",
             placeholder: "Seleccione una opción"
@@ -202,15 +214,11 @@
             theme: "classic",
             placeholder: "Seleccione una opción"
         });
-        $(".empresa2").select2({
-            theme: "classic",
-            placeholder: "Seleccione una opción"
-        });
         $(".disponible").select2({
             theme: "classic",
             placeholder: "Seleccione una opción"
         });
-        $(".disponible2").select2({
+        $(".marca").select2({
             theme: "classic",
             placeholder: "Seleccione una opción"
         });
