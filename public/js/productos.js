@@ -75,12 +75,12 @@ $('#modalBorrarProducto').on('show.bs.modal', function (e) {
     modal.find('.modal-footer #id_producto').val(id);
     modal.find('.modal-body #nombreProducto').text(name);
 });
-$('#editarP').on('submit', function (e) {
-    $('#modalEditarProducto').on('hidden.bs.modal', function () {
-        var id = $('#modalEditarProducto #id_producto').val();
-        alert("hola"+id);
-    });
-});
+$('#modalNuevoProducto #tipoNuevaCategoria').val("s").change();
+$('#modalNuevoProducto #empresa').val("s").change();
+$('#modalNuevoProducto #disponible').val("s").change();
+$('#modalNuevoProducto #marca').val("s").change();
+
+
 
 
 

@@ -25,7 +25,7 @@ class createMarcasRequest extends FormRequest
     {
         return [
             'name'=> 'unique:marcas,name|required|string|max:30',
-            'description'=>'max:100|string'
+            'description'=>'max:100'
             //
         ];
     }

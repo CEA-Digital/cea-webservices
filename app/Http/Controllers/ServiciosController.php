@@ -248,7 +248,7 @@ class ServiciosController extends Controller
             ->select("servicios.id","servicios.name", "empresas.name As name_empresa")
             ->where('servicios.id','LIKE',$idServicio)->get();
 
-      $servicio=  json_decode($servicio,true);
+        $servicio=  json_decode($servicio,true);
 
         return view('Servicios.imagenes_servicio')->with("imagenes", $imagenes)->with("servicio", $servicio);
 

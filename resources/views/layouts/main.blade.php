@@ -197,6 +197,34 @@
 
 
 <script src="{{asset("js/empresas.js")}}"></script>
+<script>
+    $(document).ready(function () {
+        $(".select2TipoCategoria").select2({
+            theme: "classic",
+            placeholder: "Seleccione una opción"
+        });
+        $(".tipoCategoria").select2({
+            theme: "classic",
+            placeholder: "Seleccione una opción"
+        });
+        $(".empresa").select2({
+            theme: "classic",
+            placeholder: "Seleccione una opción"
+        });
+        $(".empresa2").select2({
+            theme: "classic",
+            placeholder: "Seleccione una opción"
+        });
+        $(".disponible").select2({
+            theme: "classic",
+            placeholder: "Seleccione una opción"
+        });
+        $(".disponible2").select2({
+            theme: "classic",
+            placeholder: "Seleccione una opción"
+        });
+    });
+</script>
 
 </body>
 </html>

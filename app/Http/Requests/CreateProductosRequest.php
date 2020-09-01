@@ -33,6 +33,7 @@ class CreateProductosRequest extends FormRequest
             'disponible'=>'required|boolean',
             'id_empresa'=>'required|integer',
             'id_categoria'=>'required|integer',
+            'id_marca'=>'required|integer'
 
         ];
     }
@@ -47,6 +48,7 @@ class CreateProductosRequest extends FormRequest
             'lote_price.numeric' =>'El precio lote debe ser un valor numericos',
             'id_empresa.required' => 'Se requiere una empresa para este producto.',
             'id_categoria.required' => 'Se requiere una categoria para este producto.',
+            'id_marca.required'=>'Se requiere una marca para este producto'
         ];
     }
 }

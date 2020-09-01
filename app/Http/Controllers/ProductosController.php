@@ -93,6 +93,7 @@ class ProductosController extends Controller
                   'disponible'=>'required|boolean',
                   'id_empresa'=>'required|integer',
                   'id_categoria'=>'required|integer',
+                  'id_marca'=>'required|integer'
               ],$messages = [
                   'name.required' => 'El nombre del producto es requerido.',
                   'description.max:192' => 'La descripción  no debe de tener más de 192 caracteres.',
@@ -102,6 +103,8 @@ class ProductosController extends Controller
                   'lote_price.numeric' =>'El precio lote debe ser un valor numericos',
                   'id_empresa.required' => 'Se requiere una empresa para este producto.',
                   'id_categoria.required' => 'Se requiere una categoria para este producto.',
+                  'id_marca.required'=>'Se requiere una marca para este producto'
+
               ]);
               $editarProductos=Producto::findOrFail($request->id);
               $editarProductos->name=$request->input('name');
@@ -139,7 +142,7 @@ class ProductosController extends Controller
                   . $request->input("name"));
 
           }catch (ValidationException $exception){
-              return redirect()->route("productos")->with("errors","errors")->with('id_producto',$request->input("id"))->withErrors($exception->errors());
+              return redirect()->route("productos")->with('errores','errores')->with('id_producto',$request->input("id"))->withErrors($exception->errors());
           }
 
     }

@@ -7,7 +7,6 @@ use App\Marca;
 use App\Producto;
 use http\QueryString;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -58,7 +57,7 @@ class MarcaController extends Controller
                 $editar->save();
                 return redirect()->route("marcas")->withExito("Marca editada correctamente");
             }catch (ValidationException $exception){
-                return redirect()->route("marcas")->with('errors','errors')->with('id_M',$request->input("id"))->withErrors($exception->errors());
+                return redirect()->route("marcas")->with('errores','errores')->with('id_M',$request->input("id"))->withErrors($exception->errors());
             }
         }else{
             try {

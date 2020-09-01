@@ -44,7 +44,7 @@
         @endif
 
         <!--------------------------Reabrir modal si hay errror---------------------------->
-        @if(session("errors"))
+        @if(session("errores"))
             <input id="id_M" name="id_M" value="{{session("id_M")}}" type="hidden" >
 
             <script>
@@ -55,7 +55,7 @@
                     }
                 }
             </script>
-            @endif
+            @else
             @if($errors->any())
             <script>
                 document.onreadystatechange = function () {
@@ -65,6 +65,7 @@
                 }
             </script>
             @endif
+    @endif
 
         <table class="table">
             <thead class="thead-dark">
@@ -130,7 +131,8 @@
                         <div class="form-group">
                             <label for="name">Nombre Marca:</label>
                             <input type="text"
-                                   class="form-control @error('name') is-invalid @enderror" name="name" id="name" maxlength="30" value="{{old('name')}}">
+                                   class="form-control @error('name') is-invalid @enderror" name="name" id="name" maxlength="30"
+                                   value="{{old('name')}}" required>
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -178,7 +180,8 @@
                             <div class="form-group">
                                 <label for="name">Nombre Marca:</label>
                                 <input required="required" type="text"
-                                       class="form-control @error('name') is-invalid @enderror" name="name" id="name" maxlength="30" value="{{old('name')}}">
+                                       class="form-control @error('name') is-invalid @enderror" name="name" id="name" maxlength="30"
+                                       value="{{old('name')}}"">
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message}}</strong>

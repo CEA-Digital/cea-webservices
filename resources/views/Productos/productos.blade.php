@@ -53,7 +53,7 @@
 
         @endif
 
-        @if(session("errors"))
+        @if(session("errores"))
             <input type="hidden" id="id_producto" name="id_producto" value="{{session("id_producto")}}">
             <script type="text/javascript">
                 var id = document.getElementById("id_producto").value;
@@ -212,7 +212,8 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nombreNuevoProducto">Nombre Producto</label>
-                            <input class="form-control @error('name') is-invalid @enderror" name="name" id="nombreNuevoProducto" maxlength="100"  value="{{ old('name') }}">
+                            <input class="form-control @error('name') is-invalid @enderror" name="name" id="nombreNuevoProducto" maxlength="100"
+                                   value="{{ old('name')}}" required="required">
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -236,7 +237,7 @@
 
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Unitario</label>
-                            <input required class="form-control @error('unit_price') is-invalid @enderror" name="unit_price"
+                            <input required="required" class="form-control @error('unit_price') is-invalid @enderror" name="unit_price"
                                    id="precioUnitarioProducto" maxlength="8"
                                    type="number"
                                    value="{{old('unit_price')}}">
@@ -249,7 +250,7 @@
 
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Lote</label>
-                            <input required class="form-control @error('lote_price') is-invalid @enderror" name="lote_price" id="precioLoteProducto"
+                            <input required="required" class="form-control @error('lote_price') is-invalid @enderror" name="lote_price" id="precioLoteProducto"
                                    maxlength="8"
                                    type="number"
                                    value="{{old('lote_price')}}">
@@ -265,11 +266,11 @@
                             </label>
                             <br>
                             <select name="id_categoria"
-                                    required
+                                    required="required"
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control @error('id_categoria') is-invalid @enderror"
+                                    class="tipoCategoria form-control @error('id_categoria') is-invalid @enderror"
                                     id="tipoNuevaCategoria">
-                                <option disabled selected value="">Seleccione</option>
+                                <option disabled selected value="s">Seleccione</option>
                                 @foreach($categoria as $categorias)
                                     <option value="{{$categorias->id}}" @if(Request::old('id_categoria')==$categorias->id){{'selected'}}@endif
                                     @if(session("idNuevaCategoria"))
@@ -294,10 +295,10 @@
                             <label for="empresa">Seleccione la empresa</label>
                             <br>
                             <select name="id_empresa"
-                                    required
+                                    required="required"
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control @error('id_empresa') is-invalid @enderror" id="empresa">
-                                <option disabled selected value="">Seleccione</option>
+                                    class="empresa form-control @error('id_empresa') is-invalid @enderror" id="empresa">
+                                <option disabled selected value="s">Seleccione</option>
                                 @foreach($empresas as $empresa)
                                     <option value="{{$empresa->id}}" @if(Request::old('id_empresa')==$empresa->id){{'selected'}}@endif
                                     @if(session("idEmpresa"))
@@ -313,12 +314,12 @@
                             </label>
                             <br>
                             <select name="disponible"
-                                    required
+                                    required="required"
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control @error('disponible') is-invalid @enderror" id="disponible">
-                                <option disabled selected value="{{old('disponible')}}">Seleccione</option>
-                                <option value="1">Si</option>
-                                <option value="0">No</option>
+                                    class="disponible form-control @error('disponible') is-invalid @enderror" id="disponible">
+                                <option disabled selected value="s">Seleccione</option>
+                                <option value="1"@if(Request::old('disponible')==1){{'selected'}}@endif>Si </option>
+                                <option value="0"@if(Request::old('disponible')==0){{'selected'}}@endif>No </option>
                             </select>
                             <!---- Boton para crear un nuevo tipo de categoria- -->
                         </div>
@@ -327,9 +328,9 @@
                             <label for="empresa">Seleccione la marca</label>
                             <br>
                             <select name="id_marca"
-                                    style="width: 85%"
-                                    class="select2TipoCategoria form-control @error('id_marca') is-invalid @enderror" id="marca">
-                                <option disabled selected value="">Seleccione:</option>
+                                    style="width: 85%" required="required"
+                                    class="select2TipoCategoria form-control @error('id_marca') is-invalid @enderror" id="id_marca">
+                                <option disabled selected value="s">Seleccione</option>
                                 @foreach($marca as $marcas)
                                     <option value="{{$marcas->id}}" @if(Request::old('id_marca')==$marcas->id){{'selected'}}@endif
                                     @if(session("idMarca"))
@@ -415,7 +416,8 @@
 
                         <div class="form-group">
                             <label for="precioUnitarioProducto">Precio Unitario</label>
-                            <input required class="form-control @error('unit_price') is-invalid @enderror" name="unit_price" id="precioUnitarioProducto"
+                            <input required="required" class="form-control @error('unit_price') is-invalid @enderror"
+                                   name="unit_price" id="precioUnitarioProducto"
                                    maxlength="8" type="number">
                             @error('unit_price')
                             <span class="invalid-feedback" role="alert">
@@ -435,13 +437,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="tipoEditarCategoria">Seleccione la Categoria
+                            <label for="tipoEditarCategoria">Seleccione la Categoria:
                             </label>
                             <br>
                             <select name="id_categoria"
-                                    required
+                                    required="required"
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control" id="tipoEditarCategoria">
+                                    class="select2TipoCategoria form-control @error('id_categoria') is-invalid @enderror"
+                                    id="tipoEditarCategoria" >
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($categoria as $categorias)
                                     <option value="{{$categorias->id}}">{{$categorias->name}}</option>
@@ -460,7 +463,8 @@
                             <select name="id_empresa"
                                     required
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control" id="empresa">
+                                    class="empresa2 form-control @error('id_empresa') is-invalid @enderror"
+                                    id="empresa" required="required">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($empresas as $empresa)
                                     <option value="{{$empresa->id}}">{{$empresa->name}}
@@ -476,7 +480,8 @@
                                     required
                                     style="width: 85%"
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control" id="disponible">
+                                    class="disponible2 form-control @error('disponible') is-invalid @enderror"
+                                    id="disponible">
                                 <option disabled selected value="">Seleccione</option>
                                 <option value="1">Si</option>
                                 <option value="0">No</option>
@@ -488,7 +493,8 @@
                             <br>
                             <select name="id_marca"
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control" id="marca">
+                                    class="select2TipoCategoria form-control @error('id_marca') is-invalid @enderror"
+                                    id="marca" required="required">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($marca as $marca)
                                     <option value="{{$marca->id}}">{{$marca->name}}
@@ -667,7 +673,7 @@
                             <select name="id_categoria"
                                     required
                                     style="width: 85%"
-                                    class="select2TipoCategoria form-control" id="tipoNuevaCategoria">
+                                    class="empresa2 form-control" id="tipoNuevaCategoria">
                                 <option disabled selected value="">Seleccione</option>
                                 @foreach($tipoCategorias as $tipoCategoria)
                                     <option value="{{$tipoCategoria->id}}" @if(session("idNuevaCategoria"))
