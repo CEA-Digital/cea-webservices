@@ -111,11 +111,10 @@
                                         @endforeach
                                     </select>
                                     <!---- Boton para crear un nuevo tipo de categoria- -->
-                                    <button class="btn btn-sm btn-outline-success"
-                                       data-toggle="modal"
-                                       data-target="#modalNuevoTipoCategoria">
-                                        <i class="fas fa-plus" style="color: green"></i>
-                                    </button>
+                                    <a class="btn btn-sm btn-outline-success"
+                                        href="{{route("categorias")}}">
+                                        <i class="fas fa-external-link-alt" style="color: green"></i>
+                                    </a>
                                 </div>
                             </div>
 

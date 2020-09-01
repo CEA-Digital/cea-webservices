@@ -21,12 +21,10 @@ class EmpresaController extends Controller
     public function show($id){
         $empresa = Empresa::findOrFail($id);
         $categorias = TipoCategoria::all();
-        $contacto= Contacto::where("id","=",$empresa->id_contacto)->get();
 
         return view("Empresas.informacion_empresa")
             ->withEmpresa($empresa)
-            ->withTipoCategorias($categorias)
-            ->withContacto($contacto);
+            ->withTipoCategorias($categorias);
     }
     public function nuevaEmpresaForm($fase=1){
         $categorias = TipoCategoria::all();
@@ -94,6 +92,12 @@ class EmpresaController extends Controller
     }
 
     public function editarEmpresa(Request $request){
+
+        $pathPortadas = public_path() . '/images/empresas/portadas/';//Carpeta publica de las imagenes
+        $pathProfile = public_path() . '/images/empresas/profiles/';//Carpeta publica de las imagenes
+
+        $editarContacto= Contacto::findOrFail($request->input("id_contacto"));
+
 
     }
     public function nuevaUbicacionEmpresa($id){

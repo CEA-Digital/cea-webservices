@@ -70,7 +70,7 @@
                         <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" data-target="#messages" data-toggle="tab" class="nav-link">Messages</a>
+                        <a href="" data-target="#messages" data-toggle="tab" class="nav-link">Productos</a>
                     </li>
                     <li class="nav-item">
                         <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Editar</a>
@@ -87,8 +87,10 @@
                                 </p>
                                 <h6><strong>Categoria</strong></h6>
                                 <p>
-                                    <a class=" btn-link" title="Ver" href="{{route("buscarTipoCategorias",["busqueda"=>$empresa->nombre_categoria])}}">
-                                    {{$empresa->nombre_categoria}} <span class="fas fa-external-link-alt "></span></a>
+                                    <a class=" btn-link" title="Ver"
+                                       href="{{route("buscarTipoCategorias",["busqueda"=>$empresa->nombre_categoria])}}">
+                                        {{$empresa->nombre_categoria}} <span
+                                            class="fas fa-external-link-alt "></span></a>
                                 </p>
                             </div>
                             <div class="col-md-6">
@@ -102,7 +104,8 @@
                                 <a href="#" class="badge badge-dark badge-pill">bootstrap</a>
                                 <a href="#" class="badge badge-dark badge-pill">responsive-design</a>
                                 <hr>
-                                <span class="badge badge-primary"><i class="fab fa-product-hunt"></i> 900 Productos</span>
+                                <span class="badge badge-primary"><i
+                                        class="fab fa-product-hunt"></i> 900 Productos</span>
                                 <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Servicios</span>
                                 <span class="badge badge-danger"><i class="fa fa-eye"></i> 245 Seguidores</span>
                             </div>
@@ -195,7 +198,13 @@
                                         </div>
                                         <input class="form-control"
                                                required
+                                               @if(old("name"))
+                                               @error("name")
                                                value="{{old("name")}}"
+                                               @enderror
+                                               @else
+                                               value="{{$empresa->name}}"
+                                               @endif
                                                placeholder="Ingrese el nombre de la empresa"
                                                name="name" id="nombre_empresa" type="text"
                                                max="80">
@@ -217,7 +226,13 @@
                                                   id="direccion"
                                                   type="text"
                                                   required
-                                                  placeholder="Ingrese una dirección">{{old("direccion")}}</textarea>
+                                                  placeholder="Ingrese una dirección">
+                                            @if(old("direccion"))
+                                            @error("direccion"){{old("direccion")}}@enderror
+                                            @else
+                                            {{$empresa->direccion}}
+                                            @endif
+                                        </textarea>
 
                                     </div>
                                     <small class="text-muted">
@@ -238,9 +253,9 @@
                                         <option disabled selected value="">Seleccione</option>
                                         @foreach($tipoCategorias as $categoria)
                                             <option value="{{$categoria->id}}"
-                                                    @if(session("idNuevaCategoria"))
-                                                    value="{{session("idNuevaCategoria")}}"
-                                                {{session("idNuevaCategoria") == $categoria->id ? 'selected="selected"':''}}
+                                                    @if($empresa->id_categoria)
+                                                    value="{{$empresa->id_categoria}}"
+                                                {{$empresa->id_categoria == $categoria->id ? 'selected="selected"':''}}
                                                 @endif
                                             @if(old("id_categoria"))
                                                 {{old("id_categoria") == $categoria->id ? 'selected="selected"':''}}
@@ -251,9 +266,7 @@
                                         @endforeach
                                     </select>
                                     <!---- Boton para crear un nuevo tipo de categoria- -->
-                                    <button class="btn btn-sm btn-outline-success"
-                                            data-toggle="modal"
-                                            data-target="#modalNuevoTipoCategoria">
+                                    <button class="btn btn-sm btn-outline-success">
                                         <i class="fas fa-plus" style="color: green"></i>
                                     </button>
                                 </div>
@@ -267,10 +280,17 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><span class="fas fa-phone"></span></div>
                                         </div>
-                                        <input class="form-control @error('telefono') is-invalid @enderror" name="telefono"
+                                        <input class="form-control @error('telefono') is-invalid @enderror"
+                                               name="telefono"
                                                required
                                                max="99999999"
+                                               @if(old("telefono"))
+                                               @error("telefono")
                                                value="{{old("telefono")}}"
+                                               @enderror
+                                               @else
+                                               value="{{$empresa->contacto->telefono}}"
+                                               @endif
                                                type="number"
                                                aria-valuemax="8"
                                                maxlength="8"
@@ -285,10 +305,17 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><span class="fas fa-phone"></span></div>
                                         </div>
-                                        <input class="form-control @error('telefono_opcional') is-invalid @enderror" name="telefono_opcional"
+                                        <input class="form-control @error('telefono_opcional') is-invalid @enderror"
+                                               name="telefono_opcional"
                                                max="99999999"
                                                min="1"
+                                               @if(old("telefono_opcional"))
+                                               @error("telefono_opcional")
                                                value="{{old("telefono_opcional")}}"
+                                               @enderror
+                                               @else
+                                               value="{{$empresa->contacto->telefono_opcional}}"
+                                               @endif
                                                maxlength="8"
                                                id="telefono_opcional" type="number" placeholder="9999-9999">
                                     </div>
@@ -306,8 +333,15 @@
                                         </div>
                                         <input name="correo" type="email"
                                                placeholder="ejemplo@ejemplo.com"
+                                               @if(old("correo"))
+                                               @error("correo")
                                                value="{{old("correo")}}"
-                                               required id="correo" class="form-control @error('correo') is-invalid @enderror">
+                                               @enderror
+                                               @else
+                                               value="{{$empresa->contacto->correo}}"
+                                               @endif
+                                               required id="correo"
+                                               class="form-control @error('correo') is-invalid @enderror">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -318,7 +352,12 @@
                                             <div class="input-group-text">@</div>
                                         </div>
                                         <input name="sitio_web"
-                                               value="{{old("sitio_web")}}"
+                                               @if(old("sitio_web"))
+                                               @error("sitio_web")
+                                               value="{{old("sitio_web")}}" @enderror
+                                               @else
+                                               value="{{$empresa->contacto->sitio_web}}"
+                                               @endif
                                                placeholder="www.empresa.com" type="text" id="sitio_web"
                                                class="form-control">
                                     </div>
@@ -334,7 +373,11 @@
                                         </div>
                                         <input class="form-control"
                                                name="facebook"
+                                               @if(old("facebook"))
                                                value="{{old("facebook")}}"
+                                               @else
+                                               value="{{$empresa->contacto->facebook}}"
+                                               @endif
                                                placeholder="www.facebook.com/ejemplo" id="facebook">
                                     </div>
                                 </div>
@@ -346,7 +389,11 @@
                                             <div class="input-group-text"><span class="fab fa-instagram"></span></div>
                                         </div>
                                         <input class="form-control"
+                                               @if(old("instagram"))
                                                value="{{old("instagram")}}"
+                                               @else
+                                               value="{{$empresa->contacto->instagram}}"
+                                               @endif
                                                name="instagram"
                                                placeholder="www.instagram.com/ejemplo" id="instagram">
                                     </div>
@@ -582,6 +629,7 @@
     .image-preview-input-title-tipo-categoria {
         margin-left: 2px;
     }
+
     .image-preview-input-profile {
         position: relative;
         overflow: hidden;
